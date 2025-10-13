@@ -5,150 +5,176 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hospital Bill Form</title>
   <style>
-    @page { size: A4; margin: 0; }
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #e9f3ff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .bill-container {
+    width: 100%;
+    max-width: 210mm;
+    margin: 0 auto;
+    background: white;
+    padding: 20mm 15mm;
+    box-sizing: border-box;
+    page-break-inside: avoid;
+  }
+
+  h2 {
+    text-align: center;
+    color: #004aad;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    font-weight: bold;
+    color: #004aad;
+    border-bottom: 2px solid #004aad;
+    margin-bottom: 8px;
+    padding-bottom: 3px;
+  }
+
+  .row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .col {
+    flex: 1;
+    min-width: 100px;
+  }
+
+  label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-top: 4px;
+    box-sizing: border-box;
+  }
+
+  .relation-wrap {
+    display: flex;
+    gap: 10px;
+  }
+
+  .relation-wrap select {
+    width: 80px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+
+  th, td {
+    border: 1px solid #d1d1d1;
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  th {
+    background: #f3f6fb;
+    color: #004aad;
+    text-align: left;
+  }
+
+  .add-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+  }
+
+  button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .add-btn {
+    background: #004aad;
+    color: white;
+  }
+
+  .remove-btn {
+    background: #d9534f;
+    color: white;
+  }
+
+  .print-btn {
+    background: #28a745;
+    color: white;
+    float: right;
+    margin-top: 10px;
+  }
+
+  .total-section {
+    text-align: right;
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .total-text {
+    text-align: right;
+    font-style: italic;
+    margin-top: 5px;
+    color: #004aad;
+  }
+
+  .signature {
+    text-align: right;
+    margin-top: 60px;
+    font-weight: bold;
+  }
+
+  @media print {
+    .no-print {
+      display: none !important;
+    }
 
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #e9f3ff;
-      margin: 0; padding: 0;
+      background: white;
     }
 
     .bill-container {
-      width: 190mm;
-      height: 282mm;
-      margin: auto;
-      background: white;
-      padding: 0 35px;
-      position: relative;
-      top: 6cm;
-    }
-
-    h2 {
-      text-align: center;
-      color: #004aad;
-      font-weight: bold;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-    }
-
-    .section-title {
-      font-weight: bold;
-      color: #004aad;
-      border-bottom: 2px solid #004aad;
-      margin-bottom: 8px;
-      padding-bottom: 3px;
-    }
-
-    .row {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 10px;
-      align-items: flex-end;
-    }
-
-    .col {
-      flex: 1;
-    }
-
-    label {
-      font-weight: 600;
-      font-size: 14px;
-      color: #333;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 7px 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-      margin-top: 4px;
-    }
-
-    .relation-wrap {
-      display: flex;
-      gap: 10px;
-    }
-
-    .relation-wrap select {
-      width: 80px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-
-    th, td {
-      border: 1px solid #d1d1d1;
-      padding: 8px 10px;
-      font-size: 14px;
-    }
-
-    th {
-      background: #f3f6fb;
-      color: #004aad;
-      text-align: left;
-    }
-
-    .add-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-    }
-
-    button {
-      padding: 8px 15px;
+      box-shadow: none;
       border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
+      margin: 0;
+      padding: 0;
+      width: auto;
     }
 
-    .add-btn {
-      background: #004aad;
-      color: white;
+    .row,
+    .add-row {
+      page-break-inside: avoid;
     }
+  }
+</style>
 
-    .remove-btn {
-      background: #d9534f;
-      color: white;
-    }
-
-    .print-btn {
-      background: #28a745;
-      color: white;
-      float: right;
-      margin-top: 10px;
-    }
-
-    .total-section {
-      text-align: right;
-      margin-top: 15px;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .total-text {
-      text-align: right;
-      font-style: italic;
-      margin-top: 5px;
-      color: #004aad;
-    }
-
-    .signature {
-      text-align: right;
-      margin-top: 80px;
-      font-weight: bold;
-    }
-
-    @media print {
-      .no-print { display: none !important; }
-      body { background: white; }
-      .bill-container { box-shadow: none; border: none; }
-    }
-  </style>
 </head>
 <body>
 
