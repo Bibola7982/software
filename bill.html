@@ -3,28 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hospital Bill Form</title>
+  <title>Hospital Final Bill Form</title>
   <style>
+  @page {
+    size: A4;
+    margin: 0;
+  }
 
-    @media print {
   body {
-    background: white;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #e9f3ff;
     margin: 0;
     padding: 0;
   }
 
-
-
   .bill-container {
-    position: static !important; /* 🔥 removes top: 6cm during print */
-    padding-top: 6cm !important; /* 🔁 simulate same space */
-    height: auto !important;
-    max-height: none !important;
-    overflow: hidden;
+    width: 190mm;
+    margin: auto;
+    background: white;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: relative;
+    top: 6cm; /* Keep 6cm top space on screen */
+    background-image: url('your-background-image.png'); /* 👈 Replace with your image path */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: local;
+    opacity: 0.98; /* Overall slight transparency */
     page-break-inside: avoid;
-    break-inside: avoid;
   }
-}
 
   h2 {
     text-align: center;
@@ -46,8 +54,9 @@
     display: flex;
     gap: 15px;
     margin-bottom: 10px;
-    align-items: flex-end;
     flex-wrap: wrap;
+    align-items: flex-end;
+    page-break-inside: avoid;
   }
 
   .col {
@@ -73,17 +82,23 @@
 
   .relation-wrap {
     display: flex;
-    gap: 10px;
+    gap: 8px;
+    align-items: flex-end;
   }
 
   .relation-wrap select {
     width: 80px;
   }
 
+  .relation-wrap input {
+    flex: 1;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
+    page-break-inside: avoid;
   }
 
   th, td {
@@ -103,6 +118,7 @@
     gap: 10px;
     margin-top: 15px;
     flex-wrap: wrap;
+    page-break-inside: avoid;
   }
 
   button {
@@ -146,33 +162,41 @@
 
   .signature {
     text-align: right;
-    margin-top: 60px;
+    margin-top: 50px;
     font-weight: bold;
   }
 
+  /* === PRINT OVERRIDES === */
   @media print {
+    body {
+      background: white;
+      margin: 0;
+      padding: 0;
+    }
+
     .no-print {
       display: none !important;
     }
 
-    body {
-      background: white;
-    }
-
     .bill-container {
-      box-shadow: none;
-      border: none;
-      margin: 0;
-      padding: 0;
-      width: auto;
-    }
-
-    .row,
-    .add-row {
+      position: static !important;         /* ⛔ Remove top: 6cm during print */
+      padding-top: 6cm !important;         /* ✅ Replace top offset with padding */
+      margin: 0 !important;
+      width: 100%;
+      height: auto !important;
+      max-height: none !important;
+      overflow: hidden;
+      background-image: url('your-background-image.png'); /* 👈 Add image to print too */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.1;                        /* ✅ Lower opacity for watermark effect */
       page-break-inside: avoid;
+      break-inside: avoid;
     }
   }
 </style>
+
 
 </head>
 <body>
