@@ -5,29 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hospital Bill Form</title>
   <style>
-  @page {
-    size: A4;
-    margin: 20mm;
+  @media print {
+  .no-print {
+    display: none !important;
   }
 
   body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #e9f3ff;
+    background: white;
     margin: 0;
     padding: 0;
   }
 
-  .bill-container 
-    { width: 190mm; 
-     top: 6cm;
-    height: calc(297mm - 60mm); /* A4 height (297mm) - top margin (6cm ~ 60mm) - bottom margin */
-     margin: auto;
-     background: white; 
-     border-radius: 0; 
-     padding: 0 35px; 
-     box-shadow: none;
-     position: relative; 
-     /* Start billing from 6cm below top */ }
+  .bill-container {
+    box-shadow: none;
+    border: none;
+    margin: 0;
+    padding: 0 20px;
+    width: 100%;
+    height: calc(297mm - 60mm);
+    max-height: calc(297mm - 60mm);
+    overflow: hidden;
+    page-break-inside: avoid;
+    top: 6cm;
+  }
 
   h2 {
     text-align: center;
