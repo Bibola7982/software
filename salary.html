@@ -24,7 +24,7 @@
       margin: auto;
       padding: 0 25px 20px;
       position: relative;
-      
+ 
       box-sizing: border-box;
     }
 
@@ -134,6 +134,28 @@
       cursor: pointer;
     }
 
+    .total-section {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 15px;
+      text-align: right;
+    }
+
+    .amount-in-words {
+      font-style: italic;
+      color: #004aad;
+      text-align: right;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .signature {
+      margin-top: 60px;
+      text-align: right;
+      font-weight: bold;
+      padding-right: 10px;
+    }
+
     @media print {
       .no-print {
         display: none !important;
@@ -207,15 +229,13 @@
         <tr>
           <th>MONTH</th>
           <th>BASIC SALARY</th>
-          <th>SALARY (GROSS)/PM</th>
+          <th>GROSS SALARY</th>
           <th>TDS</th>
-          <th>NET SALARY PAYABLE</th>
+          <th>NET PAYABLE</th>
           <th class="no-print">ACTION</th>
         </tr>
       </thead>
-      <tbody id="salaryBody">
-        <!-- Dynamic rows go here -->
-      </tbody>
+      <tbody id="salaryBody"></tbody>
     </table>
 
     <!-- Add Row Section -->
@@ -227,6 +247,16 @@
       <input type="number" id="net" placeholder="Net Payable" readonly>
       <button class="add-btn" onclick="addRow()">Add</button>
     </div>
+
+    <!-- Total & Signature -->
+    <div class="total-section">
+      TOTAL NET PAYABLE = ₹ <span id="totalAmount">0.00</span>/-
+    </div>
+    <div class="amount-in-words" id="amountInWords">( ZERO ONLY )</div>
+
+    <div class="signature">
+      Auth. Signature
+    </div>
   </div>
 
   <!-- Script -->
@@ -234,6 +264,8 @@
     const grossInput = document.getElementById('gross');
     const tdsInput = document.getElementById('tds');
     const netInput = document.getElementById('net');
+    const totalAmountEl = document.getElementById('totalAmount');
+    const amountInWords = document.getElementById('amountInWords');
 
     function calculateNet() {
       const gross = parseFloat(grossInput.value) || 0;
@@ -257,26 +289,50 @@
         return;
       }
 
-      const tableBody = document.getElementById('salaryBody');
       const tr = document.createElement('tr');
-
       tr.innerHTML = `
         <td>${month}</td>
         <td>${basic}</td>
         <td>${gross}</td>
         <td>${tds}</td>
         <td>${net}/-</td>
-        <td class="no-print"><button class="remove-btn" onclick="this.parentElement.parentElement.remove()">Remove</button></td>
+        <td class="no-print"><button class="remove-btn" onclick="this.parentElement.parentElement.remove(); recalcTotal()">Remove</button></td>
       `;
+      document.getElementById('salaryBody').appendChild(tr);
 
-      tableBody.appendChild(tr);
-
-      // Reset fields
       document.getElementById('month').value = '';
       document.getElementById('basic').value = '';
       grossInput.value = '';
       tdsInput.value = '';
       netInput.value = '';
+
+      recalcTotal();
+    }
+
+    function recalcTotal() {
+      let total = 0;
+      const rows = document.querySelectorAll('#salaryBody tr');
+      rows.forEach(row => {
+        const val = row.children[4]?.innerText?.replace('/-', '') || '0';
+        total += parseFloat(val);
+      });
+
+      totalAmountEl.textContent = total.toFixed(2);
+      amountInWords.textContent = `(${convertToWords(Math.round(total)).toUpperCase()} ONLY)`;
+    }
+
+    // Convert numbers to words
+    function convertToWords(n) {
+      const a = ['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'];
+      const b = ['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+
+      if (n === 0) return 'Zero';
+      if (n < 20) return a[n];
+      if (n < 100) return b[Math.floor(n / 10)] + (n % 10 ? ' ' + a[n % 10] : '');
+      if (n < 1000) return a[Math.floor(n / 100)] + ' Hundred ' + (n % 100 ? convertToWords(n % 100) : '');
+      if (n < 100000) return convertToWords(Math.floor(n / 1000)) + ' Thousand ' + (n % 1000 ? convertToWords(n % 1000) : '');
+      if (n < 10000000) return convertToWords(Math.floor(n / 100000)) + ' Lakh ' + (n % 100000 ? convertToWords(n % 100000) : '');
+      return convertToWords(Math.floor(n / 10000000)) + ' Crore ' + (n % 10000000 ? convertToWords(n % 10000000) : '');
     }
   </script>
 
