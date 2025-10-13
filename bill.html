@@ -1,135 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hospital Bill Form</title>
-<style>
-  @page {
-    size: A4;
-    margin: 0;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Bill Form</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
 
-  body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #e9f3ff;
-    margin: 0;
-    padding: 0;
-  }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #e9f3ff;
+      margin: 0;
+      padding: 0;
+    }
 
-  .bill-container {
-    width: 190mm;
-    height: 282mm; /* A4 height (297mm) - top margin (6cm ~ 60mm) - bottom margin */
-    margin: auto;
-    background: white;
-    border-radius: 0;
-    padding: 0 35px;
-    box-shadow: none;
-    position: relative;
-    top: 6cm; /* Start billing from 6cm below top */
-  }
+    .bill-container {
+      width: 190mm;
+      height: 282mm;
+      margin: auto;
+      background: white;
+      padding: 0 35px;
+      position: relative;
+      top: 6cm;
+    }
 
-  h2 {
-    text-align: center;
-    color: #004aad;
-    margin-bottom: 20px;
-  }
+    h2 {
+      text-align: center;
+      color: #004aad;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
 
-  .section-title {
-    font-weight: bold;
-    color: #004aad;
-    border-bottom: 2px solid #004aad;
-    margin-bottom: 8px;
-    padding-bottom: 3px;
-  }
+    .section-title {
+      font-weight: bold;
+      color: #004aad;
+      border-bottom: 2px solid #004aad;
+      margin-bottom: 8px;
+      padding-bottom: 3px;
+    }
 
-  .row {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    margin-bottom: 10px;
-  }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
 
-  .col {
-    flex: 1;
-  }
+    .col {
+      flex: 1;
+    }
 
-  label {
-    font-weight: 600;
-    font-size: 14px;
-    color: #333;
-  }
+    label {
+      font-weight: 600;
+      font-size: 14px;
+      color: #333;
+    }
 
-  input, select {
-    width: 100%;
-    padding: 7px 5px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    margin-top: 4px;
-  }
+    input, select {
+      width: 100%;
+      padding: 7px 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-top: 4px;
+    }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-  }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
 
-  th, td {
-    border: 1px solid #d1d1d1;
-    padding: 8px 10px;
-    font-size: 14px;
-  }
+    th, td {
+      border: 1px solid #d1d1d1;
+      padding: 8px 10px;
+      font-size: 14px;
+    }
 
-  th {
-    background: #f3f6fb;
-    color: #004aad;
-  }
+    th {
+      background: #f3f6fb;
+      color: #004aad;
+      text-align: left;
+    }
 
-  .add-row {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-  }
+    .add-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
 
-  button {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-  }
+    button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
 
-  .add-btn { background: #004aad; color: white; }
-  .remove-btn { background: #d9534f; color: white; }
-  .print-btn { background: #28a745; color: white; float: right; margin-top: 10px; }
+    .add-btn { background: #004aad; color: white; }
+    .remove-btn { background: #d9534f; color: white; }
+    .print-btn { background: #28a745; color: white; float: right; margin-top: 10px; }
 
-  .total-section {
-    text-align: right;
-    margin-top: 15px;
-    font-size: 16px;
-    font-weight: bold;
-  }
+    .total-section {
+      text-align: right;
+      margin-top: 15px;
+      font-size: 16px;
+      font-weight: bold;
+    }
 
-  .total-text {
-    text-align: right;
-    font-style: italic;
-    margin-top: 5px;
-    color: #004aad;
-  }
+    .total-text {
+      text-align: right;
+      font-style: italic;
+      margin-top: 5px;
+      color: #004aad;
+    }
 
-  .signature {
-    text-align: right;
-    margin-top: 80px;
-    font-weight: bold;
-  }
+    .signature {
+      text-align: right;
+      margin-top: 80px;
+      font-weight: bold;
+    }
 
-  @media print {
-    .no-print { display: none !important; }
-    body { background: white; }
-    .bill-container { box-shadow: none; border: none; }
-  }
-</style>
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white; }
+      .bill-container { box-shadow: none; border: none; }
+    }
+  </style>
 </head>
 <body>
 
@@ -145,7 +145,12 @@
     </div>
     <div class="col">
       <label>S/O, D/O, W/O</label>
-      <input type="text" id="relation">
+      <select id="relation">
+        <option value="">-- Select --</option>
+        <option>S/O</option>
+        <option>D/O</option>
+        <option>W/O</option>
+      </select>
     </div>
     <div class="col no-print" style="text-align:right;">
       <button class="print-btn" onclick="window.print()">🖨️ Print</button>
@@ -180,6 +185,7 @@
     <thead>
       <tr>
         <th>Particulars</th>
+        <th>Unit</th>
         <th>Amount (₹)</th>
         <th class="no-print">Action</th>
       </tr>
@@ -189,50 +195,53 @@
 
   <div class="add-row no-print">
     <select id="particularSelect">
-      <option value="">Select Particular</option>
-      <option>Admission fee</option>
-      <option>Emergency fee</option>
-      <option>ICU Rent</option>
-      <option>ICU WITH VENT. CHARGE </option>
-      <option>MEDICAL BILL CHARGE</option>
-      <option>Room Rent</option>
-      <option>Consultation fee 1</option>
-      <option>Consultation fee 2</option>
-      <option>Consultation fee 3</option>
-      <option>Consultation fee 4</option>
-      <option>Operation fee 1</option>
-      <option>Operation fee 2</option>
-      <option>Operation fee 3</option>
-      <option>Anaesthesia fee</option>
-      <option>OT Charges</option>
-      <option>Intubation Fee</option>
-      <option>Orthopedic Implants</option>
-      <option>Operation fee 1 (Cataract Surgery)</option>
-      <option>Implant (Hydrophilic Foldable IOLs Intraocular Lens)</option>
-      <option>Ventilator fee</option>
-      <option>Monitor Charges</option>
-      <option>Infusion Pump Charges</option>
-      <option>Oxygen Charge With Pulse Oxy.</option>
-      <option>Cooler/Heater/AC Charge</option>
-      <option>Nurshing Charges</option>
-      <option>CMO Charges</option>
-      <option>Ryle Tube Aspiration/Cath/Enema/ B Wash</option>
-      <option>Gastric Lavage</option>
-      <option>Dressing Charges</option>
-      <option>Blood Transfusion</option>
-      <option>Center Line</option>
-      <option>MLC Charges</option>
-      <option>Work up fee</option>
-      <option>Alfa-Bed / Water Bed Charges</option>
-      <option>Physiotheraphy Charges</option>
-      <option>MOT Charges</option>
-      <option>ECG Charge</option>
-      <option>Lab Charge</option>
-      <option>Xray Charge</option>
-      <option>Ultrasound</option>
-      <option>Dental</option>
-      <option>Others</option>
+      <div class="add-row no-print"> 
+        <select id="particularSelect"> 
+          <option value="">Select Particular</option> 
+          <option>Admission fee</option> 
+          <option>Emergency fee</option> 
+          <option>ICU Rent</option> 
+          <option>ICU WITH VENT. CHARGE </option>
+          <option>MEDICAL BILL CHARGE</option>
+          <option>Room Rent</option> 
+          <option>Consultation fee 1</option>
+          <option>Consultation fee 2</option> 
+          <option>Consultation fee 3</option> 
+          <option>Consultation fee 4</option> 
+          <option>Operation fee 1</option> 
+          <option>Operation fee 2</option> 
+          <option>Operation fee 3</option> 
+          <option>Anaesthesia fee</option> 
+          <option>OT Charges</option> 
+          <option>Intubation Fee</option> 
+          <option>Orthopedic Implants</option> 
+          <option>Operation fee 1 (Cataract Surgery)</option>
+          <option>Implant (Hydrophilic Foldable IOLs Intraocular Lens)</option>
+          <option>Ventilator fee</option> 
+          <option>Monitor Charges</option> 
+          <option>Infusion Pump Charges</option>
+          <option>Oxygen Charge With Pulse Oxy.</option> 
+          <option>Cooler/Heater/AC Charge</option> 
+          <option>Nurshing Charges</option> 
+          <option>CMO Charges</option>
+          <option>Ryle Tube Aspiration/Cath/Enema/ B Wash</option>
+          <option>Gastric Lavage</option>
+          <option>Dressing Charges</option> 
+          <option>Blood Transfusion</option>
+          <option>Center Line</option> 
+          <option>MLC Charges</option> 
+          <option>Work up fee</option>
+          <option>Alfa-Bed / Water Bed Charges</option>
+          <option>Physiotheraphy Charges</option> 
+          <option>MOT Charges</option>
+          <option>ECG Charge</option> 
+          <option>Lab Charge</option> 
+          <option>Xray Charge</option> 
+          <option>Ultrasound</option> 
+          <option>Dental</option> 
+          <option>Others</option>
     </select>
+    <input type="text" id="unitInput" placeholder="Unit">
     <input type="number" id="amountInput" placeholder="Enter Amount">
     <button class="add-btn" id="addRow">Add</button>
   </div>
@@ -272,7 +281,7 @@
   function recalcTotal() {
     let total = 0;
     document.querySelectorAll('#billBody tr').forEach(row => {
-      total += parseFloat(row.children[1].textContent) || 0;
+      total += parseFloat(row.children[2].textContent) || 0;
     });
     totalAmount.textContent = total.toFixed(2);
     amountInWords.textContent = total > 0
@@ -282,12 +291,14 @@
 
   addBtn.addEventListener('click', () => {
     const part = document.getElementById('particularSelect').value;
+    const unit = document.getElementById('unitInput').value.trim();
     const amt = document.getElementById('amountInput').value;
+
     if (!part) return alert('Please select a particular.');
-    if (!amt) return alert('Please enter amount.');
+    if (!amt || isNaN(amt) || amt <= 0) return alert('Please enter a valid amount.');
 
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${part}</td><td>${amt}</td><td class='no-print'><button class='remove-btn'>Remove</button></td>`;
+    tr.innerHTML = `<td>${part}</td><td>${unit || '-'}</td><td>${amt}</td><td class='no-print'><button class='remove-btn'>Remove</button></td>`;
     billBody.appendChild(tr);
 
     tr.querySelector('.remove-btn').addEventListener('click', () => {
@@ -297,6 +308,7 @@
 
     recalcTotal();
     document.getElementById('amountInput').value = '';
+    document.getElementById('unitInput').value = '';
     document.getElementById('particularSelect').value = '';
   });
 </script>
