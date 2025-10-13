@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Salary Slip Generator</title>
   <style>
     @page {
       size: A4;
       margin: 6cm 1.5cm 1.5cm 1.5cm;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
@@ -17,12 +21,11 @@
     }
 
     .salary-slip-container {
-      width: 100%;
-      max-width: 800px;
+      max-width: 100%;
+      width: 800px;
       margin: auto;
       background: white;
-      padding: 25px 30px;
-      box-sizing: border-box;
+      padding: 20px;
       position: relative;
       top: 6cm;
     }
@@ -30,72 +33,72 @@
     h2 {
       text-align: center;
       color: #004aad;
-      margin-bottom: 25px;
+      margin-bottom: 15px;
+      font-size: 22px;
     }
 
     .section-title {
       font-weight: bold;
-      margin-top: 25px;
+      margin-top: 20px;
       color: #004aad;
-      border-bottom: 2px solid #004aad;
-      padding-bottom: 5px;
-      font-size: 16px;
+      border-bottom: 1px solid #004aad;
+      padding-bottom: 3px;
+      font-size: 15px;
     }
 
     .row {
       display: flex;
-      gap: 20px;
+      gap: 15px;
       flex-wrap: wrap;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .col {
       flex: 1;
-      min-width: 180px;
+      min-width: 150px;
     }
 
     label {
+      font-size: 13px;
       font-weight: 600;
-      font-size: 14px;
     }
 
     input, select {
       width: 100%;
-      padding: 7px 10px;
-      margin-top: 4px;
+      padding: 5px 8px;
+      margin-top: 3px;
       border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-      font-size: 14px;
+      border-radius: 4px;
+      font-size: 13px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 15px;
+      margin-top: 10px;
+      font-size: 13px;
     }
 
     th, td {
       border: 1px solid #ccc;
-      padding: 8px 10px;
-      font-size: 14px;
+      padding: 5px 6px;
+      text-align: left;
     }
 
     th {
       background: #f0f6ff;
       color: #004aad;
-      text-align: left;
     }
 
     td input {
       width: 100%;
       border: none;
       background: transparent;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .actions {
-      margin-top: 10px;
+      margin-top: 8px;
       display: flex;
       gap: 10px;
     }
@@ -105,10 +108,11 @@
     }
 
     button {
-      padding: 8px 12px;
+      padding: 6px 10px;
       border: none;
-      border-radius: 5px;
+      border-radius: 4px;
       font-weight: 600;
+      font-size: 13px;
       cursor: pointer;
     }
 
@@ -130,16 +134,17 @@
     }
 
     .summary {
-      margin-top: 25px;
+      margin-top: 20px;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 14px;
       text-align: right;
     }
 
     .signature {
-      margin-top: 80px;
+      margin-top: 40px;
       font-weight: bold;
       text-align: right;
+      font-size: 13px;
     }
 
     @media print {
@@ -155,8 +160,13 @@
 
       .salary-slip-container {
         top: 0;
-        padding: 0;
         margin: 0;
+        padding: 0;
+      }
+
+      input, select, button {
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
       }
     }
   </style>
@@ -170,7 +180,7 @@
     <div class="row">
       <div class="col">
         <label>Employee Name</label>
-        <input type="text" placeholder="John Doe">
+        <input type="text" placeholder="Mandeep Yadav">
       </div>
       <div class="col">
         <label>Employee ID</label>
@@ -299,11 +309,10 @@
         <td><input type="number" value="${amount}" onchange="calculateTotals()"></td>
         <td class="no-print"><button class="remove-btn" onclick="this.closest('tr').remove(); calculateTotals();">Remove</button></td>
       `;
-      table.appendChild(row);
 
-      document.getElementById(type + 'Particular').value = '';
-      document.getElementById(type + 'Amount').
+      table.appendChild(row);
       document.getElementById(type + 'Amount').value = '';
+      document.getElementById(type + 'Particular').value = '';
       calculateTotals();
     }
 
