@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Salary Slip</title>
+  <meta charset="UTF-8" />
+  <title>Salary Slip Generator</title>
   <style>
     @page {
       size: A4;
-      margin: 6cm 1.5cm 1.5cm 1.5cm; /* Top, Right, Bottom, Left */
+      margin: 6cm 1.5cm 1.5cm 1.5cm;
     }
 
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
-      background: #f4f8ff;
+      background: #eef3ff;
     }
 
     .salary-slip-container {
@@ -21,40 +21,37 @@
       max-width: 800px;
       margin: auto;
       background: white;
-      padding: 30px;
+      padding: 25px 30px;
       box-sizing: border-box;
       position: relative;
-      top: 6cm; /* Screen-only top gap */
-      background-image: url('your-background.png'); /* Optional */
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
+      top: 6cm;
     }
 
     h2 {
       text-align: center;
       color: #004aad;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     .section-title {
       font-weight: bold;
-      margin-top: 20px;
+      margin-top: 25px;
       color: #004aad;
-      border-bottom: 1px solid #004aad;
+      border-bottom: 2px solid #004aad;
       padding-bottom: 5px;
+      font-size: 16px;
     }
 
     .row {
       display: flex;
       gap: 20px;
-      margin-top: 10px;
       flex-wrap: wrap;
+      margin-top: 10px;
     }
 
     .col {
       flex: 1;
-      min-width: 200px;
+      min-width: 180px;
     }
 
     label {
@@ -64,11 +61,12 @@
 
     input, select {
       width: 100%;
-      padding: 6px 10px;
+      padding: 7px 10px;
       margin-top: 4px;
       border: 1px solid #ccc;
       border-radius: 5px;
       box-sizing: border-box;
+      font-size: 14px;
     }
 
     table {
@@ -79,161 +77,256 @@
 
     th, td {
       border: 1px solid #ccc;
-      padding: 8px 12px;
-      text-align: left;
+      padding: 8px 10px;
       font-size: 14px;
     }
 
     th {
-      background: #eef4ff;
+      background: #f0f6ff;
       color: #004aad;
+      text-align: left;
+    }
+
+    td input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 14px;
+    }
+
+    .actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .actions .col {
+      flex: 1;
+    }
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .add-btn {
+      background: #004aad;
+      color: white;
+    }
+
+    .remove-btn {
+      background: #d9534f;
+      color: white;
+    }
+
+    .print-btn {
+      background: #28a745;
+      color: white;
+      float: right;
+      margin-top: 20px;
     }
 
     .summary {
-      margin-top: 20px;
+      margin-top: 25px;
       font-weight: bold;
       font-size: 16px;
       text-align: right;
     }
 
-    .print-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: #28a745;
-      color: white;
-      border: none;
-      border-radius: 5px;
+    .signature {
+      margin-top: 80px;
       font-weight: bold;
-      cursor: pointer;
-      float: right;
+      text-align: right;
     }
 
     @media print {
-      body {
-        background: white;
-      }
-
       .no-print {
         display: none !important;
       }
 
+      body {
+        background: white;
+        margin: 0;
+        padding: 0;
+      }
+
       .salary-slip-container {
-        position: static;
+        top: 0;
         padding: 0;
         margin: 0;
-        background-image: url('your-background.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
       }
     }
   </style>
 </head>
 <body>
 
-<div class="salary-slip-container">
-  <h2>SALARY SLIP</h2>
+  <div class="salary-slip-container">
+    <h2>SALARY SLIP</h2>
 
-  <div class="section-title">Employee Details</div>
-  <div class="row">
-    <div class="col">
-      <label>Employee Name</label>
-      <input type="text" placeholder="John Doe">
+    <div class="section-title">Employee Details</div>
+    <div class="row">
+      <div class="col">
+        <label>Employee Name</label>
+        <input type="text" placeholder="John Doe">
+      </div>
+      <div class="col">
+        <label>Employee ID</label>
+        <input type="text" placeholder="EMP001">
+      </div>
+      <div class="col">
+        <label>Designation</label>
+        <input type="text" placeholder="Software Engineer">
+      </div>
     </div>
-    <div class="col">
-      <label>Employee ID</label>
-      <input type="text" placeholder="EMP12345">
+    <div class="row">
+      <div class="col">
+        <label>Department</label>
+        <input type="text" placeholder="IT">
+      </div>
+      <div class="col">
+        <label>Month</label>
+        <select>
+          <option>January</option>
+          <option>February</option>
+          <option>March</option>
+          <option>April</option>
+          <option>May</option>
+          <option>June</option>
+          <option>July</option>
+          <option>August</option>
+          <option>September</option>
+          <option>October</option>
+          <option>November</option>
+          <option>December</option>
+        </select>
+      </div>
+      <div class="col">
+        <label>Year</label>
+        <input type="number" value="2025">
+      </div>
     </div>
-    <div class="col">
-      <label>Designation</label>
-      <input type="text" placeholder="Software Engineer">
+
+    <!-- Earnings Table -->
+    <div class="section-title">Earnings</div>
+    <table id="earningsTable">
+      <thead>
+        <tr>
+          <th>Particulars</th>
+          <th>Amount (₹)</th>
+          <th class="no-print">Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div class="actions no-print">
+      <div class="col">
+        <select id="earningsParticular">
+          <option value="">Select Earning</option>
+          <option>Basic Pay</option>
+          <option>HRA</option>
+          <option>Bonus</option>
+          <option>Conveyance</option>
+          <option>Special Allowance</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="col">
+        <input type="number" id="earningsAmount" placeholder="Amount">
+      </div>
+      <div class="col">
+        <button class="add-btn" onclick="addRow('earnings')">Add</button>
+      </div>
     </div>
+
+    <!-- Deductions Table -->
+    <div class="section-title">Deductions</div>
+    <table id="deductionsTable">
+      <thead>
+        <tr>
+          <th>Particulars</th>
+          <th>Amount (₹)</th>
+          <th class="no-print">Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div class="actions no-print">
+      <div class="col">
+        <select id="deductionsParticular">
+          <option value="">Select Deduction</option>
+          <option>PF</option>
+          <option>Professional Tax</option>
+          <option>Income Tax</option>
+          <option>Loan</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="col">
+        <input type="number" id="deductionsAmount" placeholder="Amount">
+      </div>
+      <div class="col">
+        <button class="add-btn" onclick="addRow('deductions')">Add</button>
+      </div>
+    </div>
+
+    <div class="summary" id="salarySummary">
+      Gross Salary: ₹0.00<br>
+      Total Deductions: ₹0.00<br>
+      <strong>Net Pay: ₹0.00</strong>
+    </div>
+
+    <div class="signature">
+      Authorised Signature
+    </div>
+
+    <button class="print-btn no-print" onclick="window.print()">🖨️ Print</button>
   </div>
 
-  <div class="row">
-    <div class="col">
-      <label>Department</label>
-      <input type="text" placeholder="IT">
-    </div>
-    <div class="col">
-      <label>Month</label>
-      <select>
-        <option>October</option>
-        <option>September</option>
-        <option>August</option>
-        <!-- Add more months -->
-      </select>
-    </div>
-    <div class="col">
-      <label>Year</label>
-      <input type="number" placeholder="2025">
-    </div>
-  </div>
+  <script>
+    function addRow(type) {
+      const table = document.getElementById(type + 'Table').querySelector('tbody');
+      const part = document.getElementById(type + 'Particular').value;
+      const amount = document.getElementById(type + 'Amount').value;
 
-  <div class="section-title">Earnings</div>
-  <table>
-    <thead>
-      <tr>
-        <th>Particulars</th>
-        <th>Amount (₹)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Basic Pay</td>
-        <td>25,000</td>
-      </tr>
-      <tr>
-        <td>HRA</td>
-        <td>10,000</td>
-      </tr>
-      <tr>
-        <td>Conveyance</td>
-        <td>2,000</td>
-      </tr>
-      <tr>
-        <td>Bonus</td>
-        <td>3,000</td>
-      </tr>
-    </tbody>
-  </table>
+      if (!part || !amount) return alert('Please select a particular and amount');
 
-  <div class="section-title">Deductions</div>
-  <table>
-    <thead>
-      <tr>
-        <th>Particulars</th>
-        <th>Amount (₹)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>PF</td>
-        <td>2,000</td>
-      </tr>
-      <tr>
-        <td>Professional Tax</td>
-        <td>200</td>
-      </tr>
-      <tr>
-        <td>Income Tax</td>
-        <td>1,000</td>
-      </tr>
-    </tbody>
-  </table>
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${part}</td>
+        <td><input type="number" value="${amount}" onchange="calculateTotals()"></td>
+        <td class="no-print"><button class="remove-btn" onclick="this.closest('tr').remove(); calculateTotals();">Remove</button></td>
+      `;
+      table.appendChild(row);
 
-  <div class="summary">
-    Gross Salary: ₹40,000<br>
-    Total Deductions: ₹3,200<br>
-    <strong>Net Pay: ₹36,800</strong>
-  </div>
+      document.getElementById(type + 'Particular').value = '';
+      document.getElementById(type + 'Amount').
+      document.getElementById(type + 'Amount').value = '';
+      calculateTotals();
+    }
 
-  <div class="summary" style="margin-top: 60px;">
-    Authorised Signature
-  </div>
+    function calculateTotals() {
+      let gross = 0, deduction = 0;
 
-  <button class="print-btn no-print" onclick="window.print()">🖨️ Print</button>
-</div>
+      document.querySelectorAll('#earningsTable tbody input').forEach(input => {
+        gross += parseFloat(input.value) || 0;
+      });
+
+      document.querySelectorAll('#deductionsTable tbody input').forEach(input => {
+        deduction += parseFloat(input.value) || 0;
+      });
+
+      const net = gross - deduction;
+
+      document.getElementById('salarySummary').innerHTML = `
+        Gross Salary: ₹${gross.toFixed(2)}<br>
+        Total Deductions: ₹${deduction.toFixed(2)}<br>
+        <strong>Net Pay: ₹${net.toFixed(2)}</strong>
+      `;
+    }
+  </script>
 
 </body>
 </html>
