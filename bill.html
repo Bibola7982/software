@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hospital Final Bill Form</title>
-  <style>
+ <style>
   @page {
     size: A4;
     margin: 0;
@@ -24,13 +24,11 @@
     padding: 0 20px;
     box-sizing: border-box;
     position: relative;
-    top: 6cm; /* Keep 6cm top space on screen */
-    background-image: url('your-background-image.png'); /* 👈 Replace with your image path */
-    background-size: contain;
+    top: 6cm; /* Visible space on screen */
+    background-image: url('your-background-image.png'); /* Replace with actual image path */
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-attachment: local;
-    opacity: 0.98; /* Overall slight transparency */
     page-break-inside: avoid;
   }
 
@@ -113,12 +111,31 @@
     text-align: left;
   }
 
+  /* ✅ Make add row inline */
   .add-row {
     display: flex;
     gap: 10px;
     margin-top: 15px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    align-items: flex-end;
     page-break-inside: avoid;
+  }
+
+  .add-row select,
+  .add-row input {
+    flex: 1;
+  }
+
+  .add-row input[type="number"] {
+    max-width: 100px;
+  }
+
+  .add-row input.unit-input {
+    max-width: 80px;
+  }
+
+  .add-row button {
+    white-space: nowrap;
   }
 
   button {
@@ -166,7 +183,6 @@
     font-weight: bold;
   }
 
-  /* === PRINT OVERRIDES === */
   @media print {
     body {
       background: white;
@@ -179,23 +195,23 @@
     }
 
     .bill-container {
-      position: static !important;         /* ⛔ Remove top: 6cm during print */
-      padding-top: 6cm !important;         /* ✅ Replace top offset with padding */
+      position: static !important;
+      padding-top: 6cm !important;
       margin: 0 !important;
       width: 100%;
       height: auto !important;
       max-height: none !important;
       overflow: hidden;
-      background-image: url('your-background-image.png'); /* 👈 Add image to print too */
-      background-size: contain;
+      background-image: url('your-background-image.png'); /* Print bg */
+      background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
-      opacity: 0.1;                        /* ✅ Lower opacity for watermark effect */
       page-break-inside: avoid;
       break-inside: avoid;
     }
   }
 </style>
+
 
 
 </head>
@@ -309,9 +325,11 @@
           <option>Dental</option> 
           <option>Others</option>
       </select>
-      <input type="number" id="unitInput" placeholder="Unit" />
-      <input type="number" id="amountInput" placeholder="Amount per unit" />
-      <button class="add-btn" id="addRow">Add</button>
+   
+<input type="number" id="unitInput" class="unit-input" placeholder="Unit">
+<input type="number" id="amountInput" placeholder="Amount">
+<button class="add-btn" id="addRow">Add</button>
+
     </div>
 
     <div class="total-section">
