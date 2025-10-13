@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hospital Bill Form</title>
   <style>
     @page {
@@ -30,8 +30,9 @@
     h2 {
       text-align: center;
       color: #004aad;
-      margin-bottom: 20px;
       font-weight: bold;
+      margin-bottom: 20px;
+      text-transform: uppercase;
     }
 
     .section-title {
@@ -44,7 +45,6 @@
 
     .row {
       display: flex;
-      justify-content: space-between;
       gap: 15px;
       margin-bottom: 10px;
     }
@@ -61,7 +61,7 @@
 
     input, select {
       width: 100%;
-      padding: 7px 5px;
+      padding: 7px 10px;
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 14px;
@@ -100,9 +100,22 @@
       font-weight: 600;
     }
 
-    .add-btn { background: #004aad; color: white; }
-    .remove-btn { background: #d9534f; color: white; }
-    .print-btn { background: #28a745; color: white; float: right; margin-top: 10px; }
+    .add-btn {
+      background: #004aad;
+      color: white;
+    }
+
+    .remove-btn {
+      background: #d9534f;
+      color: white;
+    }
+
+    .print-btn {
+      background: #28a745;
+      color: white;
+      float: right;
+      margin-top: 10px;
+    }
 
     .total-section {
       text-align: right;
@@ -125,80 +138,87 @@
     }
 
     @media print {
-      .no-print { display: none !important; }
-      body { background: white; }
-      .bill-container { box-shadow: none; border: none; }
+      .no-print {
+        display: none !important;
+      }
+
+      body {
+        background: white;
+      }
+
+      .bill-container {
+        box-shadow: none;
+        border: none;
+      }
     }
   </style>
 </head>
 <body>
 
-<div class="bill-container">
-  <h2> Hospital TOTAL BILL BREAK-UP </h2>
+  <div class="bill-container">
+    <h2>Hospital TOTAL BILL BREAK-UP</h2>
 
-  <div class="section-title">Patient Details</div>
+    <div class="section-title">Patient Details</div>
 
-  <div class="row">
-    <div class="col">
-      <label>Name</label>
-      <input type="text" id="name">
+    <div class="row">
+      <div class="col">
+        <label>Name</label>
+        <input type="text" id="name" />
+      </div>
+      <div class="col">
+        <label>S/O, D/O, W/O</label>
+        <select id="relation">
+          <option value="">-- Select --</option>
+          <option>S/O</option>
+          <option>D/O</option>
+          <option>W/O</option>
+        </select>
+      </div>
+      <div class="col no-print" style="text-align:right;">
+        <button class="print-btn" onclick="window.print()">🖨️ Print</button>
+      </div>
     </div>
-    <div class="col">
-      <label>S/O, D/O, W/O</label>
-      <select id="relation">
-        <option value="">-- Select --</option>
-        <option>S/O</option>
-        <option>D/O</option>
-        <option>W/O</option>
-      </select>
-    </div>
-    <div class="col no-print" style="text-align:right;">
-      <button class="print-btn" onclick="window.print()">🖨️ Print</button>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col">
-      <label>IPD</label>
-      <input type="text" id="ipd">
+    <div class="row">
+      <div class="col">
+        <label>IPD</label>
+        <input type="text" id="ipd" />
+      </div>
+      <div class="col">
+        <label>UHID</label>
+        <input type="text" id="uhid" />
+      </div>
     </div>
-    <div class="col">
-      <label>UHID</label>
-      <input type="text" id="uhid">
+
+    <div class="row">
+      <div class="col">
+        <label>D.O.A</label>
+        <input type="date" id="doa" />
+      </div>
+      <div class="col">
+        <label>D.O.D</label>
+        <input type="date" id="dod" />
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col">
-      <label>D.O.A</label>
-      <input type="date" id="doa1">
-    </div>
-    <div class="col">
-      <label>D.O.D</label>
-      <input type="date" id="doa2">
-    </div>
-  </div>
+    <div class="section-title" style="margin-top:20px;">Billing Charges</div>
 
-  <div class="section-title" style="margin-top:20px;">Billing Charges</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Particulars</th>
+          <th>Unit</th>
+          <th>Amount (₹)</th>
+          <th class="no-print">Action</th>
+        </tr>
+      </thead>
+      <tbody id="billBody"></tbody>
+    </table>
 
-  <table id="billTable">
-    <thead>
-      <tr>
-        <th>Particulars</th>
-        <th>Unit</th>
-        <th>Amount (₹)</th>
-        <th class="no-print">Action</th>
-      </tr>
-    </thead>
-    <tbody id="billBody"></tbody>
-  </table>
-
-  <div class="add-row no-print">
-    <select id="particularSelect">
-      <div class="add-row no-print"> 
-        <select id="particularSelect"> 
-          <option value="">Select Particular</option> 
-          <option>Admission fee</option> 
+    <div class="add-row no-print">
+      <select id="particularSelect">
+        <option value="">Select Particular</option>
+        <option>Admission fee</option> 
           <option>Emergency fee</option> 
           <option>ICU Rent</option> 
           <option>ICU WITH VENT. CHARGE </option>
@@ -240,78 +260,79 @@
           <option>Ultrasound</option> 
           <option>Dental</option> 
           <option>Others</option>
-    </select>
-    <input type="text" id="unitInput" placeholder="Unit">
-    <input type="number" id="amountInput" placeholder="Enter Amount">
-    <button class="add-btn" id="addRow">Add</button>
+      </select>
+      <input type="text" id="unitInput" placeholder="Unit" />
+      <input type="number" id="amountInput" placeholder="Enter Amount" />
+      <button class="add-btn" id="addRow">Add</button>
+    </div>
+
+    <div class="total-section">
+      TOTAL AMOUNT = ₹ <span id="totalAmount">0.00</span>/-
+    </div>
+    <div class="total-text" id="amountInWords">(ZERO ONLY)</div>
+
+    <div class="signature">Auth. Signature</div>
   </div>
 
-  <div class="total-section">
-    TOTAL AMOUNT = ₹ <span id="totalAmount">0.00</span>/-
-  </div>
-  <div class="total-text" id="amountInWords">(ZERO ONLY)</div>
+  <script>
+    const addBtn = document.getElementById('addRow');
+    const billBody = document.getElementById('billBody');
+    const totalAmount = document.getElementById('totalAmount');
+    const amountInWords = document.getElementById('amountInWords');
 
-  <div class="signature">
-    Auth. Signature
-  </div>
-</div>
+    function numberToWords(num) {
+      const a = [
+        "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+        "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
+        "Eighteen", "Nineteen"
+      ];
+      const b = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
 
-<script>
-  const addBtn = document.getElementById('addRow');
-  const billBody = document.getElementById('billBody');
-  const totalAmount = document.getElementById('totalAmount');
-  const amountInWords = document.getElementById('amountInWords');
+      const inWords = (n) => {
+        if (n < 20) return a[n];
+        if (n < 100) return b[Math.floor(n / 10)] + (n % 10 ? " " + a[n % 10] : "");
+        if (n < 1000) return a[Math.floor(n / 100)] + " Hundred" + (n % 100 ? " " + inWords(n % 100) : "");
+        if (n < 100000) return inWords(Math.floor(n / 1000)) + " Thousand" + (n % 1000 ? " " + inWords(n % 1000) : "");
+        if (n < 10000000) return inWords(Math.floor(n / 100000)) + " Lakh" + (n % 100000 ? " " + inWords(n % 100000) : "");
+        return inWords(Math.floor(n / 10000000)) + " Crore" + (n % 10000000 ? " " + inWords(n % 10000000) : "");
+      };
 
-  function numberToWords(num) {
-    const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten',
-               'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen',
-               'Eighteen', 'Nineteen'];
-    const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-    const inWords = (n) => {
-      if (n < 20) return a[n];
-      if (n < 100) return b[Math.floor(n / 10)] + (n % 10 ? ' ' + a[n % 10] : '');
-      if (n < 1000) return a[Math.floor(n / 100)] + ' Hundred' + (n % 100 ? ' ' + inWords(n % 100) : '');
-      if (n < 100000) return inWords(Math.floor(n / 1000)) + ' Thousand' + (n % 1000 ? ' ' + inWords(n % 1000) : '');
-      if (n < 10000000) return inWords(Math.floor(n / 100000)) + ' Lakh' + (n % 100000 ? ' ' + inWords(n % 100000) : '');
-      return inWords(Math.floor(n / 10000000)) + ' Crore' + (n % 10000000 ? ' ' + inWords(n % 10000000) : '');
-    };
-    return inWords(num).toUpperCase() + ' ONLY';
-  }
+      return inWords(num).toUpperCase() + " ONLY";
+    }
 
-  function recalcTotal() {
-    let total = 0;
-    document.querySelectorAll('#billBody tr').forEach(row => {
-      total += parseFloat(row.children[2].textContent) || 0;
-    });
-    totalAmount.textContent = total.toFixed(2);
-    amountInWords.textContent = total > 0
-      ? `( ${numberToWords(Math.round(total))} )`
-      : '( ZERO ONLY )';
-  }
+    function recalcTotal() {
+      let total = 0;
+      document.querySelectorAll('#billBody tr').forEach(row => {
+        total += parseFloat(row.children[2].textContent) || 0;
+      });
+      totalAmount.textContent = total.toFixed(2);
+      amountInWords.textContent = total > 0
+        ? `( ${numberToWords(Math.round(total))} )`
+        : '(ZERO ONLY)';
+    }
 
-  addBtn.addEventListener('click', () => {
-    const part = document.getElementById('particularSelect').value;
-    const unit = document.getElementById('unitInput').value.trim();
-    const amt = document.getElementById('amountInput').value;
+    addBtn.addEventListener('click', () => {
+      const part = document.getElementById('particularSelect').value;
+      const unit = document.getElementById('unitInput').value.trim();
+      const amt = document.getElementById('amountInput').value;
 
-    if (!part) return alert('Please select a particular.');
-    if (!amt || isNaN(amt) || amt <= 0) return alert('Please enter a valid amount.');
+      if (!part) return alert('Please select a particular.');
+      if (!amt || isNaN(amt) || amt <= 0) return alert('Please enter a valid amount.');
 
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${part}</td><td>${unit || '-'}</td><td>${amt}</td><td class='no-print'><button class='remove-btn'>Remove</button></td>`;
-    billBody.appendChild(tr);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${part}</td><td>${unit || '-'}</td><td>${amt}</td><td class='no-print'><button class='remove-btn'>Remove</button></td>`;
+      billBody.appendChild(tr);
 
-    tr.querySelector('.remove-btn').addEventListener('click', () => {
-      tr.remove();
+      tr.querySelector('.remove-btn').addEventListener('click', () => {
+        tr.remove();
+        recalcTotal();
+      });
+
       recalcTotal();
+      document.getElementById('amountInput').value = '';
+      document.getElementById('unitInput').value = '';
+      document.getElementById('particularSelect').value = '';
     });
-
-    recalcTotal();
-    document.getElementById('amountInput').value = '';
-    document.getElementById('unitInput').value = '';
-    document.getElementById('particularSelect').value = '';
-  });
-</script>
-
+  </script>
 </body>
 </html>
