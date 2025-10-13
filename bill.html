@@ -5,29 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hospital Bill Form</title>
   <style>
-  @media print {
-  .no-print {
-    display: none !important;
-  }
 
+    @media print {
   body {
     background: white;
     margin: 0;
     padding: 0;
   }
 
+  .no-print {
+    display: none !important;
+  }
+
   .bill-container {
-    box-shadow: none;
-    border: none;
-    margin: 0;
-    padding: 0 20px;
-    width: 100%;
-    height: calc(297mm - 60mm);
-    max-height: calc(297mm - 60mm);
+    position: static !important; /* 🔥 removes top: 6cm during print */
+    padding-top: 6cm !important; /* 🔁 simulate same space */
+    height: auto !important;
+    max-height: none !important;
     overflow: hidden;
     page-break-inside: avoid;
-    top: 6cm;
+    break-inside: avoid;
   }
+}
 
   h2 {
     text-align: center;
