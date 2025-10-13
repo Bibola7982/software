@@ -167,15 +167,15 @@
     <div class="employee-details">
       <div class="emp-field">
         <label>Employee Name</label>
-        <input type="text" placeholder="Enter name">
+        <input type="text" placeholder="Monty Genius">
       </div>
       <div class="emp-field">
         <label>Designation</label>
-        <input type="text" placeholder="Enter designation">
+        <input type="text" placeholder="Software Engineer">
       </div>
       <div class="emp-field">
         <label>Department</label>
-        <input type="text" placeholder="Enter department">
+        <input type="text" placeholder="IT ">
       </div>
       <div class="emp-field">
         <label>Date of Joining</label>
@@ -204,21 +204,35 @@
     <div class="add-row no-print">
       <input type="text" id="month" placeholder="Month (e.g. OCT. 2024)">
       <input type="text" id="basic" placeholder="Basic Salary">
-      <input type="text" id="gross" placeholder="Gross Salary">
-      <input type="text" id="tds" placeholder="TDS">
-      <input type="text" id="net" placeholder="Net Payable">
+      <input type="number" id="gross" placeholder="Gross Salary">
+      <input type="number" id="tds" placeholder="TDS">
+      <input type="number" id="net" placeholder="Net Payable" readonly>
       <button class="add-btn" onclick="addRow()">Add</button>
     </div>
   </div>
 
   <!-- Script -->
   <script>
+    const grossInput = document.getElementById('gross');
+    const tdsInput = document.getElementById('tds');
+    const netInput = document.getElementById('net');
+
+    function calculateNet() {
+      const gross = parseFloat(grossInput.value) || 0;
+      const tds = parseFloat(tdsInput.value) || 0;
+      const net = gross - tds;
+      netInput.value = net.toFixed(2);
+    }
+
+    grossInput.addEventListener('input', calculateNet);
+    tdsInput.addEventListener('input', calculateNet);
+
     function addRow() {
       const month = document.getElementById('month').value.trim();
       const basic = document.getElementById('basic').value.trim();
-      const gross = document.getElementById('gross').value.trim();
-      const tds = document.getElementById('tds').value.trim();
-      const net = document.getElementById('net').value.trim();
+      const gross = grossInput.value.trim();
+      const tds = tdsInput.value.trim();
+      const net = netInput.value.trim();
 
       if (!month || !basic || !gross || !tds || !net) {
         alert("Please fill all fields.");
@@ -242,9 +256,9 @@
       // Reset fields
       document.getElementById('month').value = '';
       document.getElementById('basic').value = '';
-      document.getElementById('gross').value = '';
-      document.getElementById('tds').value = '';
-      document.getElementById('net').value = '';
+      grossInput.value = '';
+      tdsInput.value = '';
+      netInput.value = '';
     }
   </script>
 
