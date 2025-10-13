@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hospital Bill Creator</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f8f8f8; padding: 20px; }
+    .invoice { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; margin-bottom: 20px; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    input, select { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #f0f0f0; }
+    button { padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; }
+    .add-btn { background: #007bff; color: white; }
+    .print-btn { background: #28a745; color: white; float: right; }
+    .remove-btn { background: #dc3545; color: white; }
+    .total { text-align: right; margin-top: 15px; font-size: 18px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="invoice">
+    <h2>Hospital Bill Generator</h2>
+
+    <div>
+      <label>Name</label>
+      <input type="text" id="name" placeholder="Enter Name">
+
+      <label>S/O, D/O, W/O</label>
+      <input type="text" id="relation" placeholder="Enter Relation">
+
+      <label>IPD</label>
+      <input type="text" id="ipd" placeholder="Enter IPD">
+
+      <label>UHID</label>
+      <input type="text" id="uhid" placeholder="Enter UHID">
+
+      <label>Date of Admission</label>
+      <input type="date" id="doa1">
+
+      <label>Date of Discharge</label>
+      <input type="date" id="doa2">
+    </div>
+
+    <table id="itemsTable">
+      <thead>
+        <tr>
+          <th>Particulars</th>
+          <th>Amount (₹)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="itemsBody"></tbody>
+    </table>
+
+    <div style="margin-top:15px; display:flex; gap:10px; align-items:center;">
+      <select id="particularSelect">
+        <option value="">Select Particular</option>
+        <option>Admission fee</option>
+        <option>Emergency fee</option>
+        <option>ICU Rent</option>
+        <option>ICU with vent. charge </option>
+        <option>Room Rent</option>
+        <option>Consultation fee 1</option>
+        <option>Consultation fee 2</option>
+        <option>Consultation fee 3</option>
+        <option>Consultation fee 4</option>
+        <option>Operation fee 1</option>
+        <option>Operation fee 2</option>
+        <option>Operation fee 3</option>
+        <option>Anaesthesia fee</option>
+        <option>OT Charges</option>
+        <option>Intubation Fee</option>
+        <option>Orthopedic Implants</option>
+        <option>Operation fee 1 (Cataract Surgery)</option>
+        <option>Implant (Hydrophilic Foldable IOLs Intraocular Lens)</option>
+        <option>Ventilator fee</option>
+        <option>Monitor Charges</option>
+        <option>Infusion Pump Charges</option>
+        <option>Oxygen Charge With Pulse Oxy.</option>
+        <option>Cooler/Heater/AC Charge</option>
+        <option>Nurshing Charges</option>
+        <option>CMO Charges</option>
+        <option>Ryle Tube Aspiration/Cath/Enema/ B Wash</option>
+        <option>Gastric Lavage</option>
+        <option>Dressing Charges</option>
+        <option>Blood Transfusion</option>
+        <option>Center Line</option>
+        <option>MLC Charges</option>
+        <option>Work up fee</option>
+        <option>Alfa-Bed / Water Bed Charges</option>
+        <option>Physiotheraphy Charges</option>
+        <option>MOT Charges</option>
+        <option>ECG Charge</option>
+        <option>Lab Charge</option>
+        <option>Xray Charge</option>
+        <option>Ultrasound</option>
+        <option>Dental</option>
+        <option>Others</option>
+      </select>
+
+      <input type="number" id="amountInput" placeholder="Enter Amount">
+      <button class="add-btn" id="addRow">Add</button>
+    </div>
+
+    <div class="total">Total: ₹ <span id="totalAmount">0</span></div>
+
+    <button class="print-btn" onclick="window.print()">Print Bill</button>
+  </div>
+
+  <script>
+    const addRowBtn = document.getElementById('addRow');
+    const tableBody = document.getElementById('itemsBody');
+    const totalAmount = document.getElementById('totalAmount');
+
+    function recalcTotal() {
+      let total = 0;
+      document.querySelectorAll('#itemsBody tr').forEach(row => {
+        total += parseFloat(row.children[1].innerText) || 0;
+      });
+      totalAmount.innerText = total.toFixed(2);
+    }
+
+    addRowBtn.addEventListener('click', () => {
+      const part = document.getElementById('particularSelect').value;
+      const amt = document.getElementById('amountInput').value;
+      if (!part) return alert('Please select a particular');
+      if (!amt) return alert('Please enter amount');
+
+      const row = document.createElement('tr');
+      row.innerHTML = `<td>${part}</td><td>${amt}</td><td><button class='remove-btn'>Remove</button></td>`;
+      tableBody.appendChild(row);
+
+      row.querySelector('.remove-btn').addEventListener('click', () => {
+        row.remove();
+        recalcTotal();
+      });
+
+      recalcTotal();
+      document.getElementById('amountInput').value = '';
+      document.getElementById('particularSelect').value = '';
+    });
+  </script>
+</body>
+</html>
