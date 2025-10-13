@@ -18,6 +18,7 @@
     border-radius: 10px;
     padding: 25px 35px;
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    position: relative;
   }
   h2 {
     text-align: center;
@@ -53,6 +54,16 @@
     font-size: 14px;
     margin-top: 4px;
   }
+  @page {
+  size: A4;
+  margin: 15mm;
+}
+.bill-container {
+  width: 190mm;
+  min-height: 270mm;
+  margin: auto;
+}
+
   table {
     width: 100%;
     border-collapse: collapse;
@@ -88,6 +99,17 @@
     font-size: 16px;
     font-weight: bold;
   }
+  .total-text {
+    text-align: right;
+    font-style: italic;
+    margin-top: 5px;
+    color: #004aad;
+  }
+  .signature {
+    text-align: right;
+    margin-top: 80px;
+    font-weight: bold;
+  }
   @media print {
     .no-print { display: none !important; }
     body { background: white; }
@@ -98,7 +120,7 @@
 <body>
 
 <div class="bill-container">
-  <h2>Hospital TOTAL BILL BREAK-UP </h2>
+  <h2> Hospital TOTAL BILL BREAK-UP </h2>
 
   <div class="section-title">Patient Details</div>
 
@@ -157,7 +179,8 @@
       <option>Admission fee</option>
       <option>Emergency fee</option>
       <option>ICU Rent</option>
-       <option>ICU WITH VENT. CHARGE </option>
+      <option>ICU WITH VENT. CHARGE </option>
+      <option> MEDICAL BILL CHARGE</option>
       <option>Room Rent</option>
       <option>Consultation fee 1</option>
       <option>Consultation fee 2</option>
@@ -201,7 +224,12 @@
   </div>
 
   <div class="total-section">
-    Total Amount: ₹ <span id="totalAmount">0.00</span>
+    TOTAL AMOUNT = ₹ <span id="totalAmount">0.00</span>/-
+  </div>
+  <div class="total-text" id="amountInWords">(ZERO ONLY)</div>
+
+  <div class="signature">
+    Auth. Signature
   </div>
 </div>
 
@@ -209,6 +237,23 @@
   const addBtn = document.getElementById('addRow');
   const billBody = document.getElementById('billBody');
   const totalAmount = document.getElementById('totalAmount');
+  const amountInWords = document.getElementById('amountInWords');
+
+  function numberToWords(num) {
+    const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten',
+               'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen',
+               'Eighteen', 'Nineteen'];
+    const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+    const inWords = (n) => {
+      if (n < 20) return a[n];
+      if (n < 100) return b[Math.floor(n / 10)] + (n % 10 ? ' ' + a[n % 10] : '');
+      if (n < 1000) return a[Math.floor(n / 100)] + ' Hundred' + (n % 100 ? ' ' + inWords(n % 100) : '');
+      if (n < 100000) return inWords(Math.floor(n / 1000)) + ' Thousand' + (n % 1000 ? ' ' + inWords(n % 1000) : '');
+      if (n < 10000000) return inWords(Math.floor(n / 100000)) + ' Lakh' + (n % 100000 ? ' ' + inWords(n % 100000) : '');
+      return inWords(Math.floor(n / 10000000)) + ' Crore' + (n % 10000000 ? ' ' + inWords(n % 10000000) : '');
+    };
+    return inWords(num).toUpperCase() + ' ONLY';
+  }
 
   function recalcTotal() {
     let total = 0;
@@ -216,6 +261,9 @@
       total += parseFloat(row.children[1].textContent) || 0;
     });
     totalAmount.textContent = total.toFixed(2);
+    amountInWords.textContent = total > 0
+      ? `( ${numberToWords(Math.round(total))} )`
+      : '( ZERO ONLY )';
   }
 
   addBtn.addEventListener('click', () => {
