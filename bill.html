@@ -5,16 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hospital Bill Form</title>
   <style>
-    @page {
-      size: A4;
-      margin: 0;
-    }
+    @page { size: A4; margin: 0; }
 
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
       background: #e9f3ff;
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
     }
 
     .bill-container {
@@ -47,6 +43,7 @@
       display: flex;
       gap: 15px;
       margin-bottom: 10px;
+      align-items: flex-end;
     }
 
     .col {
@@ -66,6 +63,15 @@
       border-radius: 6px;
       font-size: 14px;
       margin-top: 4px;
+    }
+
+    .relation-wrap {
+      display: flex;
+      gap: 10px;
+    }
+
+    .relation-wrap select {
+      width: 80px;
     }
 
     table {
@@ -138,18 +144,9 @@
     }
 
     @media print {
-      .no-print {
-        display: none !important;
-      }
-
-      body {
-        background: white;
-      }
-
-      .bill-container {
-        box-shadow: none;
-        border: none;
-      }
+      .no-print { display: none !important; }
+      body { background: white; }
+      .bill-container { box-shadow: none; border: none; }
     }
   </style>
 </head>
@@ -162,17 +159,19 @@
 
     <div class="row">
       <div class="col">
-        <label>Name</label>
+        <label>Patient Name</label>
         <input type="text" id="name" />
       </div>
       <div class="col">
-        <label>S/O, D/O, W/O</label>
-        <select id="relation">
-          <option value="">-- Select --</option>
-          <option>S/O</option>
-          <option>D/O</option>
-          <option>W/O</option>
-        </select>
+        <label>Relation</label>
+        <div class="relation-wrap">
+          <select id="relationType">
+            <option value="S/O">S/O</option>
+            <option value="D/O">D/O</option>
+            <option value="W/O">W/O</option>
+          </select>
+          <input type="text" id="relationName" placeholder="Enter name" />
+        </div>
       </div>
       <div class="col no-print" style="text-align:right;">
         <button class="print-btn" onclick="window.print()">🖨️ Print</button>
@@ -261,8 +260,8 @@
           <option>Dental</option> 
           <option>Others</option>
       </select>
-      <input type="text" id="unitInput" placeholder="Unit" />
-      <input type="number" id="amountInput" placeholder="Enter Amount" />
+      <input type="number" id="unitInput" placeholder="Unit" />
+      <input type="number" id="amountInput" placeholder="Amount per unit" />
       <button class="add-btn" id="addRow">Add</button>
     </div>
 
@@ -308,29 +307,38 @@
       totalAmount.textContent = total.toFixed(2);
       amountInWords.textContent = total > 0
         ? `( ${numberToWords(Math.round(total))} )`
-        : '(ZERO ONLY)';
+        : "(ZERO ONLY)";
     }
 
     addBtn.addEventListener('click', () => {
       const part = document.getElementById('particularSelect').value;
-      const unit = document.getElementById('unitInput').value.trim();
-      const amt = document.getElementById('amountInput').value;
+      const unit = parseFloat(document.getElementById('unitInput').value);
+      const amt = parseFloat(document.getElementById('amountInput').value);
 
-      if (!part) return alert('Please select a particular.');
-      if (!amt || isNaN(amt) || amt <= 0) return alert('Please enter a valid amount.');
+      if (!part) return alert("Please select a particular.");
+      if (!unit || unit <= 0) return alert("Please enter valid unit.");
+      if (!amt || amt <= 0) return alert("Please enter valid amount.");
+
+      const total = unit * amt;
 
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${part}</td><td>${unit || '-'}</td><td>${amt}</td><td class='no-print'><button class='remove-btn'>Remove</button></td>`;
+      tr.innerHTML = `
+        <td>${part}</td>
+        <td>${unit}</td>
+        <td>${total.toFixed(2)}</td>
+        <td class="no-print"><button class="remove-btn">Remove</button></td>
+      `;
       billBody.appendChild(tr);
 
-      tr.querySelector('.remove-btn').addEventListener('click', () => {
+      tr.querySelector(".remove-btn").addEventListener("click", () => {
         tr.remove();
         recalcTotal();
       });
 
       recalcTotal();
-      document.getElementById('amountInput').value = '';
+
       document.getElementById('unitInput').value = '';
+      document.getElementById('amountInput').value = '';
       document.getElementById('particularSelect').value = '';
     });
   </script>
