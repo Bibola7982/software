@@ -24,7 +24,7 @@
       margin: auto;
       padding: 0 25px 20px;
       position: relative;
-    
+      
       box-sizing: border-box;
     }
 
@@ -51,11 +51,17 @@
       font-size: 22px;
     }
 
+    .employee-box {
+      border: 1px solid #004aad;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
     .employee-details {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
-      margin-bottom: 20px;
       font-size: 15px;
     }
 
@@ -67,6 +73,7 @@
       font-weight: 600;
       display: block;
       margin-bottom: 4px;
+      color: #000;
     }
 
     input {
@@ -149,6 +156,15 @@
       .remove-btn {
         display: none;
       }
+
+      .employee-box {
+        border: 1px solid black;
+      }
+
+      label {
+        font-weight: bold;
+        color: black;
+      }
     }
   </style>
 </head>
@@ -164,22 +180,24 @@
     <h2>SALARY SLIP</h2>
 
     <!-- Employee Info -->
-    <div class="employee-details">
-      <div class="emp-field">
-        <label>Employee Name</label>
-        <input type="text" placeholder="Monty Genius">
-      </div>
-      <div class="emp-field">
-        <label>Designation</label>
-        <input type="text" placeholder="Software Engineer">
-      </div>
-      <div class="emp-field">
-        <label>Department</label>
-        <input type="text" placeholder="IT ">
-      </div>
-      <div class="emp-field">
-        <label>Date of Joining</label>
-        <input type="date">
+    <div class="employee-box">
+      <div class="employee-details">
+        <div class="emp-field">
+          <label>Employee Name</label>
+          <input type="text" placeholder="Monty Genius">
+        </div>
+        <div class="emp-field">
+          <label>Designation</label>
+          <input type="text" placeholder="Software engineer">
+        </div>
+        <div class="emp-field">
+          <label>Department</label>
+          <input type="text" placeholder="IT">
+        </div>
+        <div class="emp-field">
+          <label>Date of Joining</label>
+          <input type="date">
+        </div>
       </div>
     </div>
 
