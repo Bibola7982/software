@@ -17,7 +17,17 @@
     padding: 0;
   }
 
-  .bill-container { width: 190mm; height: 282mm; /* A4 height (297mm) - top margin (6cm ~ 60mm) - bottom margin */ margin: auto; background: white; border-radius: 0; padding: 0 35px; box-shadow: none; position: relative; top: 6cm; /* Start billing from 6cm below top */ }
+  .bill-container 
+    { width: 190mm; 
+     top: 6cm;
+    height: calc(297mm - 60mm); /* A4 height (297mm) - top margin (6cm ~ 60mm) - bottom margin */
+     margin: auto;
+     background: white; 
+     border-radius: 0; 
+     padding: 0 35px; 
+     box-shadow: none;
+     position: relative; 
+     /* Start billing from 6cm below top */ }
 
   h2 {
     text-align: center;
