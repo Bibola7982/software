@@ -78,6 +78,40 @@ label {
   margin-bottom: 5px;
 }
 
+   /* ===== Add Row Form ===== */
+.add-row {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+/* Custom widths for inline form fields */
+.particular-col {
+  flex: 2;
+  min-width: 200px;
+}
+
+.unit-col {
+  flex: 0.5;
+  min-width: 80px;
+}
+
+.amount-col {
+  flex: 1;
+  min-width: 120px;
+}
+
+.add-row input {
+  width: 100%;
+  padding: 7px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fdfdfd;
+}
+
 input,
 select {
   width: 100%;
@@ -364,7 +398,7 @@ button {
           <option>Others</option>
       </select>
    
-<input type="number" id="unitInput" class="unit-input" placeholder="Unit">
+<input type="number" id="unitInput" class="unit-input" placeholder="Unit" value="1" min="1" >
 <input type="number" id="amountInput" placeholder="Amount">
 <button class="add-btn" id="addRow">Add</button>
 
