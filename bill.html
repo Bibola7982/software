@@ -10,206 +10,226 @@
     margin: 2cm 1.5cm 1cm 1.5cm; /* top, right, bottom, left */
   }
 
+  /* ===== Base Styles ===== */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #e9f3ff;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
+/* ===== Main Container ===== */
+.bill-container {
+  width: 190mm;
+  margin: 30px auto;
+  background: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background-image: url('your-background-image.png'); /* Replace with real path */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  page-break-inside: avoid;
+}
+
+/* ===== Header ===== */
+h2 {
+  text-align: center;
+  color: #004aad;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  font-size: 22px;
+}
+
+/* ===== Section Titles ===== */
+.section-title {
+  font-weight: 700;
+  color: #004aad;
+  border-bottom: 2px solid #004aad;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  font-size: 16px;
+}
+
+/* ===== Form Layout ===== */
+.row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.col {
+  flex: 1;
+  min-width: 120px;
+}
+
+label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* ===== Relation Block ===== */
+.relation-wrap {
+  display: flex;
+  gap: 5px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.relation-wrap select {
+  width: 90px;
+}
+
+.relation-wrap input {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* ===== Table Styles ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  border: 1px solid #d1d1d1;
+  padding: 10px;
+  font-size: 14px;
+}
+
+th {
+  background: #f3f6fb;
+  color: #004aad;
+  text-align: left;
+  font-weight: 600;
+}
+
+/* ===== Add Row Form ===== */
+.add-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.add-row select,
+.add-row input {
+  flex: 1;
+  min-width: 120px;
+}
+
+.add-row input.unit-input {
+  max-width: 80px;
+}
+
+.add-row input[type="number"] {
+  max-width: 100px;
+}
+
+.add-row button {
+  white-space: nowrap;
+}
+
+/* ===== Buttons ===== */
+button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.add-btn {
+  background-color: #004aad;
+  color: white;
+}
+
+.remove-btn {
+  background-color: #d9534f;
+  color: white;
+}
+
+.print-btn {
+  background-color: #28a745;
+  color: white;
+  float: right;
+  margin-top: 10px;
+}
+
+/* ===== Total Section ===== */
+.total-section {
+  text-align: right;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.total-text {
+  text-align: right;
+  font-style: italic;
+  margin-top: 5px;
+  color: #004aad;
+}
+
+/* ===== Signature ===== */
+.signature {
+  text-align: right;
+  margin-top: 50px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* ===== Print Styles ===== */
+@media print {
   body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #e9f3ff;
+    background: white;
     margin: 0;
     padding: 0;
   }
 
+  .no-print {
+    display: none !important;
+  }
+
   .bill-container {
-    width: 190mm;
-    margin: auto;
-    background: white;
-    padding: 0 20px;
-    box-sizing: border-box;
-    position: relative;
-    background-image: url('your-background-image.png'); /* Replace with actual image path */
+    position: static !important;
+    padding-top: 6cm !important;
+    margin: 0 !important;
+    width: 100%;
+    height: auto !important;
+    max-height: none !important;
+    overflow: hidden;
+    background-image: url('your-background-image.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     page-break-inside: avoid;
+    break-inside: avoid;
   }
+}
 
-  h2 {
-    text-align: center;
-    color: #004aad;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-  }
-
-  .section-title {
-    font-weight: bold;
-    color: #004aad;
-    border-bottom: 2px solid #004aad;
-    margin-bottom: 8px;
-    padding-bottom: 3px;
-  }
-
-  .row {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 10px;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    page-break-inside: avoid;
-  }
-
-  .col {
-    flex: 1;
-    min-width: 100px;
-  }
-
-  label {
-    font-weight: 600;
-    font-size: 14px;
-    color: #333;
-  }
-
-  input, select {
-    width: 100%;
-    padding: 7px 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    margin-top: 4px;
-    box-sizing: border-box;
-  }
-
-  .relation-wrap {
-    display: flex;
-    gap: 3px;
-    align-items: flex-end;
-  }
-
-  .relation-wrap select {
-    width: 90px;
-  }
-
-  .relation-wrap input {
-    flex: 1;
-    min-width: 250px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-    page-break-inside: avoid;
-  }
-
-  th, td {
-    border: 1px solid #d1d1d1;
-    padding: 8px 10px;
-    font-size: 14px;
-  }
-
-  th {
-    background: #f3f6fb;
-    color: #004aad;
-    text-align: left;
-  }
-
-  /* ✅ Make add row inline */
-  .add-row {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-    flex-wrap: nowrap;
-    align-items: flex-end;
-    page-break-inside: avoid;
-  }
-
-  .add-row select,
-  .add-row input {
-    flex: 1;
-  }
-
-  .add-row input[type="number"] {
-    max-width: 100px;
-  }
-
-  .add-row input.unit-input {
-    max-width: 80px;
-  }
-
-  .add-row button {
-    white-space: nowrap;
-  }
-
-  button {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-
-  .add-btn {
-    background: #004aad;
-    color: white;
-  }
-
-  .remove-btn {
-    background: #d9534f;
-    color: white;
-  }
-
-  .print-btn {
-    background: #28a745;
-    color: white;
-    float: right;
-    margin-top: 10px;
-  }
-
-  .total-section {
-    text-align: right;
-    margin-top: 15px;
-    font-size: 16px;
-    font-weight: bold;
-  }
-
-  .total-text {
-    text-align: right;
-    font-style: italic;
-    margin-top: 5px;
-    color: #004aad;
-  }
-
-  .signature {
-    text-align: right;
-    margin-top: 50px;
-    font-weight: bold;
-  }
-
-  @media print {
-    body {
-      background: white;
-      margin: 0;
-      padding: 0;
-    }
-
-    .no-print {
-      display: none !important;
-    }
-
-    .bill-container {
-      position: static !important;
-      padding-top: 6cm !important;
-      margin: 0 !important;
-      width: 100%;
-      height: auto !important;
-      max-height: none !important;
-      overflow: hidden;
-      background-image: url('your-background-image.png'); /* Print bg */
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      page-break-inside: avoid;
-      break-inside: avoid;
-    }
-  }
 </style>
 
 
@@ -255,15 +275,27 @@
     </div>
 
     <div class="row">
-      <div class="col">
-        <label>D.O.A</label>
-        <input type="date" id="doa" />
-      </div>
-      <div class="col">
-        <label>D.O.D</label>
-        <input type="date" id="dod" />
-      </div>
-    </div>
+  <!-- D.O.A -->
+  <div class="col">
+    <label for="doa-date">D.O.A (Date)</label>
+    <input type="date" id="doa-date" name="doa-date">
+  </div>
+  <div class="col time-col">
+    <label for="doa-time">D.O.A (Time)</label>
+    <input type="time" id="doa-time" name="doa-time">
+  </div>
+
+  <!-- D.O.D -->
+  <div class="col">
+    <label for="dod-date">D.O.D (Date)</label>
+    <input type="date" id="dod-date" name="dod-date">
+  </div>
+  <div class="col time-col">
+    <label for="dod-time">D.O.D (Time)</label>
+    <input type="time" id="dod-time" name="dod-time">
+  </div>
+</div>
+
 
     <div class="section-title" style="margin-top:20px;">Billing Charges</div>
 
@@ -282,26 +314,26 @@
     <div class="add-row no-print">
       <select id="particularSelect">
         <option value="">Select Particular</option>
-        <option>Admission fee</option> 
-          <option>Emergency fee</option> 
-          <option>ICU Rent</option> 
+        <option>Admission Charge</option> 
+          <option>Emergency Charge</option> 
+          <option>ICU Rent Charge</option> 
           <option>ICU WITH VENT. CHARGE </option>
           <option>MEDICAL BILL CHARGE</option>
-          <option>Room Rent</option> 
+          <option>Room RentCharge </option> 
           <option>Consultation fee 1</option>
           <option>Consultation fee 2</option> 
           <option>Consultation fee 3</option> 
           <option>Consultation fee 4</option> 
-          <option>Operation fee 1</option> 
-          <option>Operation fee 2</option> 
-          <option>Operation fee 3</option> 
-          <option>Anaesthesia fee</option> 
+          <option>Operation Charge 1</option> 
+          <option>Operation Charge 2</option> 
+          <option>Operation Charge 3</option> 
+          <option>Anaesthesia Charge</option> 
           <option>OT Charges</option> 
-          <option>Intubation Fee</option> 
-          <option>Orthopedic Implants</option> 
-          <option>Operation fee 1 (Cataract Surgery)</option>
+          <option>Intubation Charge</option> 
+          <option>Orthopedic Implants Charge </option> 
+          <option>Operation Charge 1 (Cataract Surgery)</option>
           <option>Implant (Hydrophilic Foldable IOLs Intraocular Lens)</option>
-          <option>Ventilator fee</option> 
+          <option>Ventilator Charge</option> 
           <option>Monitor Charges</option> 
           <option>Infusion Pump Charges</option>
           <option>Oxygen Charge With Pulse Oxy.</option> 
@@ -309,12 +341,12 @@
           <option>Nurshing Charges</option> 
           <option>CMO Charges</option>
           <option>Ryle Tube Aspiration/Cath/Enema/ B Wash</option>
-          <option>Gastric Lavage</option>
+          <option>Gastric Lavage Charge</option>
           <option>Dressing Charges</option> 
-          <option>Blood Transfusion</option>
+          <option>Blood Transfusion Charge</option>
           <option>Center Line</option> 
           <option>MLC Charges</option> 
-          <option>Work up fee</option>
+          <option>Work up Charge</option>
           <option>Alfa-Bed / Water Bed Charges</option>
           <option>Physiotheraphy Charges</option> 
           <option>MOT Charges</option>
@@ -322,7 +354,7 @@
           <option>Lab Charge</option> 
           <option>Xray Charge</option> 
           <option>Ultrasound</option> 
-          <option>Dental</option> 
+          <option>Dental Charge </option> 
           <option>Others</option>
       </select>
    
