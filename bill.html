@@ -191,45 +191,46 @@
     }
 
     @media print {
-      body {
-        background: white;
-        margin: 0;
-        padding: 0;
-      }
+  body {
+    background: white;
+    margin: 0;
+    padding: 0;
+  }
 
-      .no-print {
-        display: none !important;
-      }
+  .no-print {
+    display: none !important;
+  }
 
-      .bill-container {
-        position: static !important;
-        padding-top: 5cm !important;
-        margin: 0 !important;
-        width: 100%;
-        height: auto !important;
-        max-height: none !important;
-        overflow: hidden;
-        background-image: url('your-background-image.png');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        page-break-inside: avoid;
-        break-inside: avoid;
-        box-shadow: none;
-      }
+  .bill-container {
+    position: static !important;
+    padding-top: 4cm !important; /* Changed from 5cm to 4cm */
+    margin: 0 !important;
+    width: 100%;
+    height: auto !important;
+    max-height: none !important;
+    overflow: hidden;
+    background-image: url('your-background-image.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    box-shadow: none;
+  }
 
-      .total-section {
-        font-size: 17px;
-        font-weight: bold;
-        color: #000;
-      }
+  .total-section {
+    font-size: 17px;
+    font-weight: bold;
+    color: #000;
+  }
 
-      .total-text {
-        color: #004aad;
-        font-size: 13px;
-        margin-top: 5px;
-      }
-    }
+  .total-text {
+    color: #004aad;
+    font-size: 13px;
+    margin-top: 5px;
+  }
+}
+
   </style>
 </head>
 <body>
