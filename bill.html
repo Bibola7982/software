@@ -7,7 +7,7 @@
   <style>
     @page {
       size: A4;
-      margin: 4cm 1.5cm 1cm 1.5cm;
+      margin: 2cm 1.5cm 1cm 1.5cm;
     }
 
     body {
@@ -110,7 +110,6 @@
       border: 1px solid #d1d1d1;
       padding: 10px;
       text-align: left;
-    
     }
 
     th {
@@ -207,7 +206,7 @@
 
       .bill-container {
         position: static !important;
-        padding-top: 5cm !important;
+        padding-top: 4cm !important;
         margin: 0 !important;
         width: 100%;
         height: auto !important;
@@ -220,7 +219,7 @@
         page-break-inside: avoid;
         break-inside: avoid;
         box-shadow: none;
-        transform: scale(0.100);
+        transform: scale(0.85);
         transform-origin: top left;
       }
 
@@ -231,7 +230,7 @@
 
       table th, table td {
         padding: 4px 6px !important;
-        font-size: 14px !important;
+        font-size: 12px !important;
       }
 
       .row {
@@ -239,9 +238,9 @@
       }
 
       .section-title {
-        margin-bottom: 10px !important;
-        padding-bottom: 4px !important;
-        font-size: 21px !important;
+        margin-bottom: 6px !important;
+        padding-bottom: 2px !important;
+        font-size: 14px !important;
       }
 
       .add-row {
@@ -249,18 +248,18 @@
       }
 
       .total-section {
-        font-size: 23px !important;
-        margin-top: 17px !important;
+        font-size: 16px !important;
+        margin-top: 10px !important;
       }
 
       .total-text {
-        font-size: 19px !important;
-        margin-top: 12px !important;
+        font-size: 12px !important;
+        margin-top: 5px !important;
       }
 
       .signature {
-        margin-top: 37px !important;
-        font-size: 20px !important;
+        margin-top: 30px !important;
+        font-size: 13px !important;
       }
     }
   </style>
@@ -347,8 +346,7 @@
     </table>
 
     <div class="add-row no-print">
-      <select id="particularSelect">
-        <option value="">Select Particular</option> <option>Admission Charge</option> <option>Emergency Charge</option> <option>ICU Rent Charge</option> <option>ICU WITH VENT. CHARGE</option> <option>MEDICAL BILL CHARGE</option> <option>Room RentCharge</option> <option>Consultation fee 1</option> <option>Consultation fee 2</option> <option>Consultation fee 3</option> <option>Consultation fee 4</option> <option>Operation Charge 1</option> <option>Operation Charge 2</option> <option>Operation Charge 3</option> <option>Anaesthesia Charge</option> <option>OT Charges</option> <option>Intubation Charge</option> <option>Orthopedic Implants Charge</option> <option>Implant (IOL)</option> <option>Ventilator Charge</option> <option>Monitor Charges</option> <option>Infusion Pump Charges</option> <option>Oxygen Charge</option> <option>Cooler/Heater/AC Charge</option> <option>Nurshing Charges</option> <option>CMO Charges</option> <option>Dressing Charges</option> <option>Blood Transfusion Charge</option> <option>Center Line</option> <option>MLC Charges</option> <option>Work up Charge</option> <option>ECG Charge</option> <option>Lab Charge</option> <option>Xray Charge</option> <option>Ultrasound</option> <option>Dental Charge</option> <option>Others</option>
+      <select id="particularSelect"> <option value="">Select Particular</option> <option>Admission Charge</option> <option>Emergency Charge</option> <option>ICU Rent Charge</option> <option>ICU WITH VENT. CHARGE</option> <option>MEDICAL BILL CHARGE</option> <option>Room RentCharge</option> <option>Consultation fee 1</option> <option>Consultation fee 2</option> <option>Consultation fee 3</option> <option>Consultation fee 4</option> <option>Operation Charge 1</option> <option>Operation Charge 2</option> <option>Operation Charge 3</option> <option>Anaesthesia Charge</option> <option>OT Charges</option> <option>Intubation Charge</option> <option>Orthopedic Implants Charge</option> <option>Implant (IOL)</option> <option>Ventilator Charge</option> <option>Monitor Charges</option> <option>Infusion Pump Charges</option> <option>Oxygen Charge</option> <option>Cooler/Heater/AC Charge</option> <option>Nurshing Charges</option> <option>CMO Charges</option> <option>Dressing Charges</option> <option>Blood Transfusion Charge</option> <option>Center Line</option> <option>MLC Charges</option> <option>Work up Charge</option> <option>ECG Charge</option> <option>Lab Charge</option> <option>Xray Charge</option> <option>Ultrasound</option> <option>Dental Charge</option> <option>Others</option>
       </select>
       <input type="number" id="unitInput" class="unit-input" placeholder="Unit" value="1" min="1">
       <input type="number" id="amountInput" class="amount-input" placeholder="Amount">
