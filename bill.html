@@ -4,263 +4,235 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hospital Final Bill Form</title>
- <style>
-  @page {
-    size: A4;
-    margin: 2cm 1.5cm 1cm 1.5cm; /* top, right, bottom, left */
-  }
+  <style>
+    @page {
+      size: A4;
+      margin: 2cm 1.5cm 1cm 1.5cm;
+    }
 
-/* ===== Base Styles ===== */
-body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: #e9f3ff;
-  margin: 0;
-  padding: 0;
-  line-height: 1.5;
-}
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #e9f3ff;
+      margin: 0;
+      padding: 0;
+      line-height: 1.5;
+    }
 
-/* ===== Main Container ===== */
-.bill-container {
-  width: 190mm;
-  margin: 30px auto;
-  background: #fff;
-  padding: 20px 30px;
-  box-sizing: border-box;
-  border-radius: 8px;
-  background-image: url('your-background-image.png'); /* Replace with your actual path */
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  page-break-inside: avoid;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-}
+    .bill-container {
+      width: 190mm;
+      margin: 30px auto;
+      background: #fff;
+      padding: 20px 30px;
+      box-sizing: border-box;
+      border-radius: 8px;
+      background-image: url('your-background-image.png'); /* Update this with actual path */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      page-break-inside: avoid;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    }
 
-/* ===== Header ===== */
-h2 {
-  text-align: center;
-  color: #004aad;
-  font-weight: bold;
-  margin-bottom: 30px;
-  font-size: 22px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+    h2 {
+      text-align: center;
+      color: #004aad;
+      font-weight: bold;
+      margin-bottom: 30px;
+      font-size: 22px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
-/* ===== Section Titles ===== */
-.section-title {
-  font-weight: bold;
-  color: #004aad;
-  border-bottom: 2px solid #004aad;
-  margin-bottom: 10px;
-  padding-bottom: 5px;
-  font-size: 16px;
-}
+    .section-title {
+      font-weight: bold;
+      color: #004aad;
+      border-bottom: 2px solid #004aad;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      font-size: 16px;
+    }
 
-/* ===== Form Layout ===== */
-.row {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-  align-items: flex-end;
-}
+    .row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
 
-.col {
-  flex: 1;
-  min-width: 120px;
-}
+    .col {
+      flex: 1;
+      min-width: 120px;
+    }
 
-label {
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
-  display: block;
-  margin-bottom: 5px;
-}
+    label {
+      font-weight: 600;
+      font-size: 14px;
+      color: #333;
+      display: block;
+      margin-bottom: 5px;
+    }
 
-   /* ===== Add Row Form ===== */
-.add-row {
-  display: flex;
-  gap: 15px;
-  margin-top: 15px;
-  flex-wrap: wrap;
-  align-items: flex-end;
-}
+    input,
+    select {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+      background: #fdfdfd;
+    }
 
-/* Custom widths for inline form fields */
-.particular-col {
-  flex: 2;
-  min-width: 200px;
-}
+    .relation-wrap {
+      display: flex;
+      gap: 3px;
+      align-items: flex-end;
+    }
 
-.unit-col {
-  flex: 0.5;
-  min-width: 80px;
-}
+    .relation-wrap select {
+      width: 90px;
+    }
 
-.amount-col {
-  flex: 1;
-  min-width: 120px;
-}
+    .relation-wrap input {
+      flex: 1;
+      min-width: 250px;
+    }
 
-.add-row input {
-  width: 100%;
-  padding: 7px 10px;
-  font-size: 14px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background-color: #fdfdfd;
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 14px;
+    }
 
-input,
-select {
-  width: 100%;
-  padding: 7px 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-  box-sizing: border-box;
-  background: #fdfdfd;
-}
+    th,
+    td {
+      border: 1px solid #d1d1d1;
+      padding: 10px;
+      text-align: left;
+    }
 
-/* ===== Relation Block ===== */
-.relation-wrap {
-  display: flex;
-  gap: 3px;
-  align-items: flex-end;
-}
+    th {
+      background: #f3f6fb;
+      color: #004aad;
+      font-weight: bold;
+    }
 
-.relation-wrap select {
-  width: 90px;
-}
+    .add-row {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
 
-.relation-wrap input {
-  flex: 1;
-  min-width: 250px;
-}
+    .add-row select,
+    .add-row input {
+      flex: 1;
+      min-width: 120px;
+    }
 
-/* ===== Table Styles ===== */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  font-size: 14px;
-}
+    .unit-input {
+      max-width: 80px;
+    }
 
-th,
-td {
-  border: 1px solid #d1d1d1;
-  padding: 10px;
-  text-align: left;
-}
+    .amount-input {
+      max-width: 120px;
+    }
 
-th {
-  background: #f3f6fb;
-  color: #004aad;
-  font-weight: bold;
-}
+    .add-btn {
+      background-color: #004aad;
+      color: white;
+    }
 
-/* ===== Total Section ===== */
-.total-section {
-  text-align: right;
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #000;
-}
+    .remove-btn {
+      background-color: #d9534f;
+      color: white;
+    }
 
-.total-text {
-  text-align: center;
-  font-style: italic;
-  margin-top: 10px;
-  color: #004aad;
-  font-size: 14px;
-}
+    .print-btn {
+      background-color: #28a745;
+      color: white;
+      float: right;
+      margin-top: 10px;
+    }
 
-/* ===== Signature ===== */
-.signature {
-  text-align: right;
-  margin-top: 50px;
-  font-weight: bold;
-  font-size: 14px;
-}
+    button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+    }
 
-/* ===== Buttons ===== */
-button {
-  padding: 8px 15px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 14px;
-}
+    .total-section {
+      text-align: right;
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #000;
+    }
 
-.add-btn {
-  background-color: #004aad;
-  color: white;
-}
+    .total-text {
+      text-align: center;
+      font-style: italic;
+      margin-top: 10px;
+      color: #004aad;
+      font-size: 14px;
+    }
 
-.remove-btn {
-  background-color: #d9534f;
-  color: white;
-}
+    .signature {
+      text-align: right;
+      margin-top: 50px;
+      font-weight: bold;
+      font-size: 14px;
+    }
 
-.print-btn {
-  background-color: #28a745;
-  color: white;
-  float: right;
-  margin-top: 10px;
-}
+    @media print {
+      body {
+        background: white;
+        margin: 0;
+        padding: 0;
+      }
 
-/* ===== Print Styles ===== */
-@media print {
-  body {
-    background: white;
-    margin: 0;
-    padding: 0;
-  }
+      .no-print {
+        display: none !important;
+      }
 
-  .no-print {
-    display: none !important;
-  }
+      .bill-container {
+        position: static !important;
+        padding-top: 5cm !important;
+        margin: 0 !important;
+        width: 100%;
+        height: auto !important;
+        max-height: none !important;
+        overflow: hidden;
+        background-image: url('your-background-image.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        box-shadow: none;
+      }
 
-  .bill-container {
-    position: static !important;
-    padding-top: 5cm !important;
-    margin: 0 !important;
-    width: 100%;
-    height: auto !important;
-    max-height: none !important;
-    overflow: hidden;
-    background-image: url('your-background-image.png'); /* Use your actual background path */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    page-break-inside: avoid;
-    break-inside: avoid;
-    box-shadow: none;
-  }
+      .total-section {
+        font-size: 17px;
+        font-weight: bold;
+        color: #000;
+      }
 
-  .total-section {
-    font-size: 17px;
-    font-weight: bold;
-    color: #000;
-  }
-
-  .total-text {
-    color: #004aad;
-    font-size: 13px;
-    margin-top: 5px;
-  }
-}
-
-</style>
-
-
-
+      .total-text {
+        color: #004aad;
+        font-size: 13px;
+        margin-top: 5px;
+      }
+    }
+  </style>
 </head>
 <body>
-
   <div class="bill-container">
     <h2>Hospital TOTAL BILL BREAK-UP</h2>
 
@@ -296,46 +268,38 @@ button {
         <label>UHID</label>
         <input type="text" id="uhid" />
       </div>
-
-
-    <div class="col">
-    <label for="department">Department</label>
-    <select id="department" name="department">
-      <option value="">-- Select Department --</option>
-      <option value="cardiology">Cardiology</option>
-      <option value="neurology">Neurology</option>
-      <option value="orthopedics">Orthopedics</option>
-      <option value="general">General Medicine</option>
-      <option value="icu">ICU</option>
-      <option value="emergency">Emergency</option>
-    </select>
-  </div>
-</div>
-
-  
+      <div class="col">
+        <label for="department">Department</label>
+        <select id="department" name="department">
+          <option value="">-- Select Department --</option>
+          <option value="cardiology">Cardiology</option>
+          <option value="neurology">Neurology</option>
+          <option value="orthopedics">Orthopedics</option>
+          <option value="general">General Medicine</option>
+          <option value="icu">ICU</option>
+          <option value="emergency">Emergency</option>
+        </select>
+      </div>
+    </div>
 
     <div class="row">
-  <!-- D.O.A -->
-  <div class="col">
-    <label for="doa-date">D.O.A (Date)</label>
-    <input type="date" id="doa-date" name="doa-date">
-  </div>
-  <div class="col time-col">
-    <label for="doa-time">D.O.A (Time)</label>
-    <input type="time" id="doa-time" name="doa-time">
-  </div>
-
-  <!-- D.O.D -->
-  <div class="col">
-    <label for="dod-date">D.O.D (Date)</label>
-    <input type="date" id="dod-date" name="dod-date">
-  </div>
-  <div class="col time-col">
-    <label for="dod-time">D.O.D (Time)</label>
-    <input type="time" id="dod-time" name="dod-time">
-  </div>
-</div>
-
+      <div class="col">
+        <label for="doa-date">D.O.A (Date)</label>
+        <input type="date" id="doa-date" name="doa-date">
+      </div>
+      <div class="col">
+        <label for="doa-time">D.O.A (Time)</label>
+        <input type="time" id="doa-time" name="doa-time">
+      </div>
+      <div class="col">
+        <label for="dod-date">D.O.D (Date)</label>
+        <input type="date" id="dod-date" name="dod-date">
+      </div>
+      <div class="col">
+        <label for="dod-time">D.O.D (Time)</label>
+        <input type="time" id="dod-time" name="dod-time">
+      </div>
+    </div>
 
     <div class="section-title" style="margin-top:20px;">Billing Charges</div>
 
@@ -354,54 +318,46 @@ button {
     <div class="add-row no-print">
       <select id="particularSelect">
         <option value="">Select Particular</option>
-        <option>Admission Charge</option> 
-          <option>Emergency Charge</option> 
-          <option>ICU Rent Charge</option> 
-          <option>ICU WITH VENT. CHARGE </option>
-          <option>MEDICAL BILL CHARGE</option>
-          <option>Room RentCharge </option> 
-          <option>Consultation fee 1</option>
-          <option>Consultation fee 2</option> 
-          <option>Consultation fee 3</option> 
-          <option>Consultation fee 4</option> 
-          <option>Operation Charge 1</option> 
-          <option>Operation Charge 2</option> 
-          <option>Operation Charge 3</option> 
-          <option>Anaesthesia Charge</option> 
-          <option>OT Charges</option> 
-          <option>Intubation Charge</option> 
-          <option>Orthopedic Implants Charge </option> 
-          <option>Operation Charge 1 (Cataract Surgery)</option>
-          <option>Implant (Hydrophilic Foldable IOLs Intraocular Lens)</option>
-          <option>Ventilator Charge</option> 
-          <option>Monitor Charges</option> 
-          <option>Infusion Pump Charges</option>
-          <option>Oxygen Charge With Pulse Oxy.</option> 
-          <option>Cooler/Heater/AC Charge</option> 
-          <option>Nurshing Charges</option> 
-          <option>CMO Charges</option>
-          <option>Ryle Tube Aspiration/Cath/Enema/ B Wash</option>
-          <option>Gastric Lavage Charge</option>
-          <option>Dressing Charges</option> 
-          <option>Blood Transfusion Charge</option>
-          <option>Center Line</option> 
-          <option>MLC Charges</option> 
-          <option>Work up Charge</option>
-          <option>Alfa-Bed / Water Bed Charges</option>
-          <option>Physiotheraphy Charges</option> 
-          <option>MOT Charges</option>
-          <option>ECG Charge</option> 
-          <option>Lab Charge</option> 
-          <option>Xray Charge</option> 
-          <option>Ultrasound</option> 
-          <option>Dental Charge </option> 
-          <option>Others</option>
+        <option>Admission Charge</option>
+        <option>Emergency Charge</option>
+        <option>ICU Rent Charge</option>
+        <option>ICU WITH VENT. CHARGE</option>
+        <option>MEDICAL BILL CHARGE</option>
+        <option>Room RentCharge</option>
+        <option>Consultation fee 1</option>
+        <option>Consultation fee 2</option>
+        <option>Consultation fee 3</option>
+        <option>Consultation fee 4</option>
+        <option>Operation Charge 1</option>
+        <option>Operation Charge 2</option>
+        <option>Operation Charge 3</option>
+        <option>Anaesthesia Charge</option>
+        <option>OT Charges</option>
+        <option>Intubation Charge</option>
+        <option>Orthopedic Implants Charge</option>
+        <option>Implant (IOL)</option>
+        <option>Ventilator Charge</option>
+        <option>Monitor Charges</option>
+        <option>Infusion Pump Charges</option>
+        <option>Oxygen Charge</option>
+        <option>Cooler/Heater/AC Charge</option>
+        <option>Nurshing Charges</option>
+        <option>CMO Charges</option>
+        <option>Dressing Charges</option>
+        <option>Blood Transfusion Charge</option>
+        <option>Center Line</option>
+        <option>MLC Charges</option>
+        <option>Work up Charge</option>
+        <option>ECG Charge</option>
+        <option>Lab Charge</option>
+        <option>Xray Charge</option>
+        <option>Ultrasound</option>
+        <option>Dental Charge</option>
+        <option>Others</option>
       </select>
-   
-<input type="number" id="unitInput" class="unit-input" placeholder="Unit" value="1" min="1" >
-<input type="number" id="amountInput" placeholder="Amount">
-<button class="add-btn" id="addRow">Add</button>
-
+      <input type="number" id="unitInput" class="unit-input" placeholder="Unit" value="1" min="1">
+      <input type="number" id="amountInput" class="amount-input" placeholder="Amount">
+      <button class="add-btn" id="addRow">Add</button>
     </div>
 
     <div class="total-section">
@@ -419,11 +375,9 @@ button {
     const amountInWords = document.getElementById('amountInWords');
 
     function numberToWords(num) {
-      const a = [
-        "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+      const a = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
         "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
-        "Eighteen", "Nineteen"
-      ];
+        "Eighteen", "Nineteen"];
       const b = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
 
       const inWords = (n) => {
@@ -434,7 +388,6 @@ button {
         if (n < 10000000) return inWords(Math.floor(n / 100000)) + " Lakh" + (n % 100000 ? " " + inWords(n % 100000) : "");
         return inWords(Math.floor(n / 10000000)) + " Crore" + (n % 10000000 ? " " + inWords(n % 10000000) : "");
       };
-
       return inWords(num).toUpperCase() + " ONLY";
     }
 
@@ -476,7 +429,7 @@ button {
 
       recalcTotal();
 
-      document.getElementById('unitInput').value = '';
+      document.getElementById('unitInput').value = '1';
       document.getElementById('amountInput').value = '';
       document.getElementById('particularSelect').value = '';
     });
