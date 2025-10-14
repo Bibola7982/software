@@ -10,7 +10,8 @@
     margin: 2cm 1.5cm 1cm 1.5cm; /* top, right, bottom, left */
   }
 
-  /* ===== Base Styles ===== */
+
+/* ===== Base Styles ===== */
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
   background: #e9f3ff;
@@ -24,29 +25,31 @@ body {
   width: 190mm;
   margin: 30px auto;
   background: #fff;
-  padding: 20px;
+  padding: 20px 30px;
   box-sizing: border-box;
   border-radius: 8px;
-  background-image: url('your-background-image.png'); /* Replace with real path */
+  background-image: url('your-background-image.png'); /* Replace with your actual path */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   page-break-inside: avoid;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
 }
 
 /* ===== Header ===== */
 h2 {
   text-align: center;
   color: #004aad;
-  font-weight: 700;
-  margin-bottom: 25px;
-  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 30px;
   font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* ===== Section Titles ===== */
 .section-title {
-  font-weight: 700;
+  font-weight: bold;
   color: #004aad;
   border-bottom: 2px solid #004aad;
   margin-bottom: 10px;
@@ -79,11 +82,12 @@ label {
 input,
 select {
   width: 100%;
-  padding: 8px 10px;
+  padding: 7px 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 14px;
   box-sizing: border-box;
+  background: #fdfdfd;
 }
 
 /* ===== Relation Block ===== */
@@ -91,7 +95,6 @@ select {
   display: flex;
   gap: 3px;
   align-items: flex-end;
-
 }
 
 .relation-wrap select {
@@ -108,47 +111,45 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  font-size: 14px;
 }
 
 th,
 td {
   border: 1px solid #d1d1d1;
   padding: 10px;
-  font-size: 14px;
+  text-align: left;
 }
 
 th {
   background: #f3f6fb;
   color: #004aad;
-  text-align: left;
-  font-weight: 600;
+  font-weight: bold;
 }
 
-/* ===== Add Row Form ===== */
-.add-row {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-  flex-wrap: wrap;
-  align-items: flex-end;
+/* ===== Total Section ===== */
+.total-section {
+  text-align: right;
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
 }
 
-.add-row select,
-.add-row input {
-  flex: 1;
-  min-width: 120px;
+.total-text {
+  text-align: center;
+  font-style: italic;
+  margin-top: 10px;
+  color: #004aad;
+  font-size: 14px;
 }
 
-.add-row input.unit-input {
-  max-width: 80px;
-}
-
-.add-row input[type="number"] {
-  max-width: 100px;
-}
-
-.add-row button {
-  white-space: nowrap;
+/* ===== Signature ===== */
+.signature {
+  text-align: right;
+  margin-top: 50px;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 /* ===== Buttons ===== */
@@ -178,20 +179,47 @@ button {
   margin-top: 10px;
 }
 
-/* ===== Total Section ===== */
-.total-section {
-  text-align: right;
-  margin-top: 20px;
-  font-size: 16px;
-  font-weight: bold;
-}
+/* ===== Print Styles ===== */
+@media print {
+  body {
+    background: white;
+    margin: 0;
+    padding: 0;
+  }
 
-.total-text {
-  text-align: right;
-  font-style: italic;
-  margin-top: 5px;
-  color: #004aad;
-}
+  .no-print {
+    display: none !important;
+  }
+
+  .bill-container {
+    position: static !important;
+    padding-top: 5cm !important;
+    margin: 0 !important;
+    width: 100%;
+    height: auto !important;
+    max-height: none !important;
+    overflow: hidden;
+    background-image: url('your-background-image.png'); /* Use your actual background path */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    box-shadow: none;
+  }
+
+  .total-section {
+    font-size: 17px;
+    font-weight: bold;
+    color: #000;
+  }
+
+  .total-text {
+    color: #004aad;
+    font-size: 13px;
+    margin-top: 5px;
+  }
+
 
 /* ===== Signature ===== */
 .signature {
@@ -272,7 +300,23 @@ button {
         <label>UHID</label>
         <input type="text" id="uhid" />
       </div>
-    </div>
+
+
+    <div class="col">
+    <label for="department">Department</label>
+    <select id="department" name="department">
+      <option value="">-- Select Department --</option>
+      <option value="cardiology">Cardiology</option>
+      <option value="neurology">Neurology</option>
+      <option value="orthopedics">Orthopedics</option>
+      <option value="general">General Medicine</option>
+      <option value="icu">ICU</option>
+      <option value="emergency">Emergency</option>
+    </select>
+  </div>
+</div>
+
+  
 
     <div class="row">
   <!-- D.O.A -->
