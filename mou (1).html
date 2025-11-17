@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MoU Generator — Hospital Laundry (Final)</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- html2canvas + jsPDF (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#f6f8fb; --card:#ffffff; --muted:#6b7280; --accent:#4f46e5;
+      --radius:12px; font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:#0f172a;line-height:1.5;padding:18px}
+    .wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 560px;gap:20px}
+    @media (max-width:980px){.wrap{grid-template-columns:1fr; padding:0 12px}}
+    .card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:0 6px 20px rgba(15,23,42,0.06)}
+    h1{font-size:20px;margin:0 0 10px}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type="text"], input[type="date"], textarea, select{
+      width:100%;padding:10px;border-radius:10px;border:1px solid #e6e9ef;font-size:14px;background:#fff;
+    }
+    textarea{resize:vertical;min-height:64px}
+    .row{display:flex;gap:12px}
+    .col{flex:1}
+    .small{width:160px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:white;cursor:pointer;font-weight:600}
+    .btn.ghost{background:#eef2ff;color:var(--accent);border:1px solid rgba(79,70,229,0.1)}
+    .muted{color:var(--muted);font-size:13px}
+    .preview-container{height:calc(100vh - 120px);overflow:auto;padding:14px}
+    .mou{background:white;padding:28px;border-radius:8px;border:1px solid #eef2ff;max-width:760px;margin:0 auto;color:#0f172a}
+    .mou h2{text-align:center;margin:0 0 6px;font-size:18px}
+    .mou .meta{text-align:center;color:var(--muted);font-size:13px;margin-bottom:18px}
+    .mou p, .mou li{font-size:14px;margin:6px 0;text-align:justify}
+    .mou h3, .mou h4 {margin:12px 0 6px}
+    .divider{height:1px;background:#f1f5f9;margin:14px 0}
+    .sign-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:18px}
+    .signature{padding-top:18px;border-top:1px solid #e6eefc;height:84px}
+    .note{background:#fff9f0;padding:12px;border-radius:8px;border:1px solid #fff0db;color:#7a4b00;margin-top:12px}
+    .checkbox-row{display:flex;align-items:center;gap:8px;margin-top:8px}
+    footer{max-width:1200px;margin:12px auto;color:var(--muted);font-size:13px;text-align:center}
+
+    /* -------- PRINT & PDF CLEAN STYLES --------
+       - First page top margin = 40mm (4 cm), left/right/bottom = 12mm.
+       - PDF produced by jsPDF will NOT include browser headers; browser print may show headers (user must disable).
+    */
+    @media print {
+      @page { size: A4; margin-top: 40mm; margin-left: 12mm; margin-right: 12mm; margin-bottom: 12mm; }
+      body * { visibility: hidden; }
+      #preview, #preview * { visibility: visible; }
+      #preview { position: absolute; left: 0; top: 0; width: 100%; }
+      .mou { box-shadow: none; border: none; margin:0; padding:0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <!-- LEFT: Form -->
+    <div class="card" id="formCard" aria-hidden="false">
+      <h1>MoU Generator — Hospital Laundry</h1>
+      <p class="muted">Fill the form. Use the checkbox to include the full Agreement. Click <strong>Download PDF</strong> or <strong>Print MoU</strong>. First printed page will start 4 cm from top.</p>
+
+      <div style="margin-top:12px;display:grid;gap:10px">
+        <label>Hospital Name (First Party)</label>
+        <input id="hospitalName" type="text" placeholder="e.g., ANAND ORTHOPAEDIC CENTRE">
+
+        <label>Hospital Address</label>
+        <textarea id="hospitalAddress" placeholder="e.g., OPP. THEME PARK, NEAR PANORAMA, THANESAR KURUKSHETRA"></textarea>
+
+        <div class="row">
+          <div class="col">
+            <label>Representative Name</label>
+            <input id="hospitalRep" type="text" placeholder="e.g., Dr. A.B. Singh">
+          </div>
+          <div class="col">
+            <label>Designation</label>
+            <input id="repDesignation" type="text" placeholder="e.g., Chief Medical Officer">
+          </div>
+        </div>
+
+        <label>Laundry Service Provider Name (Second Party)</label>
+        <input id="providerName" type="text" placeholder="e.g., SUPER DYERS & DRY CLEANERS">
+
+        <label>Provider Address</label>
+        <textarea id="providerAddress" placeholder="e.g., RAILWAY ROAD KURUKSHETRA"></textarea>
+
+        <div class="row">
+          <div class="col">
+            <label>Daily Quantity (kg / items)</label>
+            <input id="dailyQuantity" type="text" placeholder="e.g., 150 kg or 400 items">
+          </div>
+          <div class="col small">
+            <label>Turnaround Time</label>
+            <select id="turnaround">
+              <option>24 hours</option>
+              <option>Same day</option>
+              <option>48 hours</option>
+            </select>
+          </div>
+        </div>
+
+        <label>Pickup / Delivery Schedule</label>
+        <input id="pickupSchedule" type="text" placeholder="e.g., Daily at 10:00 AM">
+
+        <div class="row">
+          <div class="col small">
+            <label>Contract Duration</label>
+            <select id="contractDuration">
+              <option>1 year</option>
+              <option>2 years</option>
+              <option>6 months</option>
+            </select>
+          </div>
+          <div class="col small">
+            <label>Pricing Format</label>
+            <select id="pricing">
+              <option>Per kg</option>
+              <option>Per item</option>
+              <option>Monthly fixed</option>
+            </select>
+          </div>
+          <div class="col">
+            <label>Date</label>
+            <input id="mouDate" type="date">
+          </div>
+        </div>
+
+        <label>Special Requirements (optional)</label>
+        <textarea id="specialRequirements" placeholder="e.g., Separate ICU/OT washing, PPE handling, emergency 4-hour service"></textarea>
+
+        <div class="checkbox-row">
+          <input id="includeFullAgreement" type="checkbox" checked />
+          <label for="includeFullAgreement" class="muted">Include Full Agreement (multi-page)</label>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:8px;align-items:center;flex-wrap:wrap">
+          <button id="downloadBtn" class="btn">Download PDF</button>
+          <button id="printBtn" class="btn" style="background:#16a34a">Print MoU</button>
+          <button id="resetBtn" class="btn ghost">Reset</button>
+          <div style="flex:1"></div>
+          <span class="muted">PDF is generated locally (no browser header/footer in generated PDF)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Preview (ONLY content here gets printed or exported) -->
+    <div class="card preview-container" aria-hidden="false">
+      <h1 style="font-size:16px;margin-bottom:8px">Live MoU Preview</h1>
+
+      <div id="preview" class="mou" aria-live="polite">
+        <h2>MEMORANDUM OF UNDERSTANDING (MoU)</h2>
+        <div class="meta" id="metaDate">Date: <span id="dateText">[Date]</span></div>
+
+        <div id="standardContent">
+          <p><strong>Hospital:</strong> <span id="p_hospitalName">[Hospital Name]</span></p>
+          <p><strong>Address:</strong> <span id="p_hospitalAddress">[Hospital Address]</span></p>
+          <p><strong>Representative:</strong> <span id="p_hospitalRep">[Rep Name]</span> — <span id="p_repDesignation">[Designation]</span></p>
+
+          <p><strong>Service Provider:</strong> <span id="p_providerName">[Provider Name]</span></p>
+          <p><strong>Provider Address:</strong> <span id="p_providerAddress">[Provider Address]</span></p>
+
+          <div class="divider"></div>
+
+          <h3>Scope of Work</h3>
+          <ol>
+            <li>Collect soiled linen daily as per agreed schedule.</li>
+            <li>Wash, disinfect, dry, iron, fold and pack linen to hospital standards.</li>
+            <li>Deliver clean linen within the agreed turnaround time (<span id="p_turnaround">24 hours</span>).</li>
+            <li>Use hospital-approved detergents and follow infection-control procedures.</li>
+          </ol>
+
+          <p><strong>Estimated Quantity:</strong> <span id="p_dailyQuantity">[Quantity]</span></p>
+          <p><strong>Pickup / Delivery:</strong> <span id="p_pickupSchedule">[Schedule]</span></p>
+          <p><strong>Pricing:</strong> <span id="p_pricing">[Pricing]</span></p>
+
+          <div id="specialBlock" style="display:none">
+            <h4>Special Requirements</h4>
+            <p id="p_specialRequirements"></p>
+          </div>
+
+          <div class="divider"></div>
+
+          <h3>Duration & Termination</h3>
+          <p>This MoU is valid for <strong id="p_contractDuration">1 year</strong> from the date of signing. Either party may terminate the MoU with a 30-day written notice.</p>
+
+          <div class="sign-grid">
+            <div>
+              <div class="signature"></div>
+              <div style="margin-top:6px;font-size:13px">Hospital Representative — <span id="p_hospitalRepSign">[Name]</span></div>
+            </div>
+            <div>
+              <div class="signature"></div>
+              <div style="margin-top:6px;font-size:13px">Service Provider Representative — <span id="p_providerNameSign">[Provider]</span></div>
+            </div>
+          </div>
+
+          <p class="muted" style="margin-top:12px;font-size:12px">This MoU records mutual understanding between the hospital and the service provider and does not by itself create legally enforceable obligations beyond any separate contract the parties may execute.</p>
+        </div>
+
+        <!-- Full agreement area appended here when checkbox is checked -->
+        <div id="fullAgreementArea" style="margin-top:18px"></div>
+      </div>
+
+      <div class="note" style="margin-top:12px">
+        Tip: For browser Print — if your print preview still shows headers/footers (URL, date, page title), disable headers/footers in your browser's print dialog to remove them. The PDF generated by the Download button will NOT include browser headers.
+      </div>
+    </div>
+  </div>
+
+  <footer id="siteFooter" style="text-align:center;margin-top:12px;color:var(--muted);font-size:13px">Built with ♥ — client-side PDF export (html2canvas + jsPDF)</footer>
+
+  <script>
+    // ---- Config: first-page top margin in mm (4 cm = 40 mm) ----
+    const TOP_MARGIN_MM = 40; // 40 mm = 4 cm
+    const SIDE_BOTTOM_MARGIN_MM = 12; // left/right/bottom margins for pages
+
+    // ---- DOM refs ----
+    const refs = {
+      hospitalName: document.getElementById('hospitalName'),
+      hospitalAddress: document.getElementById('hospitalAddress'),
+      hospitalRep: document.getElementById('hospitalRep'),
+      repDesignation: document.getElementById('repDesignation'),
+      providerName: document.getElementById('providerName'),
+      providerAddress: document.getElementById('providerAddress'),
+      dailyQuantity: document.getElementById('dailyQuantity'),
+      pickupSchedule: document.getElementById('pickupSchedule'),
+      turnaround: document.getElementById('turnaround'),
+      contractDuration: document.getElementById('contractDuration'),
+      pricing: document.getElementById('pricing'),
+      mouDate: document.getElementById('mouDate'),
+      specialRequirements: document.getElementById('specialRequirements'),
+      includeFullAgreement: document.getElementById('includeFullAgreement'),
+      downloadBtn: document.getElementById('downloadBtn'),
+      printBtn: document.getElementById('printBtn'),
+      resetBtn: document.getElementById('resetBtn'),
+      formCard: document.getElementById('formCard'),
+      siteFooter: document.getElementById('siteFooter'),
+      // preview fields
+      p_hospitalName: document.getElementById('p_hospitalName'),
+      p_hospitalAddress: document.getElementById('p_hospitalAddress'),
+      p_hospitalRep: document.getElementById('p_hospitalRep'),
+      p_repDesignation: document.getElementById('p_repDesignation'),
+      p_providerName: document.getElementById('p_providerName'),
+      p_providerAddress: document.getElementById('p_providerAddress'),
+      p_dailyQuantity: document.getElementById('p_dailyQuantity'),
+      p_pickupSchedule: document.getElementById('p_pickupSchedule'),
+      p_turnaround: document.getElementById('p_turnaround'),
+      p_pricing: document.getElementById('p_pricing'),
+      p_contractDuration: document.getElementById('p_contractDuration'),
+      p_specialRequirements: document.getElementById('p_specialRequirements'),
+      specialBlock: document.getElementById('specialBlock'),
+      dateText: document.getElementById('dateText'),
+      preview: document.getElementById('preview'),
+      p_hospitalRepSign: document.getElementById('p_hospitalRepSign'),
+      p_providerNameSign: document.getElementById('p_providerNameSign'),
+      fullAgreementArea: document.getElementById('fullAgreementArea'),
+    };
+
+    // ---- long agreement template ----
+    const agreementTemplate = (data) => `
+      <div class="divider"></div>
+      <h2 style="text-align:center;margin-top:6px">Memorandum of Understanding</h2>
+      <p>This Agreement is made on this day of <strong>${data.dateDisplay}</strong>.</p>
+
+      <p><strong>Between</strong> <strong>${data.hospitalName}</strong>, ${escapeHtml(data.hospitalAddress)} (Hereinafter called as "<strong>The Party of the first part</strong>")</p>
+
+      <p><strong>And</strong> <strong>${data.providerName}</strong>, ${escapeHtml(data.providerAddress)} (Hereinafter called as "<strong>The Party of the second part</strong>")</p>
+
+      <p><strong>WHEREAS</strong>, the second party has approached the executor expressing their interest to take up the laundry services of the hospital, the first party has agreed on mutually agreed terms and conditions mentioned hereinafter.</p>
+
+      <h3>Tenure</h3>
+      <p>Subject to the termination clause mentioned hereinafter, this understanding shall come into force with effect from the date of execution of this understanding and shall remain in force for a period of <strong>Twelve (12) Months</strong>.</p>
+
+      <h3>Scope of Services</h3>
+      <p>During the tenure of this MOU, first party shall give the dirty linen of the hospital including blankets and curtains after disinfecting the infected linen at their premises on a daily basis in a closed bag in the morning. The second party will clean and iron the dirty linen and bring them back next morning in a closed bag.</p>
+
+      <h3>Charges</h3>
+      <p>During the term of this MOU, the amount due per month will be paid to the second party by the first party.</p>
+
+      <h3>Price Revision</h3>
+      <p>Any Price revision done by the second party must be intimated and discussed with the first party 1 month in advance for the next calendar year.</p>
+
+      <h3>Relationship</h3>
+      <p>This arrangement is only on principal to principal basis and does not give rise to any principal and agent relationship or joint venture between the parties. Nothing stated in this arrangement will authorize or permit either party to represent or act as or plead any such relationship.</p>
+
+      <h3>Termination</h3>
+      <p>Either First/ Second party have the right to terminate this arrangement by giving 30 days prior notice in writing to the other without assigning any reason.</p>
+
+      <h3>Quality Assurance System</h3>
+      <p>The Second Party must allow the First Party to inspect their organization at least once in six months with respect to the below mentioned parameters as a part of the quality assurance system. The records of all such inspections must be maintained by the first party.</p>
+      <ol>
+        <li>Process of cleaning, drying and ironing of the linen.</li>
+        <li>Safety precautions taken by the employees while cleaning the linen.</li>
+        <li>Segregation of clean and dirty linen.</li>
+        <li>Storage of linen.</li>
+        <li>Transportation of the linen.</li>
+      </ol>
+
+      <h3>Governing Law and dispute resolution</h3>
+      <p>The provisions and implementation of this MOU shall be governed by the laws of Republic of India. All or any disputes, claims arising out of this arrangement but which could not be settled by means of dispute resolution meetings shall be resolved by means of arbitration by submitting the dispute for the arbitration of mutually agreed sole arbitrator in accordance with the Arbitration and Conciliation Act, 1996 as amended or reconstituted from time to time and the procedures of Arbitration shall be conducted at KURUKSHETRA, India in the local language.</p>
+
+      <h3>NOW THIS MOU WITNESSES AS UNDER</h3>
+      <ol>
+        <li><strong>Effective Date:</strong> The parties hereby agree that the effective date of the agreement shall be the date on which the agreement is signed.</li>
+        <li><strong>Period of MOU:</strong> This agreement shall be valid for a period of one year from the date of this agreement and mutual consultation of both parties. Any specific agreement(s) in conjunction with the main agreement shall be valid for such period as may be stated in those agreements. The expiry of this agreement shall not affect the rights and obligations created under such specific agreements. In case of renewal process is underway and both parties have in principle agreed to renew the agreement, obligations under this agreement may continue seamlessly.</li>
+        <li><strong>Relationship of the parties:</strong> Nothing contained in this agreement is intended to create, nor shall it be construed to create, a relationship between the parties other than that of independent parties contracting with each other solely for the purpose of effectuating the provisions of this agreement.</li>
+      </ol>
+
+      <p>IN WITNESS WHEREOF the parties hereto have executed the present agreement on the day, month and year first above written.</p>
+
+      <div style="margin-top:18px" class="sign-grid">
+        <div>
+          <div class="signature"></div>
+          <div style="margin-top:6px;font-size:13px">Signature<br />(First Party) — <strong>${data.hospitalName}</strong></div>
+        </div>
+        <div>
+          <div class="signature"></div>
+          <div style="margin-top:6px;font-size:13px">Signature<br />(Second Party) — <strong>${data.providerName}</strong></div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px">
+        <p style="margin-bottom:6px"><strong>Witness</strong></p>
+        <p>__________________________</p>
+        <p style="margin-top:10px"><strong>Witness</strong></p>
+        <p>__________________________</p>
+      </div>
+    `;
+
+    // ---- safe HTML escape helper ----
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;')
+        .replace(/\n/g, '<br/>');
+    }
+
+    // ---- init date to today ----
+    (function init(){
+      const today = new Date().toISOString().slice(0,10);
+      refs.mouDate.value = today;
+      refs.dateText.textContent = today;
+      updatePreview();
+    })();
+
+    // ---- update preview ----
+    function updatePreview() {
+      refs.p_hospitalName.textContent = refs.hospitalName.value.trim() || 'ANAND ORTHOPAEDIC CENTRE';
+      refs.p_hospitalAddress.textContent = refs.hospitalAddress.value.trim() || 'OPP. THEME PARK, NEAR PANORAMA, THANESAR KURUKSHETRA';
+      refs.p_hospitalRep.textContent = refs.hospitalRep.value.trim() || '[Rep Name]';
+      refs.p_repDesignation.textContent = refs.repDesignation.value.trim() || '[Designation]';
+      refs.p_providerName.textContent = refs.providerName.value.trim() || 'SUPER DYERS & DRY CLEANERS';
+      refs.p_providerAddress.textContent = refs.providerAddress.value.trim() || 'RAILWAY ROAD KURUKSHETRA';
+      refs.p_dailyQuantity.textContent = refs.dailyQuantity.value.trim() || '[Quantity]';
+      refs.p_pickupSchedule.textContent = refs.pickupSchedule.value.trim() || '[Schedule]';
+      refs.p_turnaround.textContent = refs.turnaround.value;
+      refs.p_pricing.textContent = refs.pricing.value;
+      refs.p_contractDuration.textContent = refs.contractDuration.value;
+      refs.dateText.textContent = refs.mouDate.value || '[Date]';
+
+      const special = refs.specialRequirements.value.trim();
+      if (special) {
+        refs.p_specialRequirements.textContent = special;
+        refs.specialBlock.style.display = 'block';
+      } else {
+        refs.specialBlock.style.display = 'none';
+        refs.p_specialRequirements.textContent = '';
+      }
+
+      refs.p_hospitalRepSign.textContent = refs.hospitalRep.value.trim() || '[Name]';
+      refs.p_providerNameSign.textContent = refs.providerName.value.trim() || '[Provider]';
+
+      // include full agreement?
+      if (refs.includeFullAgreement.checked) {
+        const data = {
+          hospitalName: refs.hospitalName.value.trim() || 'ANAND ORTHOPAEDIC CENTRE',
+          hospitalAddress: refs.hospitalAddress.value.trim() || 'OPP. THEME PARK, NEAR PANORAMA, THANESAR KURUKSHETRA',
+          providerName: refs.providerName.value.trim() || 'SUPER DYERS & DRY CLEANERS',
+          providerAddress: refs.providerAddress.value.trim() || 'RAILWAY ROAD KURUKSHETRA',
+          dateDisplay: refs.mouDate.value || new Date().toISOString().slice(0,10)
+        };
+        refs.fullAgreementArea.innerHTML = agreementTemplate(data);
+      } else {
+        refs.fullAgreementArea.innerHTML = '';
+      }
+    }
+
+    // ---- wire up inputs to update preview ----
+    [
+      'hospitalName','hospitalAddress','hospitalRep','repDesignation','providerName','providerAddress',
+      'dailyQuantity','pickupSchedule','turnaround','contractDuration','pricing','mouDate','specialRequirements','includeFullAgreement'
+    ].forEach(id => {
+      refs[id].addEventListener('input', updatePreview);
+      refs[id].addEventListener('change', updatePreview);
+    });
+
+    // ---- reset ----
+    refs.resetBtn.addEventListener('click', () => {
+      refs.hospitalName.value = '';
+      refs.hospitalAddress.value = '';
+      refs.hospitalRep.value = '';
+      refs.repDesignation.value = '';
+      refs.providerName.value = '';
+      refs.providerAddress.value = '';
+      refs.dailyQuantity.value = '';
+      refs.pickupSchedule.value = '';
+      refs.turnaround.value = '24 hours';
+      refs.contractDuration.value = '1 year';
+      refs.pricing.value = 'Per kg';
+      refs.specialRequirements.value = '';
+      refs.includeFullAgreement.checked = true;
+      refs.mouDate.value = new Date().toISOString().slice(0,10);
+      updatePreview();
+    });
+
+    // ---- PDF export (html2canvas + jsPDF) with first-page top offset ----
+    refs.downloadBtn.addEventListener('click', async function () {
+      await downloadPDF();
+    });
+
+    async function downloadPDF() {
+      const element = refs.preview;
+      if (!element) return;
+
+      // hide footer while rendering
+      if (refs.siteFooter) refs.siteFooter.style.visibility = 'hidden';
+
+      // settings
+      const scale = 2; // html2canvas scale
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      const leftRightMargin = SIDE_BOTTOM_MARGIN_MM;
+      const bottomMargin = SIDE_BOTTOM_MARGIN_MM;
+      const topFirst = TOP_MARGIN_MM;
+      const topOther = SIDE_BOTTOM_MARGIN_MM;
+
+      // temporary width for consistent rendering
+      const originalStyleWidth = element.style.width;
+      element.style.width = '760px';
+      const canvas = await html2canvas(element, { scale, useCORS: true, allowTaint: true, logging: false });
+      element.style.width = originalStyleWidth;
+
+      // restore footer visibility
+      if (refs.siteFooter) refs.siteFooter.style.visibility = 'visible';
+
+      const imgData = canvas.toDataURL('image/png');
+
+      // conversions
+      const pxToMm = px => (px * 25.4) / (96 * scale);
+      const imgWidthMM = pxToMm(canvas.width);
+      const imgHeightMM = pxToMm(canvas.height);
+
+      // available heights
+      const availFirst = pageHeight - topFirst - bottomMargin;
+      const availOther = pageHeight - topOther - bottomMargin;
+      const availWidth = pageWidth - leftRightMargin * 2;
+
+      // scale to fit width
+      const ratio = Math.min(1, availWidth / imgWidthMM);
+      const renderWidth = imgWidthMM * ratio;
+      const renderHeight = imgHeightMM * ratio;
+
+      // If fits entirely on first page
+      if (renderHeight <= availFirst) {
+        pdf.addImage(imgData, 'PNG', leftRightMargin, topFirst, renderWidth, renderHeight);
+      } else {
+        // Multi-page slicing:
+        const canvasHeight = canvas.height;
+        const firstSlicePx = Math.floor((availFirst / renderHeight) * canvasHeight);
+        const otherSlicePx = Math.floor((availOther / renderHeight) * canvasHeight) || firstSlicePx;
+
+        const sliceCanvas = document.createElement('canvas');
+        const sliceCtx = sliceCanvas.getContext('2d');
+        sliceCanvas.width = canvas.width;
+
+        let sy = 0;
+
+        // First page slice
+        let sHeight = Math.min(firstSlicePx, canvasHeight - sy);
+        sliceCanvas.height = sHeight;
+        sliceCtx.clearRect(0,0, sliceCanvas.width, sliceCanvas.height);
+        sliceCtx.drawImage(canvas, 0, sy, sliceCanvas.width, sHeight, 0, 0, sliceCanvas.width, sHeight);
+        const firstData = sliceCanvas.toDataURL('image/png');
+        const sliceHeightMM_first = pxToMm(sHeight);
+        const drawHeight_first = (sliceHeightMM_first / imgHeightMM) * renderHeight;
+
+        pdf.addImage(firstData, 'PNG', leftRightMargin, topFirst, availWidth, drawHeight_first);
+
+        sy += sHeight;
+
+        // Subsequent pages
+        while (sy < canvasHeight) {
+          sHeight = Math.min(otherSlicePx, canvasHeight - sy);
+          sliceCanvas.height = sHeight;
+          sliceCtx.clearRect(0,0, sliceCanvas.width, sliceCanvas.height);
+          sliceCtx.drawImage(canvas, 0, sy, sliceCanvas.width, sHeight, 0, 0, sliceCanvas.width, sHeight);
+          const sliceData = sliceCanvas.toDataURL('image/png');
+          const sliceHeightMM = pxToMm(sHeight);
+          const drawHeight = (sliceHeightMM / imgHeightMM) * renderHeight;
+
+          pdf.addPage();
+          pdf.addImage(sliceData, 'PNG', leftRightMargin, topOther, availWidth, drawHeight);
+
+          sy += sHeight;
+        }
+      }
+
+      // filename
+      const rawName = refs.hospitalName.value.trim() || 'MoU';
+      const safeName = rawName.replace(/[^a-z0-9_\- ]/gi, '').replace(/\s+/g, '_').slice(0,80) || 'MoU';
+      const dateStr = (refs.mouDate.value || new Date().toISOString().slice(0,10)).replace(/:/g,'-');
+
+      pdf.save(`${safeName}_MoU_${dateStr}.pdf`);
+    }
+
+    // ---- DIRECT PRINT: hide UI chrome, print current window, restore UI ----
+    refs.printBtn.addEventListener('click', function () {
+      try {
+        // Elements to hide during print
+        const toHide = [
+          refs.formCard,
+          refs.downloadBtn,
+          refs.printBtn,
+          refs.resetBtn,
+          refs.siteFooter
+        ].filter(Boolean);
+
+        // hide them
+        toHide.forEach(el => { el.style.display = 'none'; });
+
+        // Force background white for print clarity
+        const originalBodyBg = document.body.style.background;
+        document.body.style.background = '#fff';
+
+        // Wait a moment for layout/fonts to settle
+        setTimeout(() => {
+          // Use onafterprint when available to restore UI
+          const restore = () => {
+            toHide.forEach(el => { el.style.display = ''; });
+            document.body.style.background = originalBodyBg || '';
+            // remove listeners
+            if (window.matchMedia) mql.removeListener(onChange);
+            window.removeEventListener('afterprint', restore);
+          };
+
+          // Some browsers fire print dialog asynchronously; listen to afterprint
+          window.addEventListener('afterprint', restore);
+
+          // Fallback: some browsers (older) may not support afterprint. Use matchMedia if available.
+          let mql;
+          function onChange(e) {
+            if (!e.matches) { // finished printing
+              restore();
+            }
+          }
+          if (window.matchMedia) {
+            mql = window.matchMedia('print');
+            mql.addListener(onChange);
+          }
+
+          // Finally call print
+          window.print();
+
+          // As a backup restore after 2 seconds in case afterprint never fires
+          setTimeout(() => {
+            // If elements still hidden, restore
+            if (toHide.length && (toHide[0].style.display === 'none')) {
+              restore();
+            }
+          }, 2000);
+        }, 250);
+
+      } catch (err) {
+        console.error('Direct print failed:', err);
+        alert('Print failed. Try the "Download PDF" button instead or check browser console for errors.');
+        // Ensure UI restored on error
+        [refs.formCard, refs.downloadBtn, refs.printBtn, refs.resetBtn, refs.siteFooter].forEach(el => { if (el) el && (el.style.display = '');});
+        document.body.style.background = '';
+      }
+    });
+
+    // Accessibility: Enter triggers download
+    refs.downloadBtn.addEventListener('keydown', e => { if (e.key === 'Enter') downloadPDF(); });
+
+  </script>
+</body>
+</html>
