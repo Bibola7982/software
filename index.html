@@ -2,222 +2,206 @@
 <html lang="hi">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hospital Healthcare Platform - HMS</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <!-- Google font + Font Awesome for icons -->
+  <!-- SECURITY HEADERS -->
+  <meta http-equiv="Content-Security-Policy"
+        content="
+        default-src 'self';
+        img-src 'self' data:;
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline';
+        font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+        frame-ancestors 'none';
+        base-uri 'self';
+        form-action 'self';
+        ">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="no-referrer">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hospital Healthcare Platform - GUI</title>
+
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- FontAwesome with SRI -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-u7cEvG8qs8jgqC2eBzdE4zU6uPq6i0Tqa+ilPnhCYdhf66A5t/CzFxlXUWZ5G6G7H3YrGqZ7z9K2jG1C6fK6oQ=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
 
   <style>
     :root{
-      --bg: #f7f8fb;
+      --bg: #f1f4fa;
       --card: #ffffff;
       --muted: #6b7280;
-      --accent: #1e90ff;
+      --accent: #007bff;
       --border: #e6e8ee;
-      --shadow: 0 6px 18px rgba(15,23,42,0.06);
-      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      --shadow: 0 6px 18px rgba(0,0,0,0.08);
+      font-family: 'Inter', system-ui, sans-serif;
     }
-    *{box-sizing:border-box}
+
     body{
       margin:0;
-      background: radial-gradient(circle at 10% 10%, rgba(227,233,243,0.6), transparent 10%),
-                  radial-gradient(circle at 90% 90%, rgba(243,227,233,0.4), transparent 10%),
-                  var(--bg);
-      color:#0f172a;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      padding:40px;
+      padding:30px;
+      background: var(--bg);
     }
 
     .container{
-      max-width:1100px;
+      max-width:1200px;
       margin:0 auto;
     }
 
     header{
       text-align:left;
-      margin-bottom:28px;
+      margin-bottom:25px;
     }
+
     header h1{
-      font-size:40px;
-      margin:0 0 6px 0;
+      font-size:42px;
+      margin:0;
       letter-spacing:-0.5px;
     }
     header p{
-      margin:0;
       color:var(--muted);
+      margin:4px 0 0 0;
     }
 
-    /* Grid */
+    /* GRID */
     .grid{
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap:18px;
-      margin-top:18px;
+      margin-top:20px;
     }
 
-    /* Card */
+    /* CARD COMPONENT */
     .card{
       background:var(--card);
-      border-radius:12px;
-      padding:18px;
+      border-radius:14px;
+      padding:20px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
       display:flex;
       align-items:center;
-      gap:14px;
-      border:1px solid var(--border);
-      box-shadow: var(--shadow);
-      transition:transform .14s ease, box-shadow .14s ease;
+      gap:15px;
+      cursor:pointer;
+      transition:0.25s;
+      position:relative;
+      overflow:hidden;
     }
-    .card:hover{ transform: translateY(-6px); box-shadow: 0 12px 30px rgba(15,23,42,0.08);}
+
+    .card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 12px 32px rgba(0,0,0,0.12);
+    }
 
     .icon-wrap{
-      min-width:64px;
-      min-height:64px;
-      border-radius:50%;
+      min-width:68px;
+      min-height:68px;
       display:flex;
       align-items:center;
       justify-content:center;
-      border:3px solid rgba(30,144,255,0.12);
-      background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(250,251,255,0.6));
+      border-radius:50%;
+      border:3px solid rgba(0,123,255,0.15);
+      background:linear-gradient(180deg, #fff, #eef5ff);
     }
+
     .icon-wrap i{
-      font-size:26px;
+      font-size:28px;
       color:var(--accent);
     }
 
-    .card .title{
-      font-size:16px;
+    .title{
+      font-size:18px;
       font-weight:600;
-      color:#0f172a;
+      color:#111827;
       line-height:1.1;
     }
-    .card .subtitle{
+
+    .subtitle{
       font-size:13px;
-      color:var(--muted);
       margin-top:4px;
+      color:var(--muted);
     }
 
-    /* Responsive */
-    @media (max-width: 920px){
-      .grid{ grid-template-columns: repeat(2, 1fr); }
+    /* Ripple effect */
+    .card::after{
+      content:'';
+      position:absolute;
+      width:0;
+      height:0;
+      border-radius:50%;
+      background:rgba(0,123,255,0.18);
+      transform:scale(0);
+      opacity:0;
+      transition:0.5s;
+      pointer-events:none;
     }
-    @media (max-width: 580px){
-      body{ padding:20px; }
-      header h1{ font-size:28px; }
-      .grid{ grid-template-columns: 1fr; }
-      .icon-wrap{ min-width:56px; min-height:56px; }
+    .card:active::after{
+      width:200px; height:200px;
+      transform:scale(1);
+      opacity:1;
     }
+
   </style>
 </head>
+
 <body>
+  
   <div class="container">
+
     <header>
       <h1>Hospital Healthcare Platform</h1>
-      <p>Comprehensive HMS modules — ek jagah par</p>
+      <p>All HMS modules — beautifully GUI enabled</p>
     </header>
 
     <main>
-      <div class="grid">
-        <div class="card">
-          <div class="icon-wrap"><i class="fa-solid fa-file-signature"></i></div>
-          <div>
-            <div class="title">Advanced HIMS</div>
-            <div class="subtitle">Hospital Information Management</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="icon-wrap"><i class="fa-solid fa-notes-medical"></i></div>
-          <div>
-            <div class="title">EMR / EHR</div>
-            <div class="subtitle">Electronic Medical Records</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="icon-wrap"><i class="fa-solid fa-vials"></i></div>
-          <div>
-            <div class="title">LIMS</div>
-            <div class="subtitle">Lab Information Management</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="icon-wrap"><i class="fa-solid fa-x-ray"></i></div>
-          <div>
-            <div class="title">RIS / PACS</div>
-            <div class="subtitle">Imaging & Radiology</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="icon-wrap"><i class="fa-solid fa-prescription-bottle-medical"></i></div>
-          <div>
-            <div class="title">Pharmacy Management</div>
-            <div class="subtitle">Inventory & dispensing</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="icon-wrap"><i class="fa-solid fa-ambulance"></i></div>
-          <div>
-            <div class="title">Connected Ambulance</div>
-            <div class="subtitle">Real-time dispatch</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="icon-wrap"><i class="fa-solid fa-video"></i></div>
-          <div>
-            <div class="title">Telemedicine</div>
-            <div class="subtitle">Remote consultations</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="icon-wrap"><i class="fa-solid fa-house-medical"></i></div>
-          <div>
-            <div class="title">Home Care</div>
-            <div class="subtitle">In-home patient services</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="icon-wrap"><i class="fa-solid fa-boxes-stacked"></i></div>
-          <div>
-            <div class="title">Inventory & SCM</div>
-            <div class="subtitle">Supply chain management</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="icon-wrap"><i class="fa-solid fa-chart-line"></i></div>
-          <div>
-            <div class="title">Data Analytics</div>
-            <div class="subtitle">Reports & insights</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="icon-wrap"><i class="fa-solid fa-receipt"></i></div>
-          <div>
-            <div class="title">Billing System</div>
-            <div class="subtitle">Payments & invoicing</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="icon-wrap"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-          <div>
-            <div class="title">e-Claims & Insurance</div>
-            <div class="subtitle">Claims processing</div>
-          </div>
-        </div>
-
-      </div>
+      <div class="grid" id="cardsContainer"></div>
     </main>
+
   </div>
+
+  <!-- ===============================
+        FULL GUI CONFIG SYSTEM
+        EASY TO EDIT FOR THE FUTURE
+       =============================== -->
+  <script>
+    const cardsConfig = [
+      { icon: "fa-file-signature", title: "Advanced HIMS", subtitle: "Hospital Information Management", link: "hims.html" },
+      { icon: "fa-notes-medical", title: "EMR / EHR", subtitle: "Electronic Medical Records", link: "emr.html" },
+      { icon: "fa-vials", title: "LIMS", subtitle: "Lab Management System", link: "lims.html" },
+      { icon: "fa-x-ray", title: "RIS / PACS", subtitle: "Radiology Imaging System", link: "pacs.html" },
+      { icon: "fa-prescription-bottle-medical", title: "Pharmacy", subtitle: "Full Pharmacy Automation", link: "pharmacy.html" },
+      { icon: "fa-ambulance", title: "Connected Ambulance", subtitle: "Live Tracking & Dispatch", link: "ambulance.html" },
+      { icon: "fa-video", title: "Telemedicine", subtitle: "Online Doctor Consulting", link: "telemedicine.html" },
+      { icon: "fa-house-medical", title: "Home Care", subtitle: "Patient Home Services", link: "homecare.html" },
+      { icon: "fa-boxes-stacked", title: "Inventory & SCM", subtitle: "Supply Chain System", link: "inventory.html" },
+      { icon: "fa-chart-line", title: "Analytics", subtitle: "Reports & BI Dashboard", link: "analytics.html" },
+      { icon: "fa-receipt", title: "Billing System", subtitle: "Invoice & Payments", link: "billing.html" },
+      { icon: "fa-file-invoice-dollar", title: "e-Claims", subtitle: "Insurance Claims System", link: "claims.html" },
+    ];
+
+    const container = document.getElementById("cardsContainer");
+
+    cardsConfig.forEach(card => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+          <div class="icon-wrap">
+            <i class="fa-solid ${card.icon}"></i>
+          </div>
+          <div>
+            <div class="title">${card.title}</div>
+            <div class="subtitle">${card.subtitle}</div>
+          </div>
+      `;
+      div.addEventListener("click", () => window.open(card.link, "_blank"));
+      container.appendChild(div);
+    });
+  </script>
+
 </body>
 </html>
