@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Professional Bed Rest Certificate — A4</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --accent:#b71c1c; --muted:#6b7280; --paper-bg:#fff; --soft:#f7f7f7 }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;padding:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;background:#f3f4f6;color:#111}
+
+    .app{max-width:1200px;margin:18px auto;padding:18px}
+    .top{display:flex;gap:20px;align-items:center}
+    h1{font-size:20px;margin:0 0 6px}
+    p.lead{margin:0;color:var(--muted)}
+
+    .panel{background:#fff;border-radius:12px;padding:14px;box-shadow:0 6px 24px rgba(12,17,23,0.08)}
+    .controls{width:380px;padding:16px}
+    label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+    input[type=text], input[type=date], textarea, select{width:100%;padding:10px;border:1px solid #e6e6e6;border-radius:8px;font-size:14px;background:#fff}
+    textarea{min-height:84px;resize:vertical}
+
+    .btn{display:inline-block;padding:9px 14px;border-radius:10px;background:var(--accent);color:#fff;border:0;cursor:pointer;font-weight:700}
+    .btn.ghost{background:transparent;color:var(--accent);border:1px solid #f2caca}
+    .row{display:flex;gap:12px}
+
+    .preview-wrap{flex:1;padding:12px}
+    .preview{width:210mm; height:297mm; background:var(--paper-bg); margin:0 auto;box-shadow:0 12px 40px rgba(2,6,23,0.12); border:1px solid #e8e8e8;position:relative;overflow:hidden}
+
+    /* professional certificate styling */
+    .certificate{padding:18mm 20mm 18mm 20mm; min-height:calc(297mm - 36mm); background:var(--paper-bg); color:#111}
+    .header{display:flex;align-items:center;gap:14px;border-bottom:2px solid #eee;padding-bottom:10px}
+    .logo{width:92px;height:92px;background:var(--soft);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .logo img{width:100%;height:100%;object-fit:cover;display:block}
+
+    .hospital-meta{flex:1;text-align:center}
+    .hospital-meta h2{margin:0;font-size:20px;color:var(--accent);font-weight:700;letter-spacing:0.6px}
+    .hospital-meta p{margin:3px 0;color:var(--muted);font-weight:600}
+    .hospital-meta .sub{font-size:12px;color:var(--muted);font-weight:500}
+
+    .title{margin:18px 0;text-align:center}
+    .title h3{margin:0;font-size:18px;letter-spacing:0.8px}
+    .divider{height:8px}
+
+    .fields{font-size:14px;line-height:1.8;color:#111}
+    .fields .label{font-weight:700}
+
+    .muted{color:var(--muted);font-size:13px}
+    .controls .group{margin-bottom:14px}
+
+    .signature{margin-top:36px;display:flex;justify-content:space-between;align-items:center}
+    .sig-line{border-bottom:1px solid #111;width:220px;height:1px}
+    .sig-text{font-size:13px;color:var(--muted)}
+
+    /* Professional touches: dotted patient line */
+    .dotted-line{border-bottom:1px dotted #999;padding-bottom:6px}
+
+    @media (max-width:980px){.top{flex-direction:column}.controls{width:100%}.preview{width:100%;height:auto}}
+
+    /* print styles */
+    @page{size:A4;margin:0}
+    @media print{
+      body *{visibility:hidden}
+      .preview, .preview *{visibility:visible}
+      .preview{position:fixed;left:0;top:0;width:210mm;height:297mm;margin:0;border:none;box-shadow:none}
+      .certificate{padding-top:5cm !important; padding-left:18mm; padding-right:18mm; padding-bottom:18mm}
+    }
+
+    /* hide logo block when no header */
+    .no-header .logo{display:none}
+
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="top">
+      <div style="flex:1">
+        <h1>Professional Bed Rest Certificate Generator</h1>
+        <p class="lead">Create a printable, A4 professional bed-rest medical certificate. Use <strong>Download PDF</strong> or <strong>Print A4</strong>.</p>
+      </div>
+    </div>
+
+    <div class="panel" style="display:flex;gap:18px;margin-top:16px;align-items:flex-start">
+      <div class="controls" aria-label="controls">
+        <div class="group">
+          <label>Hospital Name</label>
+          <input id="hospitalName" type="text" placeholder="e.g. Bhale Ram Multispeciality Hospital" />
+        </div>
+        <div class="group">
+          <label>Hospital Address / Contact</label>
+          <input id="hospitalAddr" type="text" placeholder="Address, city, pin, phone" />
+        </div>
+
+        <div class="group">
+          <label>Patient Full Name</label>
+          <input id="patientName" type="text" placeholder="Patient name" />
+        </div>
+        <div class="row">
+          <div style="flex:1">
+            <label>Age / Sex</label>
+            <input id="ageSex" type="text" placeholder="e.g. 17 Year / Male" />
+          </div>
+          <div style="width:150px">
+            <label>Date (certificate)</label>
+            <input id="certDate" type="date" />
+          </div>
+        </div>
+
+        <div class="group">
+          <label>Treatment From (start)</label>
+          <input id="fromDate" type="date" />
+        </div>
+        <div class="group">
+          <label>Treatment To (end)</label>
+          <input id="toDate" type="date" />
+        </div>
+
+        <div class="row">
+          <div style="flex:1">
+            <label>Rest Advised From</label>
+            <input id="restFrom" type="date" />
+          </div>
+          <div style="flex:1">
+            <label>Rest Advised To</label>
+            <input id="restTo" type="date" />
+          </div>
+        </div>
+
+        <div class="group">
+          <label>Treatment / Procedure (brief)</label>
+          <textarea id="procedure" placeholder="e.g. Patient was admitted for ortho surgery in emergency"></textarea>
+        </div>
+
+        <div class="group">
+          <label>Additional Notes</label>
+          <textarea id="notes" placeholder="Further instructions or remarks (optional)"></textarea>
+        </div>
+
+        <div class="group">
+          <label>Doctor Name (for signature)</label>
+          <input id="doctor" type="text" placeholder="Dr. (name)" />
+        </div>
+
+        <div class="group">
+          <label>Header Image (logo or hospital header) — optional</label>
+          <input id="fileUpload" type="file" accept="image/*" />
+          <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn" id="applyBtn">Update Preview</button>
+            <button class="btn ghost" id="clearBtn" type="button">Clear Header</button>
+            <button class="btn ghost" id="loadSample" type="button">Load Sample Header</button>
+            <button class="btn" id="printBtn">Print A4</button>
+            <button class="btn" id="pdfBtn">Download PDF</button>
+          </div>
+        </div>
+
+        <div class="group small muted">
+          <p><strong>Note:</strong> If you do not upload a header/photo it will be omitted from the printed PDF/print. For best results set page to A4 and margins to minimum in print dialog.</p>
+        </div>
+      </div>
+
+      <div class="preview-wrap">
+        <div class="preview" id="preview">
+          <div class="certificate" id="certificate">
+            <div class="header" id="headerRow">
+              <div class="logo" id="logoHolder">
+                <img id="headerImg" src="" alt="header" />
+              </div>
+              <div class="hospital-meta">
+                <h2 id="hName">&nbsp;</h2>
+                <p id="hAddr" class="sub">&nbsp;</p>
+                <p class="sub muted" id="hContact">&nbsp;</p>
+              </div>
+            </div>
+
+            <div class="title">
+              <h3>MEDICAL CERTIFICATE / BED REST</h3>
+            </div>
+
+            <div class="fields" id="fields">
+              <p><span class="label">Patient: </span> <span id="pName" class="dotted-line">&nbsp;</span></p>
+              <p><span class="label">Age / Sex: </span> <span id="pAgeSex" class="dotted-line">&nbsp;</span></p>
+
+              <p id="treatmentLine"><span class="label">Diagnosis / Treatment:</span> <span id="treatmentProc">&nbsp;</span></p>
+
+              <p id="admitLine">is/was under my treatment at <u id="treatHosp">&nbsp;</u> from <u id="fromD">&nbsp;</u> to <u id="toD">&nbsp;</u>.</p>
+
+              <p id="restLine">He/She is/was advised <strong>complete rest</strong> for this period from <u id="restFromD">&nbsp;</u> to <u id="restToD">&nbsp;</u>.</p>
+
+              <p id="extraNotes" class="muted" style="margin-top:10px">&nbsp;</p>
+            </div>
+
+            <div class="signature">
+              <div>
+                <div class="sig-line"></div>
+                <div class="sig-text" id="docName">Doctor's Signature: &nbsp;</div>
+              </div>
+              <div class="muted">Date: <span id="printDate">&nbsp;</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- include html2canvas + jsPDF from CDN for client-side PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    const { jsPDF } = window.jspdf;
+    function fmt(d){ if(!d) return '\u00A0'; try{ const date = new Date(d); const opts={day:'2-digit', month:'short', year:'numeric'}; return date.toLocaleDateString('en-GB', opts).replace(/ /g,'. '); }catch(e){return d} }
+
+    const hospitalName = document.getElementById('hospitalName');
+    const hospitalAddr = document.getElementById('hospitalAddr');
+    const patientName = document.getElementById('patientName');
+    const ageSex = document.getElementById('ageSex');
+    const certDate = document.getElementById('certDate');
+    const fromDate = document.getElementById('fromDate');
+    const toDate = document.getElementById('toDate');
+    const restFrom = document.getElementById('restFrom');
+    const restTo = document.getElementById('restTo');
+    const notes = document.getElementById('notes');
+    const doctor = document.getElementById('doctor');
+    const procedure = document.getElementById('procedure');
+
+    const hName = document.getElementById('hName');
+    const hAddr = document.getElementById('hAddr');
+    const pName = document.getElementById('pName');
+    const pAgeSex = document.getElementById('pAgeSex');
+    const fromD = document.getElementById('fromD');
+    const toD = document.getElementById('toD');
+    const restFromD = document.getElementById('restFromD');
+    const restToD = document.getElementById('restToD');
+    const extraNotes = document.getElementById('extraNotes');
+    const docName = document.getElementById('docName');
+    const printDate = document.getElementById('printDate');
+    const treatHosp = document.getElementById('treatHosp');
+    const headerImg = document.getElementById('headerImg');
+    const fileUpload = document.getElementById('fileUpload');
+    const preview = document.getElementById('preview');
+    const headerRow = document.getElementById('headerRow');
+    const treatmentProc = document.getElementById('treatmentProc');
+
+    function updateHeaderVisibility(){
+      if(!headerImg.src || headerImg.src.trim()===''){
+        preview.classList.add('no-header');
+        return;
+      }
+      // if image has loaded
+      if(headerImg.complete && headerImg.naturalWidth>0){ preview.classList.remove('no-header'); }
+      else{
+        headerImg.onload = ()=>{ preview.classList.remove('no-header'); };
+        headerImg.onerror = ()=>{ preview.classList.add('no-header'); };
+      }
+    }
+
+    function applyToPreview(){
+      hName.textContent = hospitalName.value.trim() || '\u00A0';
+      hAddr.textContent = hospitalAddr.value.trim() || '\u00A0';
+      pName.textContent = patientName.value.trim() || '\u00A0';
+      pAgeSex.textContent = ageSex.value.trim() || '\u00A0';
+      fromD.textContent = fmt(fromDate.value);
+      toD.textContent = fmt(toDate.value);
+      restFromD.textContent = fmt(restFrom.value);
+      restToD.textContent = fmt(restTo.value);
+      extraNotes.textContent = notes.value.trim() || '\u00A0';
+      docName.textContent = "Doctor's Signature: " + (doctor.value.trim() || '\u00A0');
+      printDate.textContent = certDate.value ? (new Date(certDate.value).toLocaleDateString('en-GB')) : '\u00A0';
+      treatHosp.textContent = hName.textContent || '\u00A0';
+      treatmentProc.textContent = procedure.value.trim() || '\u00A0';
+      updateHeaderVisibility();
+    }
+
+    [hospitalName,hospitalAddr,patientName,ageSex,certDate,fromDate,toDate,restFrom,restTo,notes,doctor,procedure].forEach(el=>{ el.addEventListener('input', applyToPreview); el.addEventListener('change', applyToPreview); });
+
+    document.getElementById('applyBtn').addEventListener('click', ()=>{ applyToPreview(); });
+
+    fileUpload.addEventListener('change', (e)=>{
+      const f = e.target.files[0];
+      if(!f){ headerImg.src=''; applyToPreview(); return; }
+      const reader = new FileReader(); reader.onload = ()=>{ headerImg.src = reader.result; applyToPreview(); }; reader.readAsDataURL(f);
+    });
+
+    document.getElementById('clearBtn').addEventListener('click', ()=>{ headerImg.src = ''; fileUpload.value=''; applyToPreview(); });
+
+    // Developer-provided sample header path (local environment). Use it to load sample header if needed.
+    document.getElementById('loadSample').addEventListener('click', ()=>{
+      headerImg.src = '/mnt/data/889796ca-7253-42b2-8def-7d348e78bca8.jpeg';
+      headerImg.onload = ()=>{ applyToPreview(); };
+      headerImg.onerror = ()=>{ alert('Sample header could not be loaded in this environment.'); };
+    });
+
+    document.getElementById('printBtn').addEventListener('click', ()=>{ applyToPreview(); setTimeout(()=>{ window.print(); },200); });
+
+    // PDF export: capture the certificate area and save as A4 PDF with 5cm top offset
+    document.getElementById('pdfBtn').addEventListener('click', async ()=>{
+      applyToPreview();
+      const cert = document.getElementById('certificate');
+      // force padding-top to 5cm for PDF capture to emulate print spacing
+      const prevPadding = cert.style.paddingTop;
+      cert.style.paddingTop = '5cm';
+
+      // increase scale for better quality
+      const scale = 2.0;
+      try{
+        const canvas = await html2canvas(cert, {scale: scale, useCORS:true, backgroundColor: '#ffffff'});
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        // Create PDF (A4 = 210 x 297 mm)
+        const pdf = new jsPDF({ unit: 'mm', format: 'a4' });
+        const pdfWidth = 210;
+        const pdfHeight = 297;
+        // compute image dimensions in mm
+        const imgProps = { width: canvas.width, height: canvas.height };
+        const mmPerPx = pdfWidth / canvas.width;
+        const imgWidthMM = canvas.width * mmPerPx;
+        const imgHeightMM = canvas.height * mmPerPx;
+        // place image at top-left
+        pdf.addImage(imgData, 'JPEG', 0, 0, imgWidthMM, imgHeightMM);
+        // save
+        pdf.save('Medical_Certificate.pdf');
+      }catch(err){
+        alert('PDF generation failed: ' + err.message);
+      }finally{
+        cert.style.paddingTop = prevPadding; // restore
+      }
+    });
+
+    // initialize
+    (function init(){ applyToPreview(); })();
+
+  </script>
+</body>
+</html>
