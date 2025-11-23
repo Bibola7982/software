@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Essentiality Certificate </title>
+
+<style>
+@page {
+    size: A4;
+    margin: 10mm;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Calibri, Arial, sans-serif;
+    background: #e5e5e5;
+}
+
+.page {
+    width: 210mm;
+    min-height: 297mm;
+    max-height: 297mm;   /* <-- Add this */
+    background: white;
+    margin: 0 auto;       /* remove extra margin */
+    padding: 15mm;
+    box-shadow: none;     /* optional */
+    box-sizing: border-box;
+    page-break-after: always;
+}
+
+.page:last-child {
+    page-break-after: auto !important;
+}
+
+
+h1 {
+    text-align: center;
+    text-decoration: underline;
+    font-size: 26px;
+    margin: 0;
+}
+
+.edit {
+    display: inline-block;
+    border-bottom: 1px dotted #333;
+    min-width: 60px;
+}
+.edit:focus {
+    outline: 2px solid #49a8ff;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+}
+td, th {
+    border: 1px solid black;
+    padding: 6px;
+}
+.noborder td {
+    border: none !important;
+    padding: 4px 0;
+}
+
+.btnbox {
+    text-align: center;
+    margin: 15px 0;
+}
+.btn {
+    padding: 10px 20px;
+    margin: 3px;
+    border: none;
+    border-radius: 4px;
+    background: #1d56f0;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+@media print {
+    .btnbox { display: none; }
+    body { background: white; margin: 0; }
+    
+    .edit, #medicineTable td[contenteditable="true"] {
+        font-weight: bold !important;
+    }
+    
+    .page {
+        width: 210mm;
+        height: 297mm;           /* fixed A4 height */
+        margin: 0 auto;          /* remove extra spacing */
+        padding: 15mm 10mm;      /* adjust as needed */
+        box-sizing: border-box;
+        box-shadow: none;
+        overflow: hidden;        /* prevents content spill */
+        page-break-after: always;
+    }
+    
+    .page:last-child {
+        page-break-after: auto !important;
+    }
+
+    @page {
+        size: A4;
+        margin: 0;               /* remove browser default margins */
+    }
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="btnbox">
+    <button class="btn" onclick="window.print()">Print / Save PDF</button>
+    <button class="btn" onclick="addRow()">Add Row</button>
+</div>
+
+<!-- PAGE 1 -->
+<div class="page">
+
+<h1>ESSENTIALITY CERTIFICATE</h1>
+<p style="text-align:center;">(To be filled In Capital letters)</p>
+
+<table class="noborder">
+<tr>
+<td>Name of Claimant: <span class="edit" contenteditable="true">               </span></td>
+<td>Period of Treatment: <span class="edit" contenteditable="true">1 DAY</span></td>
+</tr>
+
+<tr>
+<td>Designation: <span class="edit" contenteditable="true">                    </span></td>
+<td>From <span class="edit" contenteditable="true">  12/10/2025  </span> TO <span class="edit" contenteditable="true">  17/10/2025  </span></td>
+</tr>
+
+<tr>
+<td>Department: <span class="edit" contenteditable="true">                         </span></td>
+<td>Indoor No <span class="edit" contenteditable="true">                        </span> OPD Date <span class="edit" contenteditable="true">  12-10-2025  </span></td>
+</tr>
+
+<tr>
+<td>Pay BASIC-Rs: <span class="edit" contenteditable="true">                 </span></td>
+<td>Outdoor No <span class="edit" contenteditable="true">22441</span> Date <span class="edit" contenteditable="true">  12-10-2025  </span></td>
+</tr>
+</table>
+
+<br>
+
+<p style="font-size:15px; line-height:1.4;">
+I certify that Mr/Mrs <span class="edit" contenteditable="true">                </span>  
+S/D/Wife of Mr <span class="edit" contenteditable="true">                _</span> employed in the office of  
+<span class="edit" contenteditable="true">                                     </span> has been under my treatment in the  
+<span class="edit" contenteditable="true"> BHALERAM MULTISPECIALITY HOSPITAL, HANSI Hospital/  </span>dispensary in my consultation  
+and that the under mentioned medicine prescribed by me  
+DR. RAHUL SHARMA / DR. RANJIT SINGH.
+for the supply to the patient and do not include preparation for which cheaper substitute of equal therapeutic value are available/not the preparation prescribed are primary food, tolet or disinfectants.
+</p>
+
+<p style="font-size:15px;">
+1. Certified that medicines have no cheaper and effective substitute<br>
+2. Certified that the treatment given was indoor/outdoor<br>
+3. Certified that the price claimed is reasonable<br>
+4. She is suffering from: <span class="edit" contenteditable="true">                                     </span>
+</p>
+
+<h3 style="text-align:center;">CONSTIPATION / GASTROENTERITIS</h3>
+
+<table id="medicineTable">
+<thead>
+<tr>
+<th>S. No.</th>
+<th>Name & Quantity</th>
+<th>Outdoor Ticket No & Date</th>
+<th>Date Purchased & Bill No</th>
+<th>Price</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<td contenteditable="true">1</td>
+<td contenteditable="true">GENERAL WARD</td>
+<td contenteditable="true">17-10-2025</td>
+<td contenteditable="true">17-10-2025<br>BILL NO: 1833</td>
+<td class="price" contenteditable="true">8600/-</td>
+</tr>
+
+<tr>
+<td contenteditable="true">2</td>
+<td contenteditable="true">INVESTIGATIONS</td>
+<td contenteditable="true">12-10-2025</td>
+<td contenteditable="true">12-10-2025 BILL NO 2974<br>17-10-2025 BILL NO 3055</td>
+<td class="price" contenteditable="true">515/- 450/-</td>
+</tr>
+
+
+
+<tr>
+<td contenteditable="true">3</td>
+<td contenteditable="true">PHARMACY BILL</td>
+<td contenteditable="true">17-10-2025</td>
+<td contenteditable="true">17-10-2025 BILL NO A05142</td>
+<td class="price" contenteditable="true">3530/-</td>
+</tr>
+
+</tbody>
+</table>
+
+<br>
+
+<p style="text-align:right; font-size:16px;">
+<b>Total Amount:</b> <span id="totalAmount">0/-</span>
+</p>
+
+<br><br>
+
+<b>In case of Indoor Treatment:</b><br>
+    <br>  <br> 
+    <br>
+<b>Signature & Designation of Authorized Medical Attendant</b><br>
+    <p style="font-size:15px; line-height:1.5;">
+    Certified that the medicines claimed in this bill are as hand ticket no 
+    <span class="edit" contenteditable="true">                                                </span> are relates to the case.
+  </p>  <br>   <br> 
+  
+<b>DR. RAHUL SHARMA / RAJESH KUMAR</b>
+
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+
+
+
+  <p><b>Certified that:</b></p>
+
+  <ol style="font-size:15px; line-height:1.5;">
+    <li>The Medicines have actually been purchased by me during the course of treatment.</li>
+    <li>I am living in the House No. <span class="edit" contenteditable="true">                                </span></li>
+    <li>I have purchased the medicines from the prescribed co-op. store.</li>
+    <li>The medicines have been purchased from private shop after obtaining non-availability certificate from Co-op. Store/Super Bazar  
+        <br><span class="edit" contenteditable="true">                                      </span>
+    </li>
+    <li>The amount of medicines purchased from private shop against one or more prescription does not exceed Rs <span class="edit" contenteditable="true">                 </span> in a single day.</li>
+    <li>In case of wife/children:  
+      <br>The patient Mr./Mrs. <span class="edit" contenteditable="true">                </span> is my <span class="edit" contenteditable="true">              </span> and is wholly dependent upon me and is residing with me and he/she is unmarried and un-employed (in case of son/daughters).</li>
+    <li>For parents only:  
+      <br>His/her total monthly income does not exceed Rs <span class="edit" contenteditable="true">                        </span> P.M. any mother/father is/are residing with me.</li>
+    <li>In case spouse is working:  
+      <br>a) Certified that my wife/husband is not getting any fixed medical allowance from any source.<br>
+      b) Certified that my wife/husband is employed and is not getting any medical reimbursement. An affidavit to this effect has been furnished.<br>
+      c) Certified that I am not ad-hoc employee and am working on regular basis.
+    </li>
+  </ol>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+
+<table class="noborder" style="width:100%;">
+<tr>
+<td>
+Place: HANSI<br><br>
+Date: <span class="edit" contenteditable="true">__ /__ /____</span>
+</td>
+
+<td style="text-align:right;">
+Signature<br>
+<span class="edit" contenteditable="true">                     _</span><br>
+Name (in capital letters)<br>
+Designation: <span class="edit" contenteditable="true">__________</span>
+</td>
+</tr>
+</table>
+
+</div>
+
+<script>
+// ADD NEW ROW
+function addRow() {
+    const tbody = document.querySelector("#medicineTable tbody");
+    const rowCount = tbody.rows.length + 1; // auto increment S. No.
+    
+    let row = document.createElement("tr");
+    row.innerHTML = `
+        <td contenteditable="true">${rowCount}</td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td class="price" contenteditable="true">0</td>
+    `;
+    tbody.appendChild(row);
+    calculateTotal(); // recalc total after adding new row
+}
+
+
+// AUTO TOTAL CALCULATION
+function autoCalculateTotal() {
+    let total = 0;
+    let items = document.querySelectorAll(".price");
+
+    items.forEach(cell => {
+        let text = cell.innerText.replace(/[^0-9\.]/g, " ").trim();
+        let nums = text.split(" ");
+
+        nums.forEach(n => {
+            let val = parseFloat(n);
+            if(!isNaN(val)) total += val;
+        });
+    });
+
+    document.getElementById("totalAmount").innerText = total + "/-";
+}
+
+document.addEventListener("input", function(e){
+    if(e.target.classList.contains("price")){
+        autoCalculateTotal();
+    }
+});
+
+window.onload = autoCalculateTotal;
+</script>
+
+</body>
+</html>
