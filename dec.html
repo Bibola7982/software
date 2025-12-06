@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Annexure-I — Standard Declaration Form</title>
+  <style>
+    :root{--page-width:800px;--pad:40px;font-family: 'Segoe UI', Roboto, Arial, sans-serif;color:#111}
+    body{display:flex;align-items:center;justify-content:center;padding:20px;background:#f3f4f6}
+    .page{width:var(--page-width);min-height:1100px;background:#fff;padding:var(--pad);box-shadow:0 8px 30px rgba(0,0,0,0.08);}
+    header{display:flex;justify-content:space-between;align-items:flex-start}
+    .left{font-size:12px;color:#666}
+    h1{font-size:18px;margin:6px 0 2px;text-align:center}
+    h2{font-size:14px;margin:0;text-align:center;color:#333}
+    .meta{margin-top:18px}
+    .declaration{margin-top:24px;line-height:1.6;font-size:15px}
+    .bullets{margin-top:18px;margin-left:36px}
+    .bullet{margin:8px 0}
+    .signature-row{display:flex;justify-content:space-between;align-items:flex-end;margin-top:80px}
+    .signature{width:45%;text-align:left}
+    .sig-line{margin-top:48px;border-top:1px solid #000;width:80%;padding-top:8px}
+    .rightsmall{text-align:right;font-size:12px;color:#666}
+    @media print{
+      body{background:#fff}
+      .page{box-shadow:none;margin:0}
+    }
+  </style>
+</head>
+<body>
+  <section class="page" role="main">
+    <header>
+      <div class="left">
+        <strong>Annexure-I</strong>
+      </div>
+      <div class="rightsmall">&nbsp;</div>
+    </header>
+
+    <h1>Standard Declaration Form</h1>
+
+    <div class="meta">
+      <p style="text-align:justify;">I <strong>Shri/Smt DR VIKAS SHARMA</strong>, <em>Head of the Hospital / Medical Superintendent (MS)</em> working in <strong>BHALE RAM MULTISPECIALITY HOSPITAL</strong>, hereby authenticate the fact that Aadhar authentication for <strong>Shri/Smt. SANTOSH W/O ISWAR</strong> having Registration ID: <strong>1017713033</strong> PMJAY/ABHA PROVIDER I’d <strong>PLUEYKN0B</strong> could not be undertaken due to:</p>
+    </div>
+
+    <div class="bullets">
+      <div class="bullet">• Technical Error</div>
+      <div class="bullet">• FINGER PRINT NOT MATCH</div>
+      <div class="bullet">• EMERGENCY</div>
+    </div>
+
+    <div class="declaration" style="margin-top:40px;text-align:left;">
+      <p>I declare that the information provided above is true and correct to the best of my knowledge and belief. I understand that providing false information may attract legal action as per applicable laws and regulations.</p>
+    </div>
+
+    <div class="signature-row">
+      <div class="signature">
+        <div class="sig-line">SIGNATURE</div>
+        <div style="margin-top:6px;font-size:13px;"><strong>Dr Vikas Sharma</strong><br /><small>Head of the Hospital / Medical Superintendent</small></div>
+      </div>
+
+      <div style="width:45%;text-align:right;">
+        <div style="font-size:13px;">Date: <span id="today"></span></div>
+        <div style="margin-top:24px;font-size:12px;color:#666;">(Hospital Stamp / Seal)</div>
+      </div>
+    </div>
+
+  </section>
+
+  <script>
+    // Fill today's date in DD-MM-YYYY format
+    const d = new Date();
+    const pad = (n)=> String(n).padStart(2,'0');
+    const today = pad(d.getDate()) + '-' + pad(d.getMonth()+1) + '-' + d.getFullYear();
+    document.getElementById('today').textContent = today;
+  </script>
+</body>
+</html>
