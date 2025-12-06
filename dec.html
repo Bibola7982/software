@@ -13,6 +13,20 @@
     .editable{font-weight:bold;outline:1px dashed transparent}
     .editable:focus{outline:1px dashed #000}
     .signature{margin-top:80px;text-align:right}
+
+    /* PRINT SETTINGS */
+    @media print{
+      body{margin:0;padding:0}
+      .toolbar{display:none !important;} /* Hide buttons */
+      *{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .page{
+        margin-top:5cm !important;
+        border:2px solid #000 !important;
+        width:100% !important;
+        box-shadow:none !important;
+        page-break-after:always;
+      }
+    }
   </style>
 </head>
 <body>
