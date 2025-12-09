@@ -1,0 +1,141 @@
+<?php ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Certificate - Form 5</title>
+
+    <style>
+        /* A4 print size */
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+
+        /* Hide print button on print view */
+        @media print {
+            #printBtn {
+                display: none;
+            }
+            body {
+                margin: 0;
+            }
+        }
+
+        body {
+            font-family: "Times New Roman", serif;
+            background: #eaeaea;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background: #fff;
+            padding: 20mm;
+            margin: 10px auto;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .underline {
+            text-decoration: underline;
+        }
+
+        .smalltext {
+            font-size: 12px;
+        }
+
+        .note {
+            font-size: 13px;
+            margin-top: 20px;
+            text-align: justify;
+        }
+
+        #printBtn {
+            padding: 12px 20px;
+            font-size: 18px;
+            background: #2d8bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            display: block;
+            margin: 25px auto;
+        }
+
+        #printBtn:hover {
+            background: #005ad1;
+        }
+
+        input {
+            border: none;
+            border-bottom: 1px solid #000;
+            font-size: 17px;
+            width: 80%;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <h3 class="center">: 58 :</h3>
+    <h2 class="center underline">FORM 5</h2>
+    <h4 class="center">[See Rule 24 (3)]</h4>
+    <h3 class="center">MEDICAL CERTIFICATE OF FITNESS TO RETURN TO DUTY</h3>
+
+    <p><b>Signature of the Government servant:</b> <input type="text"></p>
+
+    <p><b>We, the members of Medical Board</b></p>
+
+    <p>
+        I, <input type="text"> <br>
+        <span class="smalltext">
+            Civil Surgeon / Staff Surgeon / Authorized Medical Attendant / Registered Medical Practitioner
+        </span>
+    </p>
+
+    <p>
+        do hereby certify that we / I have carefully examined Shri / Shrimati / Kumari
+        <input type="text">
+        whose signature is given above, and find that he / she has recovered from his / her illness and
+        is now fit to resume duties in Government service.
+    </p>
+
+    <p>
+        We / I also certify that before arriving at this decision, we / I have examined the original medical 
+        certificate(s) and statement(s) of the case (or certified copies thereof) on which leave was granted 
+        or extended and have taken these into consideration in arriving at our / my decision.
+    </p>
+
+    <p><b>Members of the Medical Board</b></p>
+
+    <p>(1) <input type="text"></p>
+    <p>(2) <input type="text"></p>
+    <p>(3) <input type="text"></p>
+
+    <p>
+        Civil Surgeon / Staff Surgeon <br>
+        Authorized Medical Attendant <br>
+        Registered Medical Practitioner
+    </p>
+
+    <p><b>Dated:</b> <input type="text" value="<?php echo date('d-m-Y'); ?>"></p>
+
+    <p class="note">
+        <b>NOTE:</b> The original medical certificate(s) and statement(s) of the case on which the leave was 
+        originally granted or extended shall be produced before the authority required to issue the above 
+        certificate. For this purpose, the original certificate(s) and statement(s) of the case should be 
+        prepared in duplicate, one copy being retained by the Government servant concerned.
+    </p>
+
+</div>
+
+<button id="printBtn" onclick="window.print()">PRINT</button>
+
+</body>
+</html>
