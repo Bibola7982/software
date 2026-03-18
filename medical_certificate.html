@@ -15,7 +15,7 @@ body {
     margin: 15px;
 }
 
-button, input {
+button, input, select {
     padding: 8px 12px;
     margin: 5px;
     font-size: 14px;
@@ -51,9 +51,8 @@ p {
     .toolbar {
         display: none;
     }
-
     .container {
-        padding-top: 5cm; /* IMPORTANT: 5 cm top space */
+        padding-top: 5cm;
     }
 }
 </style>
@@ -62,92 +61,178 @@ p {
 <body>
 
 <div class="toolbar">
-    <label>Date: </label>
-    <input type="date" id="datePicker">
-    
-    <button onclick="setTodayDate()">Auto Fill Date</button>
+
+    <label>Gender:</label>
+    <select id="gender" onchange="updateGender()">
+        <option value="female">Female</option>
+        <option value="male">Male</option>
+    </select>
+
+    <label>Relation:</label>
+    <select id="relationType" onchange="updateRelation()">
+        <option value="wife">W/o</option>
+        <option value="son">S/o</option>
+        <option value="daughter">D/o</option>
+    </select>
+
+    <br>
+
+    <label>DOB:</label>
+    <input type="date" id="dob" onchange="calculateAge()">
+
+    <label>Discharge Date:</label>
+    <input type="date" id="discharge" onchange="calculateRest()">
+
+    <label>Rest Days:</label>
+    <input type="number" id="days" value="15" onchange="calculateRest()">
+
+    <br>
+
     <button onclick="window.print()">Print / Save PDF</button>
+
 </div>
 
 <div class="container">
 
-    <h2>MEDICAL CERTIFICATE FOR BED REST</h2>
+<h2>MEDICAL CERTIFICATE FOR BED REST</h2>
 
-    <p>
-        Date: <span class="editable" contenteditable="true" id="dateField">18/03/2026</span>
-    </p>
+<p>
+Date: <span class="editable" id="todayDate"></span>
+</p>
 
-    <p>
-        This is to certify that Mrs. 
-        <span class="editable" contenteditable="true">Babita Rani</span>, 
-        W/o 
-        <span class="editable" contenteditable="true">Anil Kumar</span>, 
-        Age 
-        <span class="editable" contenteditable="true">42</span> years/Female, 
-        resident of 
-        <span class="editable" contenteditable="true">Dhanderi</span>, 
-        has been under my medical care. 
-        She was admitted for 
-        <span class="editable" contenteditable="true">
-        Laparoscopically Assisted Vaginal Hysterectomy (LAVH)
-        </span> 
-        and has undergone surgery successfully.
-    </p>
+<p>
+This is to certify that 
+<span class="editable" id="title">Mrs.</span> 
+<span class="editable" contenteditable="true">Babita Rani</span>, 
+<span id="relation">W/o</span> 
+<span class="editable" contenteditable="true">Anil Kumar</span>, 
+Age 
+<span class="editable" id="age">42</span> years/
+<span id="genderText">Female</span>, 
+resident of 
+<span class="editable" contenteditable="true">Dhanderi</span>, 
+has been under my medical care. 
+<span id="p1">She</span> was admitted for 
+<span class="editable" contenteditable="true">
+Laparoscopically Assisted Vaginal Hysterectomy (LAVH)
+</span> 
+and has undergone surgery successfully.
+</p>
 
-    <p>
-        Considering her medical condition and post-operative recovery, 
-        she is advised strict bed rest for 
-        <span class="editable" contenteditable="true">15</span> 
-        (fifteen) days from the date of discharge to ensure proper healing 
-        and to avoid any complications.
-    </p>
+<p>
+Considering <span id="p2">her</span> medical condition and post-operative recovery, 
+<span id="p3">she</span> is advised strict bed rest for 
+<span class="editable" id="restDays">15</span> 
+(fifteen) days from the date of discharge to ensure proper healing 
+and to avoid any complications.
+</p>
 
-    <p>
-        She is advised to avoid strenuous activities and to follow all 
-        medical instructions during this period.
-    </p>
+<p>
+<span id="p4">She</span> is advised to avoid strenuous activities and to follow all 
+medical instructions during this period.
+</p>
 
-    <p>
-        Period of Rest: 
-        <span class="editable" contenteditable="true">15 days</span> 
-        (i.e. 
-        <span class="editable" contenteditable="true">18 MARCH 2026</span> 
-        to 
-        <span class="editable" contenteditable="true">02 APRIL 2026</span>)
-    </p>
+<p>
+Period of Rest: 
+<span id="restDaysText">15 days</span> 
+(i.e. 
+<span id="startDate">18 MARCH 2026</span> 
+to 
+<span id="endDate">02 APRIL 2026</span>)
+</p>
 
-    <br><br>
+<br><br>
 
-    <p>
-        Doctor:<br>
-        <span class="editable" contenteditable="true">Dr. Priyanka</span><br>
-        <span class="editable" contenteditable="true">MBBS, MS (OBST. & GYNAE)</span>
-    </p>
+<p>
+Doctor:<br>
+<span class="editable" contenteditable="true">Dr. Priyanka</span><br>
+<span class="editable" contenteditable="true">MBBS, MS (OBST. & GYNAE)</span>
+</p>
 
-    <br><br>
+<br><br>
 
-    <p><b>Signature & Stamp</b></p>
+<p><b>Signature & Stamp</b></p>
 
 </div>
 
 <script>
-function setTodayDate() {
-    let input = document.getElementById("datePicker").value;
-    if (!input) return;
 
-    let d = new Date(input);
-    let formatted = d.toLocaleDateString('en-GB');
-    document.getElementById("dateField").innerText = formatted;
-}
-
-// default today auto fill
+// Set today date
 window.onload = () => {
     let today = new Date();
-    document.getElementById("datePicker").valueAsDate = today;
-
-    let formatted = today.toLocaleDateString('en-GB');
-    document.getElementById("dateField").innerText = formatted;
+    document.getElementById("todayDate").innerText = today.toLocaleDateString('en-GB');
 };
+
+// Gender logic
+function updateGender() {
+    let g = document.getElementById("gender").value;
+
+    if (g === "male") {
+        title.innerText = "Mr.";
+        genderText.innerText = "Male";
+        p1.innerText = "He";
+        p2.innerText = "his";
+        p3.innerText = "he";
+        p4.innerText = "He";
+    } else {
+        title.innerText = "Mrs.";
+        genderText.innerText = "Female";
+        p1.innerText = "She";
+        p2.innerText = "her";
+        p3.innerText = "she";
+        p4.innerText = "She";
+    }
+}
+
+// Relation logic
+function updateRelation() {
+    let r = document.getElementById("relationType").value;
+
+    if (r === "wife") relation.innerText = "W/o";
+    if (r === "son") relation.innerText = "S/o";
+    if (r === "daughter") relation.innerText = "D/o";
+}
+
+// Age calculate
+function calculateAge() {
+    let dob = new Date(document.getElementById("dob").value);
+    if (!dob) return;
+
+    let today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    let m = today.getMonth() - dob.getMonth();
+
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+        age--;
+    }
+
+    document.getElementById("age").innerText = age;
+}
+
+// Rest calculate
+function calculateRest() {
+    let discharge = new Date(document.getElementById("discharge").value);
+    let days = parseInt(document.getElementById("days").value);
+
+    if (!discharge || !days) return;
+
+    let end = new Date(discharge);
+    end.setDate(end.getDate() + days);
+
+    function format(d) {
+        return d.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+        }).toUpperCase();
+    }
+
+    startDate.innerText = format(discharge);
+    endDate.innerText = format(end);
+    restDays.innerText = days;
+    restDaysText.innerText = days + " days";
+}
+
 </script>
 
 </body>
