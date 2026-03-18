@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Medical Certificate Generator</title>
+
+<style>
+body {
+    font-family: "Times New Roman", serif;
+    background: #f0f0f0;
+}
+
+.toolbar {
+    text-align: center;
+    margin: 15px;
+}
+
+button, select, input {
+    padding: 8px 12px;
+    margin: 5px;
+    font-size: 14px;
+}
+
+.container {
+    width: 210mm;
+    min-height: 297mm;
+    margin: auto;
+    background: white;
+    padding: 2cm;
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.editable {
+    font-weight: bold;
+    border-bottom: 1px dashed #000;
+    padding: 2px;
+    min-width: 40px;
+    display: inline-block;
+}
+
+@media print {
+    .toolbar {
+        display: none;
+    }
+
+    .container {
+        padding-top: 5cm;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="toolbar">
+
+    <label>Date: </label>
+    <input type="date" id="datePicker">
+
+    <select id="templateSelect" onchange="loadTemplate()">
+        <option value="bedrest">Bed Rest Certificate</option>
+        <option value="fitness">Fitness Certificate</option>
+        <option value="sickleave">Sick Leave Certificate</option>
+    </select>
+
+    <button onclick="window.print()">Print</button>
+    <button onclick="savePDF()">Save as PDF</button>
+
+</div>
+
+<div class="container" id="certificate">
+
+<!-- TEMPLATE LOAD HERE -->
+
+</div>
+
+<script>
+
+// Auto date
+document.getElementById("datePicker").valueAsDate = new Date();
+
+function getDate() {
+    let d = document.getElementById("datePicker").value;
+    if (!d) return "";
+    let date = new Date(d);
+    return date.toLocaleDateString('en-GB');
+}
+
+// Templates
+function loadTemplate() {
+    let type = document.getElementById("templateSelect").value;
+
+    let html = "";
+
+    if (type === "bedrest") {
+        html = `
+        <h2>MEDICAL CERTIFICATE FOR BED REST</h2>
+
+        <p>Date: <span class="editable">${getDate()}</span></p>
+
+        <p>
+        This is to certify that Mrs. 
+        <span class="editable" contenteditable="true">Babita Rani</span>, 
+        W/o <span class="editable" contenteditable="true">Anil Kumar</span>, 
+        Age <span class="editable" contenteditable="true">42</span> years/Female, 
+        resident of <span class="editable" contenteditable="true">Dhanderi</span>.
+        </p>
+
+        <p>
+        She was admitted for 
+        <span class="editable" contenteditable="true">LAVH Surgery</span> 
+        and has undergone surgery successfully.
+        </p>
+
+        <p>
+        She is advised strict bed rest for 
+        <span class="editable" contenteditable="true">15</span> days.
+        </p>
+
+        <p>
+        Period: <span class="editable" contenteditable="true">18 March 2026</span> 
+        to <span class="editable" contenteditable="true">02 April 2026</span>
+        </p>
+
+        <br><br>
+
+        <p>
+        Doctor:<br>
+        <span class="editable" contenteditable="true">Dr. Priyanka</span><br>
+        <span class="editable" contenteditable="true">MBBS, MS</span>
+        </p>
+        `;
+    }
+
+    else if (type === "fitness") {
+        html = `
+        <h2>MEDICAL FITNESS CERTIFICATE</h2>
+
+        <p>Date: <span class="editable">${getDate()}</span></p>
+
+        <p>
+        This is to certify that Mr./Mrs. 
+        <span class="editable" contenteditable="true">Name</span> 
+        is medically fit and healthy.
+        </p>
+
+        <p>
+        He/She is fit to resume duties from 
+        <span class="editable" contenteditable="true">Date</span>.
+        </p>
+
+        <br><br>
+
+        <p>
+        Doctor:<br>
+        <span class="editable" contenteditable="true">Doctor Name</span>
+        </p>
+        `;
+    }
+
+    else if (type === "sickleave") {
+        html = `
+        <h2>MEDICAL CERTIFICATE FOR SICK LEAVE</h2>
+
+        <p>Date: <span class="editable">${getDate()}</span></p>
+
+        <p>
+        This is to certify that 
+        <span class="editable" contenteditable="true">Patient Name</span> 
+        was suffering from illness and advised rest for 
+        <span class="editable" contenteditable="true">7</span> days.
+        </p>
+
+        <p>
+        Leave Period: 
+        <span class="editable" contenteditable="true">Start Date</span> 
+        to 
+        <span class="editable" contenteditable="true">End Date</span>
+        </p>
+
+        <br><br>
+
+        <p>
+        Doctor:<br>
+        <span class="editable" contenteditable="true">Doctor Name</span>
+        </p>
+        `;
+    }
+
+    document.getElementById("certificate").innerHTML = html;
+}
+
+// Save as PDF
+function savePDF() {
+    window.print(); // Chrome "Save as PDF"
+}
+
+// Load default
+loadTemplate();
+
+</script>
+
+</body>
+</html>
