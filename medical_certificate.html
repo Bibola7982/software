@@ -97,7 +97,8 @@ p {
 <h2>MEDICAL CERTIFICATE FOR BED REST</h2>
 
 <p>
-Date: <span class="editable" id="todayDate"></span>
+Date: 
+<span class="editable" contenteditable="true" id="todayDate"></span>
 </p>
 
 <p>
@@ -107,7 +108,7 @@ This is to certify that
 <span id="relation">W/o</span> 
 <span class="editable" contenteditable="true">Anil Kumar</span>, 
 Age 
-<span class="editable" id="age">42</span> years/
+<span class="editable" contenteditable="true" id="age">42</span> years/
 <span id="genderText">Female</span>, 
 resident of 
 <span class="editable" contenteditable="true">Dhanderi</span>, 
@@ -157,13 +158,19 @@ Doctor:<br>
 
 <script>
 
-// Set today date
+// SAFE AUTO DATE (editable bhi rahega)
 window.onload = () => {
     let today = new Date();
-    document.getElementById("todayDate").innerText = today.toLocaleDateString('en-GB');
+    let formatted = today.toLocaleDateString('en-GB');
+
+    let dateField = document.getElementById("todayDate");
+
+    if (dateField.innerText.trim() === "") {
+        dateField.innerText = formatted;
+    }
 };
 
-// Gender logic
+// Gender change
 function updateGender() {
     let g = document.getElementById("gender").value;
 
@@ -184,7 +191,7 @@ function updateGender() {
     }
 }
 
-// Relation logic
+// Relation change
 function updateRelation() {
     let r = document.getElementById("relationType").value;
 
@@ -193,12 +200,14 @@ function updateRelation() {
     if (r === "daughter") relation.innerText = "D/o";
 }
 
-// Age calculate
+// Age auto calculate (but editable)
 function calculateAge() {
-    let dob = new Date(document.getElementById("dob").value);
-    if (!dob) return;
+    let dobValue = document.getElementById("dob").value;
+    if (!dobValue) return;
 
+    let dob = new Date(dobValue);
     let today = new Date();
+
     let age = today.getFullYear() - dob.getFullYear();
     let m = today.getMonth() - dob.getMonth();
 
@@ -209,13 +218,14 @@ function calculateAge() {
     document.getElementById("age").innerText = age;
 }
 
-// Rest calculate
+// Rest period auto calculate
 function calculateRest() {
-    let discharge = new Date(document.getElementById("discharge").value);
+    let dischargeValue = document.getElementById("discharge").value;
     let days = parseInt(document.getElementById("days").value);
 
-    if (!discharge || !days) return;
+    if (!dischargeValue || !days) return;
 
+    let discharge = new Date(dischargeValue);
     let end = new Date(discharge);
     end.setDate(end.getDate() + days);
 
