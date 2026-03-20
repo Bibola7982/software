@@ -2,41 +2,45 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Age Difference Justification Letter</title>
+<title>Justification Letter</title>
 
 <style>
 body {
     font-family: Arial, sans-serif;
     background: #f4f4f4;
+    margin: 0;
 }
 
 .container {
-    width: 794px; /* A4 width */
-    min-height: 1123px; /* A4 height */
+    width: 210mm;
+    height: 297mm;
     margin: auto;
     background: white;
-    padding: 40px;
     box-sizing: border-box;
+    padding: 50mm 20mm 20mm 20mm; /* TOP = 5cm */
+    overflow: hidden; /* prevent extra page */
 }
 
 h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    font-size: 20px;
 }
 
 p {
-    line-height: 1.6;
-    font-size: 15px;
+    line-height: 1.5;
+    font-size: 14px;
+    margin: 6px 0;
 }
 
 .editable {
     background: #fff8c4;
-    padding: 2px 5px;
+    padding: 2px 4px;
     border-bottom: 1px dashed #000;
 }
 
 .signature {
-    margin-top: 40px;
+    margin-top: 25px;
 }
 
 button {
@@ -49,8 +53,9 @@ button {
 
 /* PRINT SETTINGS */
 @media print {
+
     body {
-        background: none;
+        margin: 0;
     }
 
     button {
@@ -58,16 +63,15 @@ button {
     }
 
     .container {
-        box-shadow: none;
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        padding: 30px;
+        width: 210mm;
+        height: 297mm;
+        padding: 50mm 15mm 15mm 15mm; /* 5cm top */
+        page-break-after: avoid;
     }
 
     @page {
         size: A4;
-        margin: 10mm;
+        margin: 0;
     }
 }
 </style>
@@ -75,7 +79,7 @@ button {
 
 <body>
 
-<div class="container" id="printArea">
+<div class="container">
 
 <h2>JUSTIFICATION LETTER FOR AGE DIFFERENCE</h2>
 
@@ -86,39 +90,33 @@ PMJAY (Ayushman Bharat)
 
 <p><b>Subject:</b> Justification for Age Difference in Patient Records</p>
 
+<p>Respected Sir/Madam,</p>
+
 <p>
-Respected Sir/Madam,
+With reference to the claim query regarding patient 
+<b><span contenteditable="true" class="editable">PATIENT NAME</span></b>,
+we provide the following clarification:
 </p>
 
 <p>
-With reference to the claim query raised regarding the age difference of the patient 
-<b><span contenteditable="true" class="editable">[PATIENT NAME]</span></b> under PMJAY scheme, we would like to provide the following clarification:
+As per PMJAY portal, age is 
+<b><span contenteditable="true" class="editable">30</span></b> years (correct).
 </p>
 
 <p>
-As per the PMJAY online portal, the patient’s age is recorded as 
-<b><span contenteditable="true" class="editable">[CORRECT AGE]</span></b> years, which is correct as per updated system records.
+However, patient submitted old ID and OPD slip showing age 
+<b><span contenteditable="true" class="editable">26</span></b> years.
 </p>
 
 <p>
-However, during admission, the patient provided an old copy of an ID card in which the age was different. Also, the OPD slip details provided by the patient reflected age as 
-<b><span contenteditable="true" class="editable">[WRONG AGE]</span></b> years.
+This difference occurred due to miscommunication and outdated documents provided by patient. No intentional error from hospital side.
 </p>
 
 <p>
-This discrepancy occurred due to miscommunication and reliance on outdated documents submitted by the patient at the time of registration. There was no intentional error from the hospital side.
+We confirm PMJAY age is correct and request to consider this as clerical error.
 </p>
 
-<p>
-We confirm that:
-<br>• PMJAY portal age (<span contenteditable="true" class="editable">[CORRECT AGE]</span>) is accurate.
-<br>• Difference occurred due to old ID proof and incorrect initial information.
-<br>• This is a genuine clerical/miscommunication error.
-</p>
-
-<p>
-We request you to kindly consider this and process the claim accordingly.
-</p>
+<p>Kindly process the claim.</p>
 
 <div class="signature">
 <p><b>Regards,</b></p>
@@ -126,24 +124,18 @@ We request you to kindly consider this and process the claim accordingly.
 <p>
 <span contenteditable="true" class="editable">Authorized Signatory</span><br>
 <span contenteditable="true" class="editable">Hospital Name</span><br>
-<span contenteditable="true" class="editable">City, State</span>
+<span contenteditable="true" class="editable">City</span>
 </p>
 
 <p>
-Date: <span contenteditable="true" class="editable">__________</span><br>
-Place: <span contenteditable="true" class="editable">__________</span>
+Date: <span contenteditable="true" class="editable">________</span><br>
+Place: <span contenteditable="true" class="editable">________</span>
 </p>
 </div>
 
 </div>
 
-<button onclick="printPage()">🖨 Print / Save PDF</button>
-
-<script>
-function printPage() {
-    window.print();
-}
-</script>
+<button onclick="window.print()">🖨 Print / Save PDF</button>
 
 </body>
 </html>
