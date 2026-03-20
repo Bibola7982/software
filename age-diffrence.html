@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Age Difference Justification Letter</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+.container {
+    width: 794px; /* A4 width */
+    min-height: 1123px; /* A4 height */
+    margin: auto;
+    background: white;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+p {
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+.editable {
+    background: #fff8c4;
+    padding: 2px 5px;
+    border-bottom: 1px dashed #000;
+}
+
+.signature {
+    margin-top: 40px;
+}
+
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 25px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* PRINT SETTINGS */
+@media print {
+    body {
+        background: none;
+    }
+
+    button {
+        display: none;
+    }
+
+    .container {
+        box-shadow: none;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        padding: 30px;
+    }
+
+    @page {
+        size: A4;
+        margin: 10mm;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="printArea">
+
+<h2>JUSTIFICATION LETTER FOR AGE DIFFERENCE</h2>
+
+<p><b>To,</b><br>
+<span contenteditable="true" class="editable">The Medical Officer / Claim Processing Team</span><br>
+PMJAY (Ayushman Bharat)
+</p>
+
+<p><b>Subject:</b> Justification for Age Difference in Patient Records</p>
+
+<p>
+Respected Sir/Madam,
+</p>
+
+<p>
+With reference to the claim query raised regarding the age difference of the patient 
+<b><span contenteditable="true" class="editable">[PATIENT NAME]</span></b> under PMJAY scheme, we would like to provide the following clarification:
+</p>
+
+<p>
+As per the PMJAY online portal, the patient’s age is recorded as 
+<b><span contenteditable="true" class="editable">[CORRECT AGE]</span></b> years, which is correct as per updated system records.
+</p>
+
+<p>
+However, during admission, the patient provided an old copy of an ID card in which the age was different. Also, the OPD slip details provided by the patient reflected age as 
+<b><span contenteditable="true" class="editable">[WRONG AGE]</span></b> years.
+</p>
+
+<p>
+This discrepancy occurred due to miscommunication and reliance on outdated documents submitted by the patient at the time of registration. There was no intentional error from the hospital side.
+</p>
+
+<p>
+We confirm that:
+<br>• PMJAY portal age (<span contenteditable="true" class="editable">[CORRECT AGE]</span>) is accurate.
+<br>• Difference occurred due to old ID proof and incorrect initial information.
+<br>• This is a genuine clerical/miscommunication error.
+</p>
+
+<p>
+We request you to kindly consider this and process the claim accordingly.
+</p>
+
+<div class="signature">
+<p><b>Regards,</b></p>
+
+<p>
+<span contenteditable="true" class="editable">Authorized Signatory</span><br>
+<span contenteditable="true" class="editable">Hospital Name</span><br>
+<span contenteditable="true" class="editable">City, State</span>
+</p>
+
+<p>
+Date: <span contenteditable="true" class="editable">__________</span><br>
+Place: <span contenteditable="true" class="editable">__________</span>
+</p>
+</div>
+
+</div>
+
+<button onclick="printPage()">🖨 Print / Save PDF</button>
+
+<script>
+function printPage() {
+    window.print();
+}
+</script>
+
+</body>
+</html>
