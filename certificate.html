@@ -15,48 +15,59 @@ body {
     min-height: 297mm;
     margin: auto;
     background: white;
-    padding: 2cm;
+    padding-top: 4cm; /* TOP SPACE */
+    padding-left: 3cm;
+    padding-right: 3cm;
+    padding-bottom: 2cm;
     box-sizing: border-box;
 }
 
+/* Heading */
 h2 {
     text-align: center;
-    margin-bottom: 30px;
-    letter-spacing: 1px;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+    font-size: 22px;
 }
 
+/* Paragraph */
 p {
     font-size: 18px;
-    line-height: 1.7;
+    line-height: 1.8;
     text-align: justify;
+    margin-bottom: 20px;
 }
 
+/* Editable */
 .editable {
     font-weight: bold;
     border-bottom: 1px dashed #000;
     padding: 2px;
 }
 
+/* Footer */
 .footer {
-    margin-top: 60px;
+    margin-top: 80px;
 }
 
 .right {
     text-align: right;
 }
 
+/* Toolbar */
 .toolbar {
     text-align: center;
     margin: 15px;
 }
 
+/* Print */
 @media print {
     .toolbar {
         display: none;
     }
 
-    .container {
-        padding-top: 4cm; /* 4 CM SPACE */
+    body {
+        background: none;
     }
 }
 </style>
@@ -65,18 +76,7 @@ p {
 <body>
 
 <div class="toolbar">
-
-    <label>Gender:</label>
-    <select id="gender" onchange="updateGender()">
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-    </select>
-
-    <label>DOB:</label>
-    <input type="date" id="dob" onchange="calculateAge()">
-
     <button onclick="window.print()">Print / Save PDF</button>
-
 </div>
 
 <div class="container">
@@ -84,39 +84,27 @@ p {
 <h2>TO WHOM IT MAY CONCERN</h2>
 
 <p>
-This is to certify that 
-<span id="title" class="editable">Mr.</span> 
-<span class="editable" contenteditable="true">Surender</span>, 
-S/o 
-<span class="editable" contenteditable="true">Satish</span>, 
-aged 
-<span id="age" class="editable" contenteditable="true">29</span> years, 
-resident of 
-<span class="editable" contenteditable="true">Alkh Pura</span>, 
-is under treatment at our hospital.
+This is to certify that <span class="editable" contenteditable="true">Mr. Surender</span>, 
+<span class="editable" contenteditable="true">S/o Satish</span>, aged 
+<span class="editable" contenteditable="true">29</span> years, resident of 
+<span class="editable" contenteditable="true">Alkh Pura</span>, is under treatment at our hospital.
 </p>
 
 <p>
-<span id="p1">He</span> was admitted with complaints of 
-<span class="editable" contenteditable="true">pain abdomen</span>, 
+He was admitted with complaints of <span class="editable" contenteditable="true">pain abdomen</span>, 
 <span class="editable" contenteditable="true">loss of appetite</span>, 
 <span class="editable" contenteditable="true">nausea</span>, 
-<span class="editable" contenteditable="true">generalized weakness</span> 
-and 
-<span class="editable" contenteditable="true">body ache</span>. 
-On clinical evaluation and investigations, the patient is being managed for 
-<span class="editable" contenteditable="true">acute abdomen</span> 
-with suspected 
-<span class="editable" contenteditable="true">typhoid fever</span>.
+<span class="editable" contenteditable="true">generalized weakness</span> and 
+<span class="editable" contenteditable="true">body ache</span>. On clinical evaluation and investigations, 
+the patient is being managed for <span class="editable" contenteditable="true">acute abdomen</span> 
+with suspected <span class="editable" contenteditable="true">typhoid fever</span>.
 </p>
 
 <p>
 The patient is currently under medical supervision and receiving appropriate treatment including 
-<span class="editable" contenteditable="true">intravenous medications</span> 
-and 
+<span class="editable" contenteditable="true">intravenous medications</span> and 
 <span class="editable" contenteditable="true">supportive care</span>. 
-<span id="p2">He</span> is advised 
-<span class="editable" contenteditable="true">complete rest</span> 
+He is advised <span class="editable" contenteditable="true">complete rest</span> 
 and should not attend duty/work until medically fit.
 </p>
 
@@ -126,19 +114,11 @@ This certificate is being issued on request of the patient for official purposes
 
 <br><br>
 
-<p>
-Date: 
-<span class="editable" contenteditable="true" id="dateField">02/04/2026</span>
-</p>
-
-<p>
-Place: 
-<span class="editable" contenteditable="true">Bhale Ram Multispecialty Hospital</span>
-</p>
+<p><b>Date:</b> <span class="editable" contenteditable="true">02/04/2026</span></p>
+<p><b>Place:</b> <span class="editable" contenteditable="true">Bhale Ram Multispecialty Hospital</span></p>
 
 <div class="footer right">
     <p>Doctor’s Signature & Stamp</p>
-
     <p>
         <span class="editable" contenteditable="true">Dr. Ranjit Singh</span><br>
         <span class="editable" contenteditable="true">MBBS, MD (General Medicine)</span>
@@ -146,43 +126,6 @@ Place:
 </div>
 
 </div>
-
-<script>
-
-// Gender auto change
-function updateGender() {
-    let g = document.getElementById("gender").value;
-
-    if (g === "female") {
-        title.innerText = "Ms.";
-        p1.innerText = "She";
-        p2.innerText = "She";
-    } else {
-        title.innerText = "Mr.";
-        p1.innerText = "He";
-        p2.innerText = "He";
-    }
-}
-
-// Age calculate from DOB
-function calculateAge() {
-    let dobValue = document.getElementById("dob").value;
-    if (!dobValue) return;
-
-    let dob = new Date(dobValue);
-    let today = new Date();
-
-    let age = today.getFullYear() - dob.getFullYear();
-    let m = today.getMonth() - dob.getMonth();
-
-    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
-        age--;
-    }
-
-    document.getElementById("age").innerText = age;
-}
-
-</script>
 
 </body>
 </html>
