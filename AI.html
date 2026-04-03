@@ -140,10 +140,54 @@ input, select {
 <div class="categories" id="cats"></div>
 
 <div class="container" id="container"></div>
+    
 
 <script>
 
 const tools = [
+
+    /* DAILY TOOLS / PRODUCTIVITY */
+
+{ name:"GitHub", cat:"code", desc:"Code hosting platform", link:"https://github.com", logo:"https://cdn-icons-png.flaticon.com/512/733/733553.png"},
+{ name:"GitLab", cat:"code", desc:"DevOps platform", link:"https://gitlab.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968853.png"},
+{ name:"Stack Overflow", cat:"code", desc:"Developer Q&A", link:"https://stackoverflow.com", logo:"https://cdn-icons-png.flaticon.com/512/2111/2111628.png"},
+{ name:"VS Code Web", cat:"code", desc:"Online code editor", link:"https://vscode.dev", logo:"https://cdn-icons-png.flaticon.com/512/906/906324.png"},
+{ name:"CodePen", cat:"code", desc:"Frontend playground", link:"https://codepen.io", logo:"https://cdn-icons-png.flaticon.com/512/2111/2111501.png"},
+
+/* STORAGE / CLOUD */
+
+{ name:"Google Drive", cat:"storage", desc:"Cloud storage", link:"https://drive.google.com", logo:"https://cdn-icons-png.flaticon.com/512/2991/2991148.png"},
+{ name:"Dropbox", cat:"storage", desc:"File storage", link:"https://dropbox.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968514.png"},
+{ name:"Proton Drive", cat:"storage", desc:"Secure cloud storage", link:"https://drive.proton.me", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968520.png"},
+{ name:"OneDrive", cat:"storage", desc:"Microsoft cloud", link:"https://onedrive.live.com", logo:"https://cdn-icons-png.flaticon.com/512/732/732221.png"},
+
+/* EMAIL */
+
+{ name:"Gmail", cat:"productivity", desc:"Email service", link:"https://mail.google.com", logo:"https://cdn-icons-png.flaticon.com/512/281/281769.png"},
+{ name:"Outlook", cat:"productivity", desc:"Microsoft email", link:"https://outlook.live.com", logo:"https://cdn-icons-png.flaticon.com/512/732/732223.png"},
+{ name:"Proton Mail", cat:"productivity", desc:"Secure email", link:"https://mail.proton.me", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968520.png"},
+
+/* DESIGN / UI */
+
+{ name:"Figma", cat:"design", desc:"UI/UX design tool", link:"https://figma.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png"},
+{ name:"Canva", cat:"design", desc:"Graphic design", link:"https://canva.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png"},
+{ name:"Dribbble", cat:"design", desc:"Design inspiration", link:"https://dribbble.com", logo:"https://cdn-icons-png.flaticon.com/512/2111/2111505.png"},
+{ name:"Behance", cat:"design", desc:"Creative showcase", link:"https://behance.net", logo:"https://cdn-icons-png.flaticon.com/512/145/145799.png"},
+
+/* PRODUCTIVITY */
+
+{ name:"Notion", cat:"productivity", desc:"Notes & tasks", link:"https://notion.so", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968875.png"},
+{ name:"Trello", cat:"productivity", desc:"Task manager", link:"https://trello.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968869.png"},
+{ name:"Slack", cat:"productivity", desc:"Team chat", link:"https://slack.com", logo:"https://cdn-icons-png.flaticon.com/512/2111/2111615.png"},
+{ name:"Discord", cat:"productivity", desc:"Community chat", link:"https://discord.com", logo:"https://cdn-icons-png.flaticon.com/512/2111/2111370.png"},
+
+/* UTILITIES */
+
+{ name:"Speedtest", cat:"tools", desc:"Internet speed test", link:"https://speedtest.net", logo:"https://cdn-icons-png.flaticon.com/512/483/483947.png"},
+{ name:"Temp Mail", cat:"tools", desc:"Temporary email", link:"https://temp-mail.org", logo:"https://cdn-icons-png.flaticon.com/512/561/561127.png"},
+{ name:"Remove.bg", cat:"tools", desc:"Remove background", link:"https://remove.bg", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png"},
+{ name:"TinyPNG", cat:"tools", desc:"Image compressor", link:"https://tinypng.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png"}
+
 
 /* RESEARCH */
 { name:"ChatGPT", cat:"research", desc:"AI chatbot", link:"https://chat.openai.com", logo:"https://cdn-icons-png.flaticon.com/512/4712/4712027.png"},
@@ -179,6 +223,58 @@ const tools = [
 { name:"Semrush", cat:"seo", desc:"SEO tool", link:"https://semrush.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968875.png"},
 { name:"Alli AI", cat:"seo", desc:"SEO automation", link:"https://alli.ai", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968875.png"},
 { name:"Clearscope", cat:"seo", desc:"SEO optimize", link:"https://clearscope.io", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968875.png"},
+
+    /* MORE DAILY DEV TOOLS */
+
+{ name:"Netlify", cat:"code", desc:"Deploy websites", link:"https://netlify.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968756.png"},
+{ name:"Vercel", cat:"code", desc:"Frontend hosting", link:"https://vercel.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png"},
+{ name:"Firebase", cat:"code", desc:"Backend platform", link:"https://firebase.google.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968528.png"},
+{ name:"Supabase", cat:"code", desc:"Firebase alternative", link:"https://supabase.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968528.png"},
+{ name:"Postman", cat:"code", desc:"API testing", link:"https://postman.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968875.png"},
+
+/* DATABASE / BACKEND */
+
+{ name:"MongoDB Atlas", cat:"code", desc:"Cloud database", link:"https://mongodb.com/atlas", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968528.png"},
+{ name:"PlanetScale", cat:"code", desc:"Serverless DB", link:"https://planetscale.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968528.png"},
+{ name:"Railway", cat:"code", desc:"Deploy backend", link:"https://railway.app", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968756.png"},
+
+/* TESTING / DEBUG */
+
+{ name:"JSON Formatter", cat:"tools", desc:"Format JSON", link:"https://jsonformatter.org", logo:"https://cdn-icons-png.flaticon.com/512/2721/2721266.png"},
+{ name:"ReqBin", cat:"tools", desc:"Test API online", link:"https://reqbin.com", logo:"https://cdn-icons-png.flaticon.com/512/2721/2721266.png"},
+{ name:"Regex101", cat:"tools", desc:"Regex tester", link:"https://regex101.com", logo:"https://cdn-icons-png.flaticon.com/512/2721/2721266.png"},
+
+/* SECURITY */
+
+{ name:"Have I Been Pwned", cat:"tools", desc:"Check data leaks", link:"https://haveibeenpwned.com", logo:"https://cdn-icons-png.flaticon.com/512/3064/3064197.png"},
+{ name:"VirusTotal", cat:"tools", desc:"Scan files/links", link:"https://virustotal.com", logo:"https://cdn-icons-png.flaticon.com/512/3064/3064197.png"},
+
+/* DOCUMENT / PDF */
+
+{ name:"ILovePDF", cat:"tools", desc:"PDF tools", link:"https://ilovepdf.com", logo:"https://cdn-icons-png.flaticon.com/512/337/337946.png"},
+{ name:"SmallPDF", cat:"tools", desc:"PDF editor", link:"https://smallpdf.com", logo:"https://cdn-icons-png.flaticon.com/512/337/337946.png"},
+
+/* TIME / PRODUCTIVITY */
+
+{ name:"Clockify", cat:"productivity", desc:"Time tracker", link:"https://clockify.me", logo:"https://cdn-icons-png.flaticon.com/512/992/992700.png"},
+{ name:"Pomofocus", cat:"productivity", desc:"Pomodoro timer", link:"https://pomofocus.io", logo:"https://cdn-icons-png.flaticon.com/512/992/992700.png"},
+{ name:"Google Keep", cat:"productivity", desc:"Quick notes", link:"https://keep.google.com", logo:"https://cdn-icons-png.flaticon.com/512/2991/2991108.png"},
+
+/* DOMAIN / HOSTING */
+
+{ name:"Namecheap", cat:"tools", desc:"Buy domains", link:"https://namecheap.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968875.png"},
+{ name:"GoDaddy", cat:"tools", desc:"Domain hosting", link:"https://godaddy.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968875.png"},
+
+/* FILE TOOLS */
+
+{ name:"WeTransfer", cat:"tools", desc:"Send large files", link:"https://wetransfer.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968514.png"},
+{ name:"Compress2Go", cat:"tools", desc:"Compress files", link:"https://compress2go.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968514.png"},
+
+/* LEARNING */
+
+{ name:"freeCodeCamp", cat:"learning", desc:"Learn coding free", link:"https://freecodecamp.org", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png"},
+{ name:"W3Schools", cat:"learning", desc:"Web tutorials", link:"https://w3schools.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png"},
+{ name:"MDN Web Docs", cat:"learning", desc:"Official web docs", link:"https://developer.mozilla.org", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png"}
 
 /* AUDIO */
 { name:"ElevenLabs", cat:"audio", desc:"AI voice", link:"https://elevenlabs.io", logo:"https://cdn-icons-png.flaticon.com/512/727/727245.png"},
