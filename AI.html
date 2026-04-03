@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Tools Hub</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f7fb;
+    transition: 0.3s;
+}
+
+/* DARK MODE */
+.dark {
+    background: #121212;
+    color: white;
+}
+
+/* HEADER */
+header {
+    padding: 15px;
+    background: linear-gradient(45deg,#007bff,#00c6ff);
+    color: white;
+    text-align: center;
+    font-size: 18px;
+}
+
+/* SEARCH */
+.search-box {
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+input, select {
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+/* CATEGORY BUTTONS */
+.categories {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px;
+}
+
+.categories button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 20px;
+    background: #ddd;
+    cursor: pointer;
+}
+
+.categories button.active {
+    background: #007bff;
+    color: white;
+}
+
+/* GRID */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    gap: 12px;
+    padding: 10px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.dark .card {
+    background: #1f1f1f;
+}
+
+.card img {
+    width: 45px;
+    height: 45px;
+}
+
+.card h4 {
+    margin: 5px 0;
+}
+
+.card p {
+    font-size: 12px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 6px 10px;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+/* DARK BUTTON */
+.toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: black;
+    color: white;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<header>🚀 Monty Genius AI Tools Hub</header>
+
+<div class="toggle" onclick="toggleDark()">🌙</div>
+
+<div class="search-box">
+    <input type="text" id="search" placeholder="Search AI tool...">
+</div>
+
+<div class="categories" id="cats"></div>
+
+<div class="container" id="container"></div>
+
+<script>
+
+const tools = [
+
+/* RESEARCH */
+{ name:"ChatGPT", cat:"research", desc:"AI chatbot", link:"https://chat.openai.com", logo:"https://cdn-icons-png.flaticon.com/512/4712/4712027.png"},
+{ name:"Claude", cat:"research", desc:"AI assistant", link:"https://claude.ai", logo:"https://cdn-icons-png.flaticon.com/512/4712/4712109.png"},
+{ name:"Perplexity", cat:"research", desc:"AI search", link:"https://perplexity.ai", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968866.png"},
+{ name:"Phind", cat:"research", desc:"Dev search AI", link:"https://phind.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968866.png"},
+
+/* WRITING */
+{ name:"Quillbot", cat:"writing", desc:"Rewrite tool", link:"https://quillbot.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png"},
+{ name:"Rytr", cat:"writing", desc:"AI writer", link:"https://rytr.me", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968898.png"},
+{ name:"Jenni AI", cat:"writing", desc:"Essay AI", link:"https://jenni.ai", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png"},
+{ name:"HyperWrite", cat:"writing", desc:"Smart writing", link:"https://hyperwriteai.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png"},
+
+/* IMAGE */
+{ name:"Midjourney", cat:"image", desc:"AI art", link:"https://midjourney.com", logo:"https://cdn-icons-png.flaticon.com/512/1828/1828884.png"},
+{ name:"DALL-E", cat:"image", desc:"Image AI", link:"https://openai.com/dall-e", logo:"https://cdn-icons-png.flaticon.com/512/4712/4712035.png"},
+{ name:"Leonardo", cat:"image", desc:"Art generator", link:"https://leonardo.ai", logo:"https://cdn-icons-png.flaticon.com/512/1828/1828884.png"},
+{ name:"Stable Diffusion", cat:"image", desc:"Open AI art", link:"https://stability.ai", logo:"https://cdn-icons-png.flaticon.com/512/1828/1828884.png"},
+
+/* VIDEO */
+{ name:"Runway ML", cat:"video", desc:"AI video", link:"https://runwayml.com", logo:"https://cdn-icons-png.flaticon.com/512/1384/1384060.png"},
+{ name:"InVideo", cat:"video", desc:"Video maker", link:"https://invideo.io", logo:"https://cdn-icons-png.flaticon.com/512/1384/1384060.png"},
+{ name:"Descript", cat:"video", desc:"Edit audio/video", link:"https://descript.com", logo:"https://cdn-icons-png.flaticon.com/512/1384/1384060.png"},
+{ name:"HeyGen", cat:"video", desc:"Avatar video", link:"https://heygen.com", logo:"https://cdn-icons-png.flaticon.com/512/1384/1384060.png"},
+
+/* CODE */
+{ name:"GitHub Copilot", cat:"code", desc:"AI coding", link:"https://github.com/copilot", logo:"https://cdn-icons-png.flaticon.com/512/733/733553.png"},
+{ name:"Replit", cat:"code", desc:"Online IDE", link:"https://replit.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png"},
+{ name:"Codeium", cat:"code", desc:"Free AI code", link:"https://codeium.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png"},
+{ name:"Tabnine", cat:"code", desc:"Auto coding", link:"https://tabnine.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png"},
+
+/* SEO */
+{ name:"Semrush", cat:"seo", desc:"SEO tool", link:"https://semrush.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968875.png"},
+{ name:"Alli AI", cat:"seo", desc:"SEO automation", link:"https://alli.ai", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968875.png"},
+{ name:"Clearscope", cat:"seo", desc:"SEO optimize", link:"https://clearscope.io", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968875.png"},
+
+/* AUDIO */
+{ name:"ElevenLabs", cat:"audio", desc:"AI voice", link:"https://elevenlabs.io", logo:"https://cdn-icons-png.flaticon.com/512/727/727245.png"},
+{ name:"Suno AI", cat:"audio", desc:"Music AI", link:"https://suno.ai", logo:"https://cdn-icons-png.flaticon.com/512/727/727245.png"},
+
+/* AUTOMATION */
+{ name:"Zapier", cat:"automation", desc:"Workflow AI", link:"https://zapier.com", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968875.png"},
+{ name:"Notion", cat:"automation", desc:"Notes + AI", link:"https://notion.so", logo:"https://cdn-icons-png.flaticon.com/512/5968/5968875.png"}
+
+];
+
+const container = document.getElementById("container");
+const catsDiv = document.getElementById("cats");
+
+/* DISPLAY */
+function displayTools(list){
+    container.innerHTML="";
+    list.forEach(t=>{
+        container.innerHTML+=`
+        <div class="card">
+            <img src="${t.logo}">
+            <h4>${t.name}</h4>
+            <p>${t.desc}</p>
+            <a href="${t.link}" target="_blank" class="btn">Open</a>
+        </div>`;
+    });
+}
+
+/* CATEGORIES */
+const categories = ["all",...new Set(tools.map(t=>t.cat))];
+
+categories.forEach(cat=>{
+    let btn=document.createElement("button");
+    btn.innerText=cat;
+    btn.onclick=()=>{
+        document.querySelectorAll(".categories button").forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        if(cat==="all") displayTools(tools);
+        else displayTools(tools.filter(t=>t.cat===cat));
+    };
+    catsDiv.appendChild(btn);
+});
+
+/* SEARCH */
+document.getElementById("search").addEventListener("input",function(){
+    let v=this.value.toLowerCase();
+    displayTools(tools.filter(t=>t.name.toLowerCase().includes(v)));
+});
+
+/* DARK MODE */
+function toggleDark(){
+    document.body.classList.toggle("dark");
+}
+
+/* INIT */
+displayTools(tools);
+
+</script>
+
+</body>
+</html>
