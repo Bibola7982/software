@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Medical Fitness Certificate</title>
+
+<style>
+body {
+    font-family: "Copperplate Gothic Light", "Copperplate", serif;
+    background: #f5f5f5;
+}
+
+.container {
+    width: 210mm;
+    min-height: 297mm;
+    margin: auto;
+    background: white;
+    padding: 2cm;
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.7;
+    text-align: justify;
+}
+
+.editable {
+    font-weight: bold;
+    border-bottom: 1px dashed #000;
+    padding: 2px;
+}
+
+.toolbar {
+    text-align: center;
+    margin: 15px;
+}
+
+.footer {
+    margin-top: 60px;
+}
+
+.right {
+    text-align: right;
+}
+
+ul {
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+@media print {
+    .toolbar {
+        display: none;
+    }
+
+    .container {
+        padding-top: 4cm; /* 4 CM TOP SPACE */
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="toolbar">
+
+    <label>Gender:</label>
+    <select id="gender" onchange="updateGender()">
+        <option value="female">Female</option>
+        <option value="male">Male</option>
+    </select>
+
+    <label>DOB:</label>
+    <input type="date" id="dob" onchange="calculateAge()">
+
+    <button onclick="window.print()">Print / Save PDF</button>
+
+</div>
+
+<div class="container">
+
+<h2>MEDICAL FITNESS CERTIFICATE</h2>
+
+<p>
+Date: 
+<span class="editable" contenteditable="true">03 / 04 / 2026</span>
+</p>
+
+<p>
+This is to certify that 
+<span id="title" class="editable">Mrs.</span> 
+<span class="editable" contenteditable="true">Babita Rani</span>, 
+W/o 
+<span class="editable" contenteditable="true">Anil Kumar</span>, 
+Age 
+<span id="age" class="editable" contenteditable="true">42</span> years/
+<span id="genderText">Female</span>, 
+resident of 
+<span class="editable" contenteditable="true">Dhanderi</span>, 
+was under my medical care for 
+<span class="editable" contenteditable="true">
+Laparoscopically Assisted Vaginal Hysterectomy (LAVH)
+</span>.
+</p>
+
+<p>
+<span id="p1">She</span> has successfully completed her treatment and post-operative recovery period. 
+On examination, <span id="p2">her</span> general condition is found to be stable and satisfactory.
+</p>
+
+<p>
+<span id="p3">She</span> is now medically fit to resume 
+<span id="p4">her</span> duties with effect from 
+<span class="editable" contenteditable="true">03 / 03 / 2026</span>.
+</p>
+
+<p>
+However, <span id="p5">she</span> is advised to:
+</p>
+
+<ul>
+    <li><span class="editable" contenteditable="true">Avoid heavy lifting and strenuous activities for a few more days.</span></li>
+    <li><span class="editable" contenteditable="true">Continue prescribed medications (if any).</span></li>
+    <li><span class="editable" contenteditable="true">Follow up as advised.</span></li>
+</ul>
+
+<br><br>
+
+<p>
+Doctor:<br>
+<span class="editable" contenteditable="true">Dr. Priyanka</span><br>
+<span class="editable" contenteditable="true">MBBS, MS (Obst. & Gynae)</span>
+</p>
+
+<br><br>
+
+<p><b>Signature & Stamp</b></p>
+
+</div>
+
+<script>
+
+// Gender auto
+function updateGender() {
+    let g = document.getElementById("gender").value;
+
+    if (g === "male") {
+        title.innerText = "Mr.";
+        genderText.innerText = "Male";
+        p1.innerText = "He";
+        p2.innerText = "his";
+        p3.innerText = "He";
+        p4.innerText = "his";
+        p5.innerText = "he";
+    } else {
+        title.innerText = "Mrs.";
+        genderText.innerText = "Female";
+        p1.innerText = "She";
+        p2.innerText = "her";
+        p3.innerText = "She";
+        p4.innerText = "her";
+        p5.innerText = "she";
+    }
+}
+
+// Age auto
+function calculateAge() {
+    let dobValue = document.getElementById("dob").value;
+    if (!dobValue) return;
+
+    let dob = new Date(dobValue);
+    let today = new Date();
+
+    let age = today.getFullYear() - dob.getFullYear();
+    let m = today.getMonth() - dob.getMonth();
+
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+        age--;
+    }
+
+    document.getElementById("age").innerText = age;
+}
+
+</script>
+
+</body>
+</html>
