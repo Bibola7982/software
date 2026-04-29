@@ -4,72 +4,126 @@
 <meta charset="UTF-8">
 <title>Genius Lab Billing</title>
 
-<!-- PDF -->
+<!-- html2pdf -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-<!-- Firebase -->
+<!-- Firebase v8 -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+*{box-sizing:border-box}
+body{font-family:Arial;background:#eee;margin:0}
+.container{max-width:780px;margin:auto;background:#fff;padding:15px;position:relative}
+h1{text-align:center}
+.top-box{border:1px solid #000;padding:10px;margin-bottom:15px}
+.row{display:flex;gap:10px;margin-bottom:8px}
+.field{flex:1;display:flex;gap:5px;align-items:center}
+.field label{min-width:70px;font-weight:bold}
+.field input{width:100%;padding:5px}
+.controls{display:flex;gap:8px;margin-bottom:10px}
+table{width:100%;border-collapse:collapse}
+table,th,td{border:1px solid black}
+th,td{padding:8px;text-align:center}
+.total{font-size:18px;margin-top:10px}
+.signature{margin-top:60px;display:flex;justify-content:space-between}
+.watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:40px;color:rgba(0,0,0,0.08)}
+#loginBox{text-align:center;margin-top:50px}
+@media print{.no-print{display:none}@page{margin:3cm 1cm}input{border:none}}
 
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Poppins',sans-serif;background:#eee}
 
-/* LOGIN */
+/* PRO LOGIN */
+
 #loginBox{
  position:fixed;inset:0;
  display:flex;justify-content:center;align-items:center;
  background:linear-gradient(135deg,#4facfe,#00f2fe);
+ z-index:9999;
 }
+
 .login-card{
- background:#fff;padding:25px;border-radius:12px;
- width:90%;max-width:350px;text-align:center;
- box-shadow:0 10px 25px rgba(0,0,0,0.2);
-}
-.input-group input{
- width:100%;padding:10px;margin-bottom:12px;
- border-radius:8px;border:1px solid #ccc;
-}
-.btn-group{display:flex;gap:10px}
-.btn{flex:1;padding:10px;border:none;border-radius:8px;cursor:pointer}
-.login-btn{background:#4facfe;color:#fff}
-.register-btn{background:#ddd}
-
-/* DASHBOARD */
-#dashboard{
- display:none;text-align:center;
- margin:10px;font-weight:bold;
+ background:#fff;
+ padding:30px 25px;
+ border-radius:14px;
+ width:90%;
+ max-width:360px;
+ text-align:center;
+ box-shadow:0 15px 35px rgba(0,0,0,0.25);
 }
 
-/* BILL */
-.container{
- max-width:780px;margin:20px auto;background:#fff;
- padding:15px;border-radius:8px;
- box-shadow:0 5px 15px rgba(0,0,0,0.1);
+.login-card h2{margin-bottom:5px}
+.sub{font-size:13px;color:#777;margin-bottom:20px}
+
+.input-wrap{margin-bottom:12px}
+
+.input-wrap input{
+ width:100%;
+ padding:10px;
+ border-radius:8px;
+ border:1px solid #ccc;
+ outline:none;
+ transition:.3s;
 }
-.row{display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap}
-.field{flex:1;display:flex;gap:5px;align-items:center}
-.field input{width:100%;padding:5px}
 
-.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-
-table{width:100%;border-collapse:collapse}
-table,th,td{border:1px solid #000}
-th,td{padding:8px;text-align:center}
-
-.total{text-align:right;font-weight:bold;margin-top:10px}
-.signature{margin-top:60px;display:flex;justify-content:space-between}
-
-/* PRINT */
-@media print{
- .no-print{display:none}
- @page{margin:3cm 1cm}
- input{border:none}
+.input-wrap input:focus{
+ border-color:#4facfe;
+ box-shadow:0 0 5px rgba(79,172,254,0.5);
 }
+
+/* PASSWORD ICON */
+.password-box{
+ position:relative;
+}
+.password-box span{
+ position:absolute;
+ right:10px;
+ top:50%;
+ transform:translateY(-50%);
+ cursor:pointer;
+}
+
+/* EXTRA */
+.extra{
+ font-size:13px;
+ text-align:left;
+ margin-bottom:10px;
+}
+
+/* BUTTONS */
+.btn-group{
+ display:flex;
+ gap:10px;
+}
+
+.btn{
+ flex:1;
+ padding:10px;
+ border:none;
+ border-radius:8px;
+ cursor:pointer;
+ font-weight:bold;
+ transition:.3s;
+}
+
+.login-btn{
+ background:#4facfe;
+ color:#fff;
+}
+.login-btn:hover{
+ background:#007bff;
+}
+
+.register-btn{
+ background:#ddd;
+}
+.register-btn:hover{
+ background:#ccc;
+}
+
+
+
 </style>
 </head>
 
@@ -77,15 +131,30 @@ th,td{padding:8px;text-align:center}
 
 <!-- LOGIN -->
 <div id="loginBox">
- <div class="login-card">
-  <h2>🧪 Genius Lab</h2>
-  <div class="input-group"><input id="email" placeholder="Email"></div>
-  <div class="input-group"><input id="password" type="password" placeholder="Password"></div>
-  <div class="btn-group">
-   <button class="btn register-btn" onclick="register()">Register</button>
-   <button class="btn login-btn" onclick="login()">Login</button>
+  <div class="login-card">
+
+    <h2>🧪 Genius Lab</h2>
+    <p class="sub">Secure Access Panel</p>
+
+    <div class="input-wrap">
+      <input id="email" type="email" placeholder="Email">
+    </div>
+
+    <div class="input-wrap password-box">
+      <input id="password" type="password" placeholder="Password">
+      <span onclick="togglePass()">👁️</span>
+    </div>
+
+    <div class="extra">
+      <label><input type="checkbox" id="remember"> Remember me</label>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn register-btn" onclick="register()">Register</button>
+      <button class="btn login-btn" onclick="login()">Login</button>
+    </div>
+
   </div>
- </div>
 </div>
 
 
@@ -312,6 +381,35 @@ async function loadDashboard(){
 
  totalBills.innerText=count;
  totalAmount.innerText=totalAmt;
+}
+
+// show/hide password
+function togglePass(){
+ let p=document.getElementById("password");
+ p.type = (p.type==="password") ? "text" : "password";
+}
+
+// remember email
+window.onload=function(){
+ let saved=localStorage.getItem("email");
+ if(saved){
+  document.getElementById("email").value=saved;
+  document.getElementById("remember").checked=true;
+ }
+}
+
+function login(){
+ let email=document.getElementById("email").value;
+ let pass=document.getElementById("password").value;
+
+ if(document.getElementById("remember").checked){
+  localStorage.setItem("email",email);
+ }else{
+  localStorage.removeItem("email");
+ }
+
+ firebase.auth().signInWithEmailAndPassword(email,pass)
+ .catch(e=>alert(e.message));
 }
 
 </script>
