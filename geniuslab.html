@@ -32,18 +32,129 @@ th,td{padding:8px;text-align:center}
 .watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:40px;color:rgba(0,0,0,0.08)}
 #loginBox{text-align:center;margin-top:50px}
 @media print{.no-print{display:none}@page{margin:3cm 1cm}input{border:none}}
+
+  /* FONT */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+{
+    font-family: 'Poppins', sans-serif;
+}
+
+/* LOGIN CONTAINER */
+.login-container{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+/* CARD */
+.login-card{
+    background:white;
+    padding:30px 25px;
+    border-radius:12px;
+    width:90%;
+    max-width:350px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* TITLE */
+.login-card h2{
+    margin-bottom:5px;
+}
+
+.subtitle{
+    font-size:14px;
+    color:gray;
+    margin-bottom:20px;
+}
+
+/* INPUT */
+.input-group{
+    margin-bottom:15px;
+}
+
+.input-group input{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:14px;
+    outline:none;
+    transition:0.3s;
+}
+
+.input-group input:focus{
+    border-color:#4facfe;
+    box-shadow:0 0 5px rgba(79,172,254,0.5);
+}
+
+/* BUTTONS */
+.btn-group{
+    display:flex;
+    gap:10px;
+}
+
+.btn{
+    flex:1;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.register-btn{
+    background:#ddd;
+}
+
+.login-btn{
+    background:#4facfe;
+    color:white;
+}
+
+.login-btn:hover{
+    background:#007bff;
+}
+
+.register-btn:hover{
+    background:#ccc;
+}
+
+/* MOBILE FRIENDLY */
+@media(max-width:480px){
+    .login-card{
+        padding:20px;
+    }
+}
+  
 </style>
 </head>
 
 <body>
 
 <!-- LOGIN -->
-<div id="loginBox">
-<h2>Genius Lab Reports</h2>
-<input id="email" placeholder="Email"><br><br>
-<input id="password" type="password" placeholder="Password"><br><br>
-<button onclick="register()">Register</button>
-<button onclick="login()">Login</button>
+<div id="loginBox" class="login-container">
+    <div class="login-card">
+        <h2>🧪 Genius Lab Reports</h2>
+        <p class="subtitle">Secure Login Portal</p>
+
+        <div class="input-group">
+            <input id="email" type="email" placeholder="Email">
+        </div>
+
+        <div class="input-group">
+            <input id="password" type="password" placeholder="Password">
+        </div>
+
+        <div class="btn-group">
+            <button class="btn register-btn" onclick="register()">Register</button>
+            <button class="btn login-btn" onclick="login()">Login</button>
+        </div>
+    </div>
 </div>
 
 
