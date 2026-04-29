@@ -4,14 +4,19 @@
 <meta charset="UTF-8">
 <title>Genius Lab Billing</title>
 
-<!-- html2pdf -->
+<!-- PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
 <style>
-
-/* FONT */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-*{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Poppins',sans-serif;background:#eee}
 
 /* LOGIN */
@@ -19,7 +24,6 @@ body{font-family:'Poppins',sans-serif;background:#eee}
  position:fixed;inset:0;
  display:flex;justify-content:center;align-items:center;
  background:linear-gradient(135deg,#4facfe,#00f2fe);
- z-index:9999;
 }
 .login-card{
  background:#fff;padding:25px;border-radius:12px;
@@ -35,6 +39,12 @@ body{font-family:'Poppins',sans-serif;background:#eee}
 .login-btn{background:#4facfe;color:#fff}
 .register-btn{background:#ddd}
 
+/* DASHBOARD */
+#dashboard{
+ display:none;text-align:center;
+ margin:10px;font-weight:bold;
+}
+
 /* BILL */
 .container{
  max-width:780px;margin:20px auto;background:#fff;
@@ -42,25 +52,17 @@ body{font-family:'Poppins',sans-serif;background:#eee}
  box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 .row{display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap}
-.field{flex:1;display:flex;gap:5px;align-items:center;min-width:150px}
+.field{flex:1;display:flex;gap:5px;align-items:center}
 .field input{width:100%;padding:5px}
+
 .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 
 table{width:100%;border-collapse:collapse}
 table,th,td{border:1px solid #000}
 th,td{padding:8px;text-align:center}
-th{background:#f5f5f5}
 
 .total{text-align:right;font-weight:bold;margin-top:10px}
 .signature{margin-top:60px;display:flex;justify-content:space-between}
-
-/* WATERMARK */
-.watermark{
- position:absolute;top:50%;left:50%;
- transform:translate(-50%,-50%);
- font-size:18px;color:rgba(0,0,0,0.08);
- text-align:center;pointer-events:none;
-}
 
 /* PRINT */
 @media print{
@@ -68,61 +70,46 @@ th{background:#f5f5f5}
  @page{margin:3cm 1cm}
  input{border:none}
 }
-
-/* MOBILE */
-@media(max-width:600px){
- .row{flex-direction:column}
- .btn-group{flex-direction:column}
-}
-
 </style>
-    
 </head>
 
 <body>
 
 <!-- LOGIN -->
-<div id="loginBox" class="login-container">
-    <div class="login-card">
-        <h2>🧪 Genius Lab Reports</h2>
-        <p class="subtitle">Secure Login Portal</p>
-
-        <div class="input-group">
-            <input id="email" type="email" placeholder="Email">
-        </div>
-
-        <div class="input-group">
-            <input id="password" type="password" placeholder="Password">
-        </div>
-
-        <div class="btn-group">
-            <button class="btn register-btn" onclick="register()">Register</button>
-            <button class="btn login-btn" onclick="login()">Login</button>
-        </div>
-    </div>
+<div id="loginBox">
+ <div class="login-card">
+  <h2>🧪 Genius Lab</h2>
+  <div class="input-group"><input id="email" placeholder="Email"></div>
+  <div class="input-group"><input id="password" type="password" placeholder="Password"></div>
+  <div class="btn-group">
+   <button class="btn register-btn" onclick="register()">Register</button>
+   <button class="btn login-btn" onclick="login()">Login</button>
+  </div>
+ </div>
 </div>
 
+<!-- DASHBOARD -->
+<div id="dashboard" class="no-print">
+📊 Bills: <span id="totalBills">0</span> | ₹ <span id="totalAmount">0</span>
+</div>
 
 <!-- BILL -->
 <div class="container" id="bill" style="display:none">
 
-
 <h1>Lab Test Bill</h1>
 
-<div class="top-box">
 <div class="row">
-<div class="field"><label>Bill No:</label><input id="billNo"></div>
-<div class="field"><label>Date:</label><input type="date" id="date"></div>
-<div class="field"><label>Name:</label><input id="name"></div>
-<div class="field"><label>Age:</label><input id="age"></div>
+<div class="field">Bill No:<input id="billNo"></div>
+<div class="field">Date:<input type="date" id="date"></div>
+<div class="field">Name:<input id="name"></div>
+<div class="field">Age:<input id="age"></div>
 </div>
 
 <div class="row">
-<div class="field"><label>Gender:</label><input id="gender"></div>
-<div class="field"><label>Mobile:</label><input id="mobile"></div>
-<div class="field"><label>Doctor:</label><input id="doctor"></div>
-<div class="field"><label>Address:</label><input id="address"></div>
-</div>
+<div class="field">Gender:<input id="gender"></div>
+<div class="field">Mobile:<input id="mobile"></div>
+<div class="field">Doctor:<input id="doctor"></div>
+<div class="field">Address:<input id="address"></div>
 </div>
 
 <div class="controls no-print">
@@ -140,10 +127,7 @@ th{background:#f5f5f5}
 <tbody id="tbody"></tbody>
 </table>
 
-<div class="total">Total: ₹ <span id="total">0</span></div>
-
-
-
+<div class="total">Total ₹ <span id="total">0</span></div>
 
 <div class="signature">
 <div>Patient Sign</div>
@@ -152,44 +136,35 @@ th{background:#f5f5f5}
 
 <div class="no-print">
 <button onclick="saveBill()">Save Cloud</button>
-<button onclick="loadBills()">Open PDF</button>
 <button onclick="window.print()">Print</button>
 <button onclick="logout()">Logout</button>
 </div>
-
-
 
 </div>
 
 <script>
 
-// 🔥 YOUR FIREBASE CONFIG (FIXED)
-var firebaseConfig = {
-  apiKey: "AIzaSyB3u3SpBpEzFMCb4dLhhA3sFWUBaZoVDfY",
-  authDomain: "lab-billing-593ea.firebaseapp.com",
-  projectId: "lab-billing-593ea",
-  storageBucket: "lab-billing-593ea.appspot.com",
-  messagingSenderId: "1019452993424",
-  appId: "1:1019452993424:web:82b8317a314aa4be054d15"
-};
+// FIREBASE
+firebase.initializeApp({
+ apiKey:"AIzaSyB3u3SpBpEzFMCb4dLhhA3sFWUBaZoVDfY",
+ authDomain:"lab-billing-593ea.firebaseapp.com",
+ projectId:"lab-billing-593ea",
+ storageBucket:"lab-billing-593ea.appspot.com"
+});
 
-firebase.initializeApp(firebaseConfig);
-var db = firebase.firestore();
-var storage = firebase.storage();
+var db=firebase.firestore();
+var storage=firebase.storage();
 
 // AUTH
 function register(){
  firebase.auth().createUserWithEmailAndPassword(email.value,password.value)
- .then(()=>alert("Registered"))
- .catch(e=>alert(e.message));
+ .then(()=>alert("Registered")).catch(e=>alert(e.message));
 }
-
 function login(){
  firebase.auth().signInWithEmailAndPassword(email.value,password.value)
  .catch(e=>alert(e.message));
 }
-
-function logout(){ firebase.auth().signOut(); }
+function logout(){firebase.auth().signOut();}
 
 firebase.auth().onAuthStateChanged(user=>{
  if(user){
@@ -197,26 +172,20 @@ firebase.auth().onAuthStateChanged(user=>{
   bill.style.display="block";
   dashboard.style.display="block";
   loadDashboard();
- } else {
-  loginBox.style.display="block";
+ }else{
+  loginBox.style.display="flex";
   bill.style.display="none";
  }
 });
 
-
-
 // BILL NO
-function generateBillNo(){
- let last=localStorage.getItem("billNo")||0;
- last++;
- localStorage.setItem("billNo",last);
- return last.toString().padStart(2,'0');
-}
-billNo.value=generateBillNo();
+billNo.value=(+localStorage.billNo+1||1);
+localStorage.billNo=billNo.value;
 date.valueAsDate=new Date();
 
 // TESTS
-let tests={"CBC":200,"LFT":600,"RFT":800,"RBS":50};
+let tests={"CBC":200,"LFT":600,"RFT":800};
+
 function loadTests(){
  testSelect.innerHTML="<option>Select</option>";
  for(let t in tests){
@@ -230,102 +199,58 @@ testSelect.onchange=()=>amount.value=tests[testSelect.value]||"";
 // ADD TEST
 function addTest(){
  if(!testSelect.value||!amount.value)return;
- tbody.innerHTML+=`
- <tr>
+ tbody.innerHTML+=`<tr>
  <td>${testSelect.value}</td>
- <td contenteditable="true">${amount.value}</td>
+ <td contenteditable>${amount.value}</td>
  <td class="no-print"><button onclick="this.parentElement.parentElement.remove();calc()">X</button></td>
  </tr>`;
  calc();
 }
 
-// ADD CUSTOM
+// ADD NEW TEST
 function addNewTest(){
- if(!newTest.value||!newPrice.value)return;
- tests[newTest.value]=parseInt(newPrice.value);
+ let t=newTest.value.trim();
+ let p=newPrice.value;
+ if(!t||!p)return alert("Enter test & price");
+ tests[t]=+p;
  loadTests();
+ newTest.value="";newPrice.value="";
 }
 
 // TOTAL
 function calc(){
  let t=0;
- document.querySelectorAll("#tbody tr").forEach(r=>{
-  t+=Number(r.cells[1].innerText)||0;
- });
+ document.querySelectorAll("#tbody tr").forEach(r=>t+=+r.cells[1].innerText||0);
  total.innerText=t;
 }
 document.addEventListener("input",calc);
 
-
-
-
-// SAVE PDF CLOUD
+// SAVE
 async function saveBill(){
-
  let user=firebase.auth().currentUser;
  if(!user)return alert("Login first");
 
- let filename=(name.value||"bill")+"_"+billNo.value+".pdf";
-
  let blob=await html2pdf().from(bill).outputPdf('blob');
-
- let ref=storage.ref().child(user.uid+"/"+filename);
+ let ref=storage.ref(user.uid+"/"+billNo.value+".pdf");
  await ref.put(blob);
 
  let url=await ref.getDownloadURL();
 
  await db.collection("bills").add({
-  uid:user.uid,
-  name:name.value,
-  billNo:billNo.value,
-  total:total.innerText,
-  url:url,
-  date:new Date()
+ uid:user.uid,total:total.innerText,date:new Date()
  });
 
- alert("Saved to Cloud ✅");
+ alert("Saved");
  loadDashboard();
-}
-
-// LOAD PDF
-async function loadBills(){
- let user=firebase.auth().currentUser;
-
- let snap=await db.collection("bills").where("uid","==",user.uid).get();
-
- let arr=[],list="Your Bills:\n";
-
- snap.forEach((doc,i)=>{
-  let d=doc.data();
-  arr.push(d);
-  list+=`${i+1}. ${d.billNo} - ${d.name}\n`;
- });
-
- let i=prompt(list+"\nEnter:");
- if(!i)return;
-
- window.open(arr[i-1].url);
 }
 
 // DASHBOARD
 async function loadDashboard(){
- let user=firebase.auth().currentUser;
- let today=new Date().toDateString();
-
- let snap=await db.collection("bills").where("uid","==",user.uid).get();
-
- let count=0,totalAmt=0;
-
- snap.forEach(doc=>{
-  let d=doc.data();
-  if(new Date(d.date).toDateString()===today){
-   count++;
-   totalAmt+=Number(d.total||0);
-  }
- });
-
- totalBills.innerText=count;
- totalAmount.innerText=totalAmt;
+ let snap=await db.collection("bills").get();
+ let c=0,a=0;
+ snap.forEach(d=>{c++;a+=+d.data().total||0});
+ totalBills.innerText=c;
+ totalAmount.innerText=a;
 }
 
 </script>
