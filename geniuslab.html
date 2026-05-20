@@ -162,96 +162,146 @@ date.valueAsDate=new Date();
 // TESTS
 let tests={
 
- // BLOOD TESTS
+ // CBC & HEMATOLOGY
  "CBC":200,
- "ESR":150,
+ "Complete Blood Count":200,
  "Hb":120,
+ "HGB":120,
+ "Hemoglobin":120,
+ "TLC":180,
+ "DLC":180,
+ "RBC Count":180,
+ "WBC Count":180,
  "Platelet Count":250,
- "Blood Group":150,
+ "PLT":250,
+ "PCV":150,
+ "MCV":150,
+ "MCH":150,
+ "MCHC":150,
+ "ESR":150,
+ "MP":120,
  "Peripheral Smear":300,
+ "Reticulocyte Count":350,
+ "Blood Group":150,
+ "Bleeding Time":200,
+ "Clotting Time":200,
+ "PT":500,
+ "INR":450,
+ "APTT":600,
+ "D-Dimer":1500,
 
  // SUGAR TESTS
  "RBS":50,
  "FBS":80,
  "PPBS":80,
  "HbA1c":500,
- "Glucose Tolerance Test":700,
+ "GTT":700,
 
- // LIVER TEST
+ // LIVER FUNCTION TEST
  "LFT":600,
- "Bilirubin":250,
  "SGPT":200,
  "SGOT":200,
- "Alkaline Phosphatase":250,
+ "ALT":200,
+ "AST":200,
+ "ALP":250,
+ "GGT":350,
+ "Total Bilirubin":250,
+ "Direct Bilirubin":200,
+ "Indirect Bilirubin":200,
+ "Total Protein":250,
+ "Albumin":250,
+ "Globulin":250,
 
- // KIDNEY TEST
+ // KIDNEY FUNCTION TEST
  "RFT":800,
- "Urea":150,
- "Creatinine":180,
- "Uric Acid":200,
+ "S. Creatinine":180,
+ "S. Urea":150,
+ "BUN":250,
+ "S. Uric Acid":200,
+ "Sodium":200,
+ "Potassium":200,
+ "Chloride":200,
  "Electrolyte":500,
 
- // THYROID
- "T3":250,
- "T4":250,
- "TSH":350,
- "Thyroid Profile":700,
-
- // LIPID
+ // LIPID PROFILE
  "Lipid Profile":700,
  "Cholesterol":200,
  "Triglyceride":250,
  "HDL":250,
  "LDL":250,
+ "VLDL":250,
 
- // URINE
- "Urine Routine":120,
- "Urine Culture":450,
- "Pregnancy Test":150,
- "Microalbumin":300,
+ // THYROID
+ "T3":250,
+ "T4":250,
+ "TSH":350,
+ "FT3":350,
+ "FT4":350,
+ "Thyroid Profile":700,
 
- // STOOL
- "Stool Routine":150,
- "Occult Blood":250,
-
- // HEART
- "ECG":300,
- "Troponin-I":900,
- "CK-MB":700,
-
- // INFECTION
- "CRP":400,
+ // DENGUE / TYPHOID / FEVER
  "Dengue NS1":900,
- "Malaria":350,
+ "Dengue IgG":800,
+ "Dengue IgM":800,
+ "Dengue Profile":1800,
  "Typhoid":500,
+ "Typhi Dot IgG":600,
+ "Typhi Dot IgM":600,
  "Widal":250,
+ "Malaria Parasite":350,
+ "MP Card":300,
+ "Chikungunya":900,
+ "CRP":400,
+ "Procalcitonin":2500,
+
+ // VIRAL TESTS
  "HIV":700,
  "HBsAg":500,
  "HCV":700,
+ "VDRL":400,
+ "COVID RT-PCR":1200,
 
- // VITAMINS
+ // HEART TESTS
+ "Troponin-I":1200,
+ "CPK":700,
+ "CPK-MB":900,
+ "LDH":650,
+
+ // URINE TESTS
+ "Urine Routine":120,
+ "Urine Microscopy":150,
+ "Urine Culture":450,
+ "Urine Protein":150,
+ "Pregnancy Test":150,
+
+ // STOOL TESTS
+ "Stool Routine":150,
+ "Stool Culture":450,
+ "Occult Blood":250,
+
+ // VITAMIN TESTS
  "Vitamin D":1200,
  "Vitamin B12":900,
- "Calcium":250,
+ "Ferritin":900,
  "Iron":350,
+ "Calcium":250,
+ "Magnesium":350,
+ "Phosphorus":300,
 
- // HORMONE
+ // HORMONE TESTS
  "FSH":700,
  "LH":700,
  "Prolactin":800,
  "Testosterone":1200,
+ "Progesterone":900,
+ "Estradiol":900,
+ "Beta HCG":900,
 
- // SPECIAL
- "COVID RT-PCR":1200,
+ // SPECIAL TESTS
+ "Blood Culture":1200,
  "Biopsy":2500,
  "Histopathology":1800,
- "FNAC":1500,
-
- // XRAY & SCAN
- "X-Ray Chest":500,
- "USG Whole Abdomen":1500,
- "CT Scan":3500,
- "MRI":6000
+ "FNAC":1500
 
 };
 function loadTests(){
