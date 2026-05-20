@@ -160,7 +160,100 @@ billNo.value=generateBillNo();
 date.valueAsDate=new Date();
 
 // TESTS
-let tests={"CBC":200,"LFT":600,"RFT":800,"RBS":50};
+let tests={
+
+ // BLOOD TESTS
+ "CBC":200,
+ "ESR":150,
+ "Hb":120,
+ "Platelet Count":250,
+ "Blood Group":150,
+ "Peripheral Smear":300,
+
+ // SUGAR TESTS
+ "RBS":50,
+ "FBS":80,
+ "PPBS":80,
+ "HbA1c":500,
+ "Glucose Tolerance Test":700,
+
+ // LIVER TEST
+ "LFT":600,
+ "Bilirubin":250,
+ "SGPT":200,
+ "SGOT":200,
+ "Alkaline Phosphatase":250,
+
+ // KIDNEY TEST
+ "RFT":800,
+ "Urea":150,
+ "Creatinine":180,
+ "Uric Acid":200,
+ "Electrolyte":500,
+
+ // THYROID
+ "T3":250,
+ "T4":250,
+ "TSH":350,
+ "Thyroid Profile":700,
+
+ // LIPID
+ "Lipid Profile":700,
+ "Cholesterol":200,
+ "Triglyceride":250,
+ "HDL":250,
+ "LDL":250,
+
+ // URINE
+ "Urine Routine":120,
+ "Urine Culture":450,
+ "Pregnancy Test":150,
+ "Microalbumin":300,
+
+ // STOOL
+ "Stool Routine":150,
+ "Occult Blood":250,
+
+ // HEART
+ "ECG":300,
+ "Troponin-I":900,
+ "CK-MB":700,
+
+ // INFECTION
+ "CRP":400,
+ "Dengue NS1":900,
+ "Malaria":350,
+ "Typhoid":500,
+ "Widal":250,
+ "HIV":700,
+ "HBsAg":500,
+ "HCV":700,
+
+ // VITAMINS
+ "Vitamin D":1200,
+ "Vitamin B12":900,
+ "Calcium":250,
+ "Iron":350,
+
+ // HORMONE
+ "FSH":700,
+ "LH":700,
+ "Prolactin":800,
+ "Testosterone":1200,
+
+ // SPECIAL
+ "COVID RT-PCR":1200,
+ "Biopsy":2500,
+ "Histopathology":1800,
+ "FNAC":1500,
+
+ // XRAY & SCAN
+ "X-Ray Chest":500,
+ "USG Whole Abdomen":1500,
+ "CT Scan":3500,
+ "MRI":6000
+
+};
 function loadTests(){
  testSelect.innerHTML="<option>Select</option>";
  for(let t in tests){
