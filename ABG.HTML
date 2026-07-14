@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>ABG Report Generator</title>
+
+<style>
+
+/*==================================================
+        HOSPITAL ABG REPORT
+==================================================*/
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+background:#dcdcdc;
+
+font-family:"Courier New",monospace;
+
+}
+
+/*--------------------------------------
+Buttons
+--------------------------------------*/
+
+.toolbar{
+
+width:210mm;
+
+margin:15px auto;
+
+display:flex;
+
+justify-content:center;
+
+gap:15px;
+
+}
+
+button{
+
+padding:9px 18px;
+
+font-family:inherit;
+
+font-size:20px;
+
+cursor:pointer;
+
+background:white;
+
+border:1px solid black;
+
+}
+
+button:hover{
+
+background:#f2f2f2;
+
+}
+
+/*--------------------------------------
+Paper
+--------------------------------------*/
+
+.paper{
+
+width:210mm;
+
+height:297mm;
+
+background:white;
+
+margin:auto;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+/*--------------------------------------
+Printable Area
+--------------------------------------*/
+
+.report{
+
+position:absolute;
+
+top:50mm;
+
+left:40mm;
+
+right:40mm;
+
+bottom:40mm;
+
+padding:0;
+
+overflow:hidden;
+
+}
+
+/*--------------------------------------
+Heading
+--------------------------------------*/
+
+.title{
+
+text-align:center;
+
+font-size:20px;
+
+font-weight:bold;
+
+letter-spacing:1px;
+
+margin-bottom:15px;
+
+}
+
+/*--------------------------------------
+Patient Details
+--------------------------------------*/
+
+.patient{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+column-gap:25px;
+
+row-gap:8px;
+
+margin-bottom:14px;
+
+font-size:18px;
+
+}
+
+.row{
+
+display:flex;
+
+align-items:center;
+
+}
+
+.row label{
+
+width:90px;
+
+font-weight:bold;
+
+}
+
+.edit{
+
+width:100%;
+
+border:none;
+
+outline:none;
+
+background:transparent;
+
+font-family:inherit;
+
+font-size:19px;
+
+}
+
+/*--------------------------------------
+Table
+--------------------------------------*/
+
+table{
+
+width:100%;
+
+border-collapse:separate;
+
+border-spacing:0 5px;
+
+font-size:19px;
+
+}
+
+th{
+
+text-align:left;
+
+padding-bottom:6px;
+
+}
+
+td{
+
+vertical-align:middle;
+
+}
+
+.parameter{
+
+width:35%;
+
+}
+
+.result{
+
+width:30%;
+
+}
+
+.reference{
+
+width:35%;
+
+}
+
+.value{
+
+width:70px;
+
+border:none;
+
+outline:none;
+
+background:transparent;
+
+font-family:inherit;
+
+font-size:19px;
+
+}
+
+.range{
+
+width:130px;
+
+border:none;
+
+outline:none;
+
+background:transparent;
+
+font-family:inherit;
+
+font-size:19px;
+
+}
+
+.flag{
+
+display:inline-block;
+
+width:18px;
+
+font-weight:bold;
+
+text-align:center;
+
+}
+
+.section{
+
+font-weight:bold;
+
+text-decoration:underline;
+
+padding-top:10px;
+
+padding-bottom:3px;
+
+}
+
+.high{
+
+font-weight:bold;
+
+}
+
+.low{
+
+font-weight:bold;
+
+}
+
+/*--------------------------------------
+Print
+--------------------------------------*/
+
+@page{
+
+size:A4 portrait;
+
+margin:0;
+
+}
+
+@media print{
+
+body{
+
+background:white;
+
+}
+
+.toolbar{
+
+display:none;
+
+}
+
+.paper{
+
+margin:0;
+
+box-shadow:none;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="toolbar">
+
+<button onclick="window.print()">
+
+Print Report
+
+</button>
+
+<button onclick="window.print()">
+
+Save as PDF
+
+</button>
+
+<button onclick="resetReport()">
+
+Reset
+
+</button>
+
+</div>
+
+<div class="paper">
+
+<div class="report">
+
+
+<div class="patient">
+
+<div class="row">
+
+<label>Patient</label>
+
+<input class="edit " value=" SATYAWAN">
+
+</div>
+
+<div class="row">
+
+<label>Age</label>
+
+<input class="edit" value="27 Y">
+
+</div>
+
+<div class="row">
+
+<label>Sex</label>
+
+<input class="edit" value="Male">
+
+</div>
+
+<div class="row">
+
+<label>Date</label>
+
+<input class="edit" type="date">
+
+</div>
+
+<div class="row">
+
+<label>UHID</label>
+
+<input class="edit">
+
+</div>
+
+<div class="row">
+
+<label>Doctor</label>
+
+<input class="edit" value="Dr. Rahul Sharma">
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+<div class="title">
+
+ARTERIAL BLOOD GAS ANALYSIS
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th class="parameter">Parameter</th>
+
+<th class="result">Result</th>
+
+<th class="reference">Reference Range</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>pH</td>
+
+<td>
+
+<input
+class="value result-input"
+value="7.40"
+data-low="7.35"
+data-high="7.45">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="7.35 - 7.45">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>PCO₂</td>
+
+<td>
+
+<input
+class="value result-input"
+value="40"
+data-low="35"
+data-high="45">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="35 - 45 mmHg">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>PO₂</td>
+
+<td>
+
+<input
+class="value result-input"
+value="95"
+data-low="80"
+data-high="100">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="80 - 100 mmHg">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>BE</td>
+
+<td>
+
+<input
+class="value result-input"
+value="0"
+data-low="-2"
+data-high="2">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="-2 to +2">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>BEecf</td>
+
+<td>
+
+<input
+class="value result-input"
+value="0"
+data-low="-2"
+data-high="2">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="-2 to +2">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>BB</td>
+
+<td>
+
+<input
+class="value result-input"
+value="48"
+data-low="45"
+data-high="52">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="45 - 52">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>TCO₂</td>
+
+<td>
+
+<input
+class="value result-input"
+value="24"
+data-low="22"
+data-high="29">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="22 - 29">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>HCO₃</td>
+
+<td>
+
+<input
+class="value result-input"
+value="24"
+data-low="22"
+data-high="26">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="22 - 26">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Std HCO₃</td>
+
+<td>
+
+<input
+class="value result-input"
+value="24"
+data-low="22"
+data-high="26">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="22 - 26 mmol/L">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Std pH</td>
+
+<td>
+
+<input
+class="value result-input"
+value="7.40"
+data-low="7.35"
+data-high="7.45">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="7.35 - 7.45">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td colspan="3" class="section">
+
+ELECTROLYTES
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Na+</td>
+
+<td>
+
+<input
+class="value result-input"
+value="140"
+data-low="135"
+data-high="145">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="135 - 145 mmol/L">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>K+</td>
+
+<td>
+
+<input
+class="value result-input"
+value="4.0"
+data-low="3.5"
+data-high="5.1">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="3.5 - 5.1 mmol/L">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Cl−</td>
+
+<td>
+
+<input
+class="value result-input"
+value="102"
+data-low="98"
+data-high="107">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="98 - 107 mmol/L">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Ca++</td>
+
+<td>
+
+<input
+class="value result-input"
+value="1.20"
+data-low="1.13"
+data-high="1.32">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="1.13 - 1.32 mmol/L">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Creatinine</td>
+
+<td>
+
+<input
+class="value result-input"
+value="0.90"
+data-low="0.60"
+data-high="1.30">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="0.60 - 1.30 mg/dL">
+
+</td>
+
+</tr>
+
+<td colspan="3" class="section">
+
+HEMATOLOGY
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Hb</td>
+
+<td>
+
+<input
+class="value result-input"
+value="15.0"
+data-low="12"
+data-high="17">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="12 - 17 g/dL">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>HCT</td>
+
+<td>
+
+<input
+class="value result-input"
+value="45"
+data-low="36"
+data-high="50">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="36 - 50 %">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>SO₂</td>
+
+<td>
+
+<input
+class="value result-input"
+value="96"
+data-low="90"
+data-high="100">
+
+<span class="flag"></span>
+
+</td>
+
+<td>
+
+<input
+class="range"
+value="90 - 100 %">
+
+</td>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+const resultInputs=document.querySelectorAll(".result-input");
+
+resultInputs.forEach(function(input){
+
+function check(){
+
+const value=parseFloat(input.value);
+
+const low=parseFloat(input.dataset.low);
+
+const high=parseFloat(input.dataset.high);
+
+const flag=input.nextElementSibling;
+
+flag.textContent="";
+
+input.classList.remove("high","low");
+
+if(isNaN(value)) return;
+
+if(value<low){
+
+flag.textContent="↓";
+
+input.classList.add("low");
+
+}
+
+else if(value>high){
+
+flag.textContent="↑";
+
+input.classList.add("high");
+
+}
+
+}
+
+check();
+
+input.addEventListener("input",check);
+
+});
+
+//--------------------------------------
+// Reset Report
+//--------------------------------------
+
+function resetReport(){
+
+if(!confirm("Reset the complete report?")) return;
+
+document.querySelectorAll(".edit").forEach(function(el){
+
+if(el.type==="date" || el.type==="time"){
+
+el.value="";
+
+}else{
+
+el.value="";
+
+}
+
+});
+
+document.querySelectorAll(".result-input").forEach(function(el){
+
+const defaults={
+"pH":"7.40",
+"PCO₂":"40",
+"PO₂":"95",
+"BE":"0",
+"BEecf":"0",
+"BB":"48",
+"TCO₂":"24",
+"HCO₃":"24",
+"Std HCO₃":"24",
+"Std pH":"7.40",
+"Na+":"140",
+"K+":"4.0",
+"Cl−":"102",
+"Ca++":"1.20",
+"Creatinine":"0.90",
+"Glucose":"95",
+"Lactate":"1.2",
+"Hb":"15.0",
+"HCT":"45",
+"SO₂":"98",
+"Temperature":"37.0",
+"FiO₂":"21"
+};
+
+const parameter=el.closest("tr").cells[0].innerText.trim();
+
+if(defaults[parameter]!==undefined){
+
+el.value=defaults[parameter];
+
+}
+
+el.dispatchEvent(new Event("input"));
+
+});
+
+}
+
+//--------------------------------------
+// Auto Date
+//--------------------------------------
+
+const dateInput=document.querySelector('input[type="date"]');
+
+if(dateInput){
+
+const today=new Date();
+
+dateInput.value=today.toISOString().substring(0,10);
+
+}
+
+//--------------------------------------
+// Auto Time
+//--------------------------------------
+
+const timeInput=document.querySelector('input[type="time"]');
+
+if(timeInput){
+
+const now=new Date();
+
+const hh=String(now.getHours()).padStart(2,"0");
+
+const mm=String(now.getMinutes()).padStart(2,"0");
+
+timeInput.value=hh+":"+mm;
+
+}
+
+//--------------------------------------
+// Select Text on Focus
+//--------------------------------------
+
+document.querySelectorAll("input").forEach(function(input){
+
+input.addEventListener("focus",function(){
+
+this.select();
+
+});
+
+});
+
+//--------------------------------------
+// Enter Key = Next Field
+//--------------------------------------
+
+const allInputs=document.querySelectorAll("input");
+
+allInputs.forEach(function(input,index){
+
+input.addEventListener("keydown",function(e){
+
+if(e.key==="Enter"){
+
+e.preventDefault();
+
+const next=allInputs[index+1];
+
+if(next){
+
+next.focus();
+
+}
+
+}
+
+});
+
+});
+
+//--------------------------------------
+// Before Printing
+//--------------------------------------
+
+window.onbeforeprint=function(){
+
+document.activeElement.blur();
+
+};
+
+//--------------------------------------
+// After Printing
+//--------------------------------------
+
+window.onafterprint=function(){
+
+};
+
+//--------------------------------------
+// Initialize Flag Calculation
+//--------------------------------------
+
+document.querySelectorAll(".result-input").forEach(function(input){
+
+input.dispatchEvent(new Event("input"));
+
+});
+
+</script>
+
+</body>
+
+</html>
